@@ -34,7 +34,7 @@ Ejemplo de primera baraja:
 
 Cuando salga una carta con resultado `APTO`, la aplicación mostrará un mensaje de aprobado y podrá preguntar si se quiere probar otra vez.
 
-Cuando salga una carta con resultado `NO_APTO` o `PRUEBA OTRA VEZ`, la aplicación mostrará una tarjeta formativa para repasar contenido relacionado con la baraja.
+Cuando salga una carta con resultado `NO_APTO` o `PRUEBA_OTRA_VEZ`, la aplicación mostrará una tarjeta formativa para repasar contenido relacionado con la baraja.
 
 Las tarjetas de teoría servirán para guardar contenido explicativo o de apoyo. Cada tarjeta pertenecerá a una baraja concreta.
 
