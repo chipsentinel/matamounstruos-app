@@ -43,6 +43,7 @@ Atributos:
 - `idBaraja`
 - `nombre`
 - `descripcion`
+- `idUsuario`
 
 Relaciones:
 
@@ -63,6 +64,7 @@ Atributos:
 - `descripcion`
 - `valor`
 - `tipoResultado`
+- `idBaraja`
 
 El campo `tipoResultado` solo puede tener estos valores:
 
