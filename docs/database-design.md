@@ -27,7 +27,7 @@ Atributos:
 
 - `idUsuario`
 - `nombre`
-- `password`
+- `passwordHash`
 - `rol`
 
 Relación:
