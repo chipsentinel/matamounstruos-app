@@ -29,8 +29,8 @@ Ejemplo de primera baraja:
 - 2, 3 y 4 NO APTO (NO_APTO)
 - 5, 6, 7, 8, 9 (APTO)
 - 10 ESTUDIANTE EJEMPLAR (APTO)
-- 11 REINA VANESA (PRUEBA OTRA VEZ)
-- 12 REY SANTI (PRUEBA OTRA VEZ)
+- 11 REINA VANESA (PRUEBA_OTRA_VEZ)
+- 12 REY SANTI (PRUEBA_OTRA_VEZ)
 
 Cuando salga una carta con resultado `APTO`, la aplicación mostrará un mensaje de aprobado y podrá preguntar si se quiere probar otra vez.
 
