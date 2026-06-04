@@ -87,6 +87,7 @@ Atributos:
 - `idTarjeta`
 - `titulo`
 - `contenido`
+- `idBaraja`
 
 Relación:
 
@@ -199,3 +200,24 @@ Por ejemplo, más adelante se podrán crear rutas como:
 - `/tarjetas`
 
 El diseño también ayuda a mantener la integridad de los datos, porque las claves foráneas evitan que existan cartas sin baraja, tarjetas sin baraja o barajas sin usuario.
+
+## Documentación de estudio
+
+Como complemento a este diseño inicial, la carpeta `docs/estudio/` recoge la documentación específica de la funcionalidad de tarjetas de estudio.
+
+Estos documentos servirán como guía de análisis y diseño para preparar:
+
+- La estructura de datos de las tarjetas.
+- Los endpoints de la API REST.
+- Las pantallas y componentes del frontend.
+- El flujo funcional entre cartas, resultados y tarjetas.
+- La metodología de trabajo aplicada durante el desarrollo.
+- El contenido teórico que más adelante podrá cargarse como material real de estudio.
+
+Documentos relacionados:
+
+- `docs/estudio/tarjeta-db.md`
+- `docs/estudio/tarjeta-backend.md`
+- `docs/estudio/tarjeta-frontend.md`
+- `docs/estudio/tarjeta-flujo.md`
+- `docs/estudio/tarjeta-gitflow.md`

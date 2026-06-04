@@ -25,12 +25,12 @@ La primera baraja prevista tendrá un máximo de 12 cartas, tomando como referen
 
 Ejemplo de primera baraja:
 
-- 1 AUTORIA APROBADA (APTO)
-- 2, 3 y 4 NO APTO (NO_APTO)
-- 5, 6, 7, 8, 9 (APTO)
-- 10 ESTUDIANTE EJEMPLAR (APTO)
-- 11 REINA VANESA (PRUEBA_OTRA_VEZ)
-- 12 REY SANTI (PRUEBA_OTRA_VEZ)
+- 1 AUTORIA APROBADA        (APTO)
+- 2, 3 y 4 NO APTO          (NO_APTO)
+- 5, 6, 7, 8, 9 APTO        (APTO)
+- 10 ESTUDIANTE EJEMPLAR    (APTO)
+- 11 REINA VANESA           (PRUEBA_OTRA_VEZ)
+- 12 REY SANTI              (PRUEBA_OTRA_VEZ)
 
 Cuando salga una carta con resultado `APTO`, la aplicación mostrará un mensaje de aprobado y podrá preguntar si se quiere probar otra vez.
 
@@ -81,6 +81,12 @@ Tecnologías previstas:
 Enlaces a la documentación del proyecto:
 
 - Diseño de base de datos: [docs/database-design.md](docs/database-design.md)
+- Tarjetas de estudio:
+  - Base de datos: [docs/estudio/tarjeta-db.md](docs/estudio/tarjeta-db.md)
+  - Backend: [docs/estudio/tarjeta-backend.md](docs/estudio/tarjeta-backend.md)
+  - Frontend: [docs/estudio/tarjeta-frontend.md](docs/estudio/tarjeta-frontend.md)
+  - Flujo funcional: [docs/estudio/tarjeta-flujo.md](docs/estudio/tarjeta-flujo.md)
+  - Gitflow: [docs/estudio/tarjeta-gitflow.md](docs/estudio/tarjeta-gitflow.md)
 - Documentación de API:
 - Modelo Entidad/Relación:
 - Modelo relacional:
