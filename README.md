@@ -81,6 +81,11 @@ Tecnologías previstas:
 Enlaces a la documentación del proyecto:
 
 - Diseño de base de datos: [docs/database-design.md](docs/database-design.md)
+- Tarjetas de estudio:
+  - Base de datos: [docs/estudio/tarjeta-db.md](docs/estudio/tarjeta-db.md)
+  - Backend: [docs/estudio/tarjeta-backend.md](docs/estudio/tarjeta-backend.md)
+  - Frontend: [docs/estudio/tarjeta-frontend.md](docs/estudio/tarjeta-frontend.md)
+  - Flujo funcional: [docs/estudio/tarjeta-flujo.md](docs/estudio/tarjeta-flujo.md)
 - Documentación de API:
 - Modelo Entidad/Relación:
 - Modelo relacional:
