@@ -108,7 +108,7 @@ Por ejemplo, como un usuario puede tener muchas barajas, la tabla `Baraja` guard
 | --- | --- | --- |
 | `idUsuario` | PK | Identificador del usuario. |
 | `nombre` |  | Nombre del usuario. |
-| `password` |  | Contraseña del usuario. |
+| `passwordHash` |  | Hash de la contraseña (p. ej., Argon2/bcrypt con sal). Nunca almacenar texto plano. |
 | `rol` |  | Rol del usuario. |
 
 ### Baraja
