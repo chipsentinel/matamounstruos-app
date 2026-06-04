@@ -26,7 +26,7 @@ La primera baraja prevista tendrá un máximo de 12 cartas, tomando como referen
 Ejemplo de primera baraja:
 
 - 1 AUTORIA APROBADA (APTO)
-- 2, 3 y 4 NO (APTO)
+- 2, 3 y 4 NO APTO (NO_APTO)
 - 5, 6, 7, 8, 9 (APTO)
 - 10 ESTUDIANTE EJEMPLAR (APTO)
 - 11 REINA VANESA (PRUEBA OTRA VEZ)
