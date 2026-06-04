@@ -86,6 +86,7 @@ Enlaces a la documentación del proyecto:
   - Backend: [docs/estudio/tarjeta-backend.md](docs/estudio/tarjeta-backend.md)
   - Frontend: [docs/estudio/tarjeta-frontend.md](docs/estudio/tarjeta-frontend.md)
   - Flujo funcional: [docs/estudio/tarjeta-flujo.md](docs/estudio/tarjeta-flujo.md)
+  - Gitflow: [docs/estudio/tarjeta-gitflow.md](docs/estudio/tarjeta-gitflow.md)
 - Documentación de API:
 - Modelo Entidad/Relación:
 - Modelo relacional:

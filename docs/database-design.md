@@ -87,6 +87,7 @@ Atributos:
 - `idTarjeta`
 - `titulo`
 - `contenido`
+- `idBaraja`
 
 Relación:
 
@@ -210,6 +211,7 @@ Estos documentos servirán como guía de análisis y diseño para preparar:
 - Los endpoints de la API REST.
 - Las pantallas y componentes del frontend.
 - El flujo funcional entre cartas, resultados y tarjetas.
+- La metodología de trabajo aplicada durante el desarrollo.
 - El contenido teórico que más adelante podrá cargarse como material real de estudio.
 
 Documentos relacionados:
@@ -218,3 +220,4 @@ Documentos relacionados:
 - `docs/estudio/tarjeta-backend.md`
 - `docs/estudio/tarjeta-frontend.md`
 - `docs/estudio/tarjeta-flujo.md`
+- `docs/estudio/tarjeta-gitflow.md`

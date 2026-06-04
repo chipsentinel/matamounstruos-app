@@ -4,11 +4,57 @@ Este documento describe el flujo funcional de las tarjetas de estudio dentro de 
 
 Las tarjetas sirven como material de apoyo cuando el usuario necesita repasar contenido teórico relacionado con una baraja.
 
+## Indice
+
+- [Objetivo del flujo](#objetivo-del-flujo)
+- [Conceptos principales](#conceptos-principales)
+- [Datos que intervienen](#datos-que-intervienen)
+- [Flujo general](#flujo-general)
+- [Resultados de carta](#resultados-de-carta)
+- [Seleccion de tarjeta](#seleccion-de-tarjeta)
+- [Flujo tecnico basico](#flujo-tecnico-basico)
+- [Estados del flujo](#estados-del-flujo)
+- [Caso sin tarjetas](#caso-sin-tarjetas)
+- [Errores frecuentes](#errores-frecuentes)
+- [Preparacion de contenido](#preparacion-de-contenido)
+- [Material para futuras tarjetas](#material-para-futuras-tarjetas)
+- [Dudas o decisiones pendientes](#dudas-o-decisiones-pendientes)
+- [Navegacion final](#navegacion-final)
+
 ## Objetivo del flujo
 
 El objetivo es conectar las cartas, los resultados y las tarjetas de estudio.
 
 Cuando el usuario obtiene un resultado que indica que debe repasar, la aplicación debe mostrar una tarjeta formativa útil.
+
+## Conceptos principales
+
+| Concepto | Explicacion | Notas |
+| --- | --- | --- |
+| `Carta` | Elemento de una baraja que devuelve un resultado. | Pertenece a una baraja. |
+| `Baraja` | Agrupa cartas y tarjetas de temario. | En la primera versión tendrá como máximo 12 cartas. |
+| `Tarjeta` | Contenido teórico o formativo asociado a una baraja. | Se muestra cuando el usuario necesita repasar. |
+| `tipoResultado` | Campo que indica el resultado de una carta. | Puede ser `APTO`, `NO_APTO` o `PRUEBA_OTRA_VEZ`. |
+
+## Datos que intervienen
+
+Los datos mínimos que intervienen en este flujo son los definidos en el diseño inicial de base de datos.
+
+| Entidad | Campo | Uso en el flujo |
+| --- | --- | --- |
+| `Baraja` | `idBaraja` | Permite localizar las cartas y tarjetas de una misma baraja. |
+| `Baraja` | `nombre` | Sirve para identificar la baraja seleccionada por el usuario. |
+| `Carta` | `idCarta` | Identifica la carta consultada o jugada. |
+| `Carta` | `valor` | Indica la posición o número de la carta dentro de la baraja. |
+| `Carta` | `tipoResultado` | Decide si se muestra mensaje positivo o tarjeta de repaso. |
+| `Tarjeta` | `idTarjeta` | Identifica la tarjeta de estudio que se mostrará. |
+| `Tarjeta` | `titulo` | Se muestra como encabezado del contenido de repaso. |
+| `Tarjeta` | `contenido` | Contiene la explicación teórica que verá el usuario. |
+| `Tarjeta` | `idBaraja` | Relaciona la tarjeta con la baraja seleccionada. |
+
+En esta primera versión, la conexión entre carta y tarjeta se hará a través de la baraja.
+
+Esto significa que una carta no necesita tener todavía una tarjeta concreta asignada. Si la carta requiere repaso, la aplicación buscará contenido dentro de las tarjetas de su misma baraja.
 
 ## Flujo general
 
@@ -61,7 +107,7 @@ La aplicación debe mostrar:
 - Tarjeta de estudio asociada a la baraja.
 - Opción para repetir la carta.
 
-## Selección de tarjeta
+## Seleccion de tarjeta
 
 En la primera versión, la tarjeta se podrá seleccionar a partir de la baraja.
 
@@ -76,7 +122,7 @@ Posibles reglas futuras:
 - Mostrar una tarjeta aleatoria de la baraja.
 - Mostrar una tarjeta según la categoría o dificultad.
 
-## Flujo técnico básico
+## Flujo tecnico basico
 
 1. El frontend solicita una carta o recibe el resultado de una carta.
 2. El backend devuelve el resultado.
@@ -87,6 +133,13 @@ Posibles reglas futuras:
 Endpoint útil:
 
 - `GET /barajas/{idBaraja}/tarjetas`
+
+Datos necesarios para este endpoint:
+
+- `idBaraja`: identifica la baraja seleccionada.
+- `idTarjeta`: identifica cada tarjeta devuelta.
+- `titulo`: permite mostrar un encabezado claro.
+- `contenido`: permite mostrar el material de repaso.
 
 ## Estados del flujo
 
@@ -119,7 +172,16 @@ En ese caso, el usuario podrá:
 - Intentar otra carta.
 - Continuar sin repaso.
 
-## Preparación de contenido
+## Errores frecuentes
+
+| Caso | Problema | Solucion |
+| --- | --- | --- |
+| Carta sin baraja | No se puede saber qué tarjetas mostrar. | Mantener la relación entre `Carta` y `Baraja`. |
+| Baraja sin tarjetas | No hay contenido de repaso disponible. | Mostrar un mensaje claro al usuario. |
+| Resultado no reconocido | La aplicación no sabe qué vista mostrar. | Usar solo `APTO`, `NO_APTO` y `PRUEBA_OTRA_VEZ`. |
+| Tarjeta no encontrada | El backend no devuelve contenido formativo. | Preparar un caso alternativo en frontend. |
+
+## Preparacion de contenido
 
 Este documento también servirá para organizar el contenido educativo antes de llevarlo a la base de datos.
 
@@ -131,3 +193,59 @@ Plantilla de flujo para una tarjeta:
 | Pendiente | `PRUEBA_OTRA_VEZ` | Pendiente | Pendiente |
 
 Esta tabla se podrá completar progresivamente con el material real de la aplicación.
+
+## Material para futuras tarjetas
+
+| Titulo de tarjeta | Idea principal | Contenido clave |
+| --- | --- | --- |
+| Resultado `APTO` | El usuario supera la carta. | Mostrar mensaje positivo, sin tarjeta obligatoria. |
+| Resultado `NO_APTO` | El usuario necesita repasar. | Mostrar tarjeta formativa asociada a la baraja. |
+| Resultado `PRUEBA_OTRA_VEZ` | El usuario debe reforzar el contenido. | Mostrar tarjeta y opción para repetir. |
+| Baraja sin tarjetas | No hay material disponible. | Mostrar mensaje claro y permitir continuar. |
+| Seleccion de tarjeta | Elegir contenido de repaso. | Usar la baraja como criterio inicial. |
+| Datos de tarjeta | La tarjeta contiene el material formativo. | `titulo`, `contenido`, `idBaraja`. |
+| Relación por baraja | La carta y la tarjeta se conectan por la misma baraja. | Usar `idBaraja` como criterio inicial. |
+
+Plantilla para ampliar tarjetas:
+
+```md
+## Titulo
+
+Pendiente.
+
+## Cuando se usa
+
+Pendiente.
+
+## Explicacion
+
+Pendiente.
+
+## Ejemplo
+
+Pendiente.
+
+## Error habitual
+
+Pendiente.
+```
+
+## Dudas o decisiones pendientes
+
+- Pendiente definir si una carta tendrá una tarjeta concreta asociada.
+- Pendiente definir si la tarjeta se elegirá siempre por baraja o con una regla más específica.
+- Pendiente definir el mensaje exacto que verá el usuario en cada resultado.
+
+## Navegacion final
+
+- [Inicio](#tarjetas-de-estudio-flujo-funcional)
+- [Indice](#indice)
+- [Objetivo del flujo](#objetivo-del-flujo)
+- [Conceptos principales](#conceptos-principales)
+- [Datos que intervienen](#datos-que-intervienen)
+- [Flujo general](#flujo-general)
+- [Resultados de carta](#resultados-de-carta)
+- [Seleccion de tarjeta](#seleccion-de-tarjeta)
+- [Caso sin tarjetas](#caso-sin-tarjetas)
+- [Material para futuras tarjetas](#material-para-futuras-tarjetas)
+- [Dudas o decisiones pendientes](#dudas-o-decisiones-pendientes)
