@@ -60,7 +60,7 @@ Funcionalidades principales:
 - Consultar las tarjetas asociadas a una baraja.
 - Limitar cada baraja a un máximo de 12 cartas.
 - Mostrar un mensaje de aprobado cuando el resultado sea `APTO`.
-- Mostrar una tarjeta formativa cuando el resultado sea `NO_APTO` o `PRUEBA OTRA VEZ`.
+- Mostrar una tarjeta formativa cuando el resultado sea `NO_APTO` o `PRUEBA_OTRA_VEZ`.
 - Mantener la relación entre usuarios, barajas, cartas y tarjetas.
 
 ## Tecnologías
