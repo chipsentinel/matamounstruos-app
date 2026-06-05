@@ -1,4 +1,4 @@
-USE usuario;
+USE matamounstruos;
 
 CREATE TABLE usuario (
     idUsuario INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -7,3 +7,10 @@ CREATE TABLE usuario (
     rol BOOLEAN DEFAULT FALSE
 );
 
+CREATE TABLE baraja (
+    idBaraja INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL,
+    descripcion VARCHAR(100) NOT NULL,
+    idUsuario INT UNSIGNED NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
+);
