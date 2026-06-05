@@ -184,7 +184,7 @@ Las tablas se podrán crear siguiendo el modelo relacional con nombres en plural
 - `cartas`
 - `tarjetas`
 
-La primera baraja podrá cargarse como datos iniciales en `seed.sql`, incluyendo sus 12 cartas y las tarjetas formativas relacionadas.
+La primera baraja podrá cargarse como datos iniciales en `seeds.sql`, incluyendo sus 12 cartas y las tarjetas formativas relacionadas.
 
 También servirá para preparar la API REST. Cada tabla podrá tener sus operaciones básicas:
 
