@@ -21,7 +21,7 @@ Cada baraja podrá contener:
 
 Las cartas representarán resultados, mensajes o elementos visuales relacionados con la baraja.
 
-La primera baraja prevista tendrá un máximo de 12 cartas, tomando como referencia una baraja sencilla de 12 posiciones. Esta baraja podrá añadirse más adelante como datos iniciales en `seed.sql`.
+La primera baraja prevista tendrá un máximo de 12 cartas, tomando como referencia una baraja sencilla de 12 posiciones. Esta baraja podrá añadirse como datos iniciales en `seeds.sql`.
 
 Ejemplo de primera baraja:
 
@@ -81,6 +81,7 @@ Tecnologías previstas:
 Enlaces a la documentación del proyecto:
 
 - Diseño de base de datos: [docs/database-design.md](docs/database-design.md)
+- Docker y MariaDB: [docker/README.md](docker/README.md)
 - Tarjetas de estudio:
   - Base de datos: [docs/estudio/tarjeta-db.md](docs/estudio/tarjeta-db.md)
   - Backend: [docs/estudio/tarjeta-backend.md](docs/estudio/tarjeta-backend.md)
