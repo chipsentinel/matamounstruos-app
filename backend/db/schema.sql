@@ -23,3 +23,11 @@ CREATE TABLE cartas (
     idBaraja INT UNSIGNED NOT NULL,
     FOREIGN KEY (idBaraja) REFERENCES barajas(idBaraja)
 );
+
+CREATE TABLE tarjetas (
+    idTarjeta INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(50) NOT NULL,
+    contenido TEXT NOT NULL,
+    idBaraja INT UNSIGNED NOT NULL,
+    FOREIGN KEY (idBaraja) REFERENCES barajas(idBaraja)
+);
