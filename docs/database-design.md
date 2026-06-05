@@ -61,7 +61,6 @@ Atributos:
 
 - `idCarta`
 - `nombre`
-- `descripcion`
 - `valor`
 - `tipoResultado`
 - `idBaraja`
@@ -101,11 +100,11 @@ En el modelo relacional las entidades se convierten en tablas.
 
 Las relaciones 1:N se resuelven añadiendo una clave foránea en la tabla que está en el lado N de la relación.
 
-Por ejemplo, como un usuario puede tener muchas barajas, la tabla `Baraja` guarda el campo `idUsuario`.
+Por ejemplo, como un usuario puede tener muchas barajas, la tabla `barajas` guarda el campo `idUsuario`.
 
 ## Tablas
 
-### Usuario
+### `usuarios`
 
 | Campo | Clave | Descripción |
 | --- | --- | --- |
@@ -114,7 +113,7 @@ Por ejemplo, como un usuario puede tener muchas barajas, la tabla `Baraja` guard
 | `password` |  | Contraseña. |
 | `rol` |  | Rol del usuario. |
 
-### Baraja
+### `barajas`
 
 | Campo | Clave | Descripción |
 | --- | --- | --- |
@@ -123,18 +122,17 @@ Por ejemplo, como un usuario puede tener muchas barajas, la tabla `Baraja` guard
 | `descripcion` |  | Descripción de la baraja. |
 | `idUsuario` | FK | Usuario al que pertenece la baraja. |
 
-### Carta
+### `cartas`
 
 | Campo | Clave | Descripción |
 | --- | --- | --- |
 | `idCarta` | PK | Identificador de la carta. |
 | `nombre` |  | Nombre de la carta. |
-| `descripcion` |  | Descripción de la carta. |
 | `valor` |  | Valor de la carta. |
 | `tipoResultado` |  | Resultado de la carta. |
 | `idBaraja` | FK | Baraja a la que pertenece la carta. |
 
-### Tarjeta
+### `tarjetas`
 
 | Campo | Clave | Descripción |
 | --- | --- | --- |
@@ -169,6 +167,7 @@ Se han tomado decisiones sencillas para que el modelo sea fácil de implementar:
 - Las cartas y las tarjetas de temario dependen de una baraja.
 - Las barajas dependen de un usuario.
 - `tipoResultado` se mantiene como una lista cerrada de valores.
+- Las tablas de la base de datos se nombran en plural para alinearlas con los recursos del backend.
 - Se usa `Tarjeta` como nombre de entidad y `idTarjeta` como identificador.
 - El máximo de 12 cartas por baraja se tratará como una regla de la aplicación.
 - Las cartas con resultado `APTO` mostrarán un mensaje de aprobado.
@@ -178,12 +177,12 @@ Se han tomado decisiones sencillas para que el modelo sea fácil de implementar:
 
 Este diseño servirá como base para crear la base de datos en MariaDB.
 
-Las tablas se podrán crear siguiendo el modelo relacional:
+Las tablas se podrán crear siguiendo el modelo relacional con nombres en plural:
 
-- `Usuario`
-- `Baraja`
-- `Carta`
-- `Tarjeta`
+- `usuarios`
+- `barajas`
+- `cartas`
+- `tarjetas`
 
 La primera baraja podrá cargarse como datos iniciales en `seed.sql`, incluyendo sus 12 cartas y las tarjetas formativas relacionadas.
 
