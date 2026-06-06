@@ -111,7 +111,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | POST | `/barajas` | Crear una baraja. | Configurado |
 | GET | `/barajas/:id` | Consultar una baraja concreta. | Configurado |
 | PUT | `/barajas/:id` | Actualizar nombre y descripcion de una baraja. | Configurado |
-| DELETE | `/barajas/:id` | Eliminar una baraja si no tiene cartas asociadas. | Previsto |
+| DELETE | `/barajas/:id` | Eliminar una baraja por identificador. | Configurado |
 | GET | `/cartas` | Listar cartas. | Previsto |
 | POST | `/cartas` | Crear una carta. | Previsto |
 | GET | `/cartas/:id` | Consultar una carta concreta. | Previsto |
@@ -182,10 +182,20 @@ En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario
 }
 ```
 
+### DELETE /barajas/:id
+
+```json
+{
+  "message": "Baraja eliminada"
+}
+```
+
+Si no existe una baraja con ese identificador, la API devuelve `404` con el mensaje `Baraja no encontrada`.
+
 ## Validaciones
 
 - No permitir cartas duplicadas dentro de una misma baraja.
-- Impedir eliminar una baraja que tenga cartas asociadas.
+- Impedir eliminar una baraja que tenga cartas asociadas. Pendiente de completar cuando se implemente el CRUD de cartas.
 - No permitir que un usuario se cree como admin enviando `rol` en el registro basico.
 - Validar que los datos obligatorios lleguen en las peticiones de creacion y actualizacion.
 - Devolver respuestas de error claras cuando no exista el recurso solicitado.
@@ -195,7 +205,7 @@ En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario
 | Caso | Codigo | Mensaje | Solucion |
 | --- | --- | --- | --- |
 | Carta duplicada en la misma baraja | 409 | La carta ya existe en esta baraja. | Revisar la combinacion de carta y baraja antes de insertar. |
-| Baraja con cartas asociadas | 409 | No se puede eliminar una baraja con cartas asociadas. | Borrar o reasignar cartas antes de eliminar la baraja. |
+| Baraja con cartas asociadas | 409 | No se puede eliminar una baraja con cartas asociadas. | Pendiente de implementar junto al CRUD de cartas. |
 | Recurso no encontrado | 404 | Recurso no encontrado. | Comprobar el identificador usado en la ruta. |
 | Datos incompletos | 400 | Faltan datos obligatorios. | Validar el cuerpo de la peticion antes de enviarla. |
 
