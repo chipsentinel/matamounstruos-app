@@ -83,9 +83,35 @@ const updateBaraja = async (req, res) => {
     }
 };
 
+const deleteBaraja = async (req, res) => {
+    try {
+        const {id} = req.params;
+
+        const result = await pool.query(
+            'DELETE FROM barajas WHERE idBaraja = ?',
+            [id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: 'Baraja no encontrada'
+            });
+        }
+
+        res.json({
+            message: 'Baraja eliminada'
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     getBarajas,
     getIdBaraja,
     createBaraja,
-    updateBaraja
+    updateBaraja,
+    deleteBaraja
 };
