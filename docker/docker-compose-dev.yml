@@ -9,14 +9,14 @@ services:
 
     # Configuracion inicial de la base de datos
     environment:
-      MARIADB_ROOT_PASSWORD: matamounstruos_root_dev
-      MARIADB_DATABASE: matamounstruos
-      MARIADB_USER: matamounstruos_dev
-      MARIADB_PASSWORD: matamounstruos_dev_pass
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
 
     # Expone MariaDB en localhost:3306
     ports:
-      - "3306:3306"
+      - "${DB_PORT}:3306"
 
     # Guarda datos y carga scripts iniciales
     volumes:
