@@ -1,4 +1,4 @@
-USE matamounstruos;
+USE matamounstruosdb;
 
 CREATE TABLE usuarios (
     idUsuario INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
