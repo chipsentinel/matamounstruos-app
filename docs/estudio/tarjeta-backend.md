@@ -10,6 +10,7 @@ La intención es preparar los endpoints, validaciones y respuestas que más adel
 - [Conceptos principales](#conceptos-principales)
 - [Dependencias iniciales](#dependencias-iniciales)
 - [Configuracion inicial](#configuracion-inicial)
+- [Servidor Express](#servidor-express)
 - [Recurso principal](#recurso-principal)
 - [Endpoints](#endpoints)
 - [Datos de entrada](#datos-de-entrada)
@@ -63,6 +64,17 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | `DB_NAME` | Nombre de la base de datos. |
 | `PORT` | Puerto del servidor Express. |
 
+## Servidor Express
+
+| Elemento | Estado | Explicacion |
+| --- | --- | --- |
+| `backend/src/app.js` | Creado | Archivo principal donde se configura y arranca Express. |
+| `dotenv` | Configurado | Carga variables de entorno desde `.env`. |
+| `cors` | Configurado | Permite peticiones desde el frontend. |
+| `express.json()` | Configurado | Permite recibir cuerpos de peticion en formato JSON. |
+| `PORT` | Configurado | Usa el puerto definido en `.env` o `3000` por defecto. |
+| Ruta `/` | Configurada | Ruta inicial para comprobar que la API responde. |
+
 ## Recurso principal
 
 | Recurso | Ruta base | Descripcion |
@@ -76,6 +88,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 
 | Metodo | Ruta | Uso | Estado |
 | --- | --- | --- | --- |
+| GET | `/` | Comprobar que la API esta operativa. | Configurado |
 | GET | `/barajas` | Listar barajas. | Previsto |
 | POST | `/barajas` | Crear una baraja. | Previsto |
 | GET | `/barajas/:id` | Consultar una baraja concreta. | Previsto |
@@ -165,6 +178,7 @@ Pendiente.
 - [Objetivo](#objetivo)
 - [Dependencias iniciales](#dependencias-iniciales)
 - [Configuracion inicial](#configuracion-inicial)
+- [Servidor Express](#servidor-express)
 - [Recurso principal](#recurso-principal)
 - [Endpoints](#endpoints)
 - [Validaciones](#validaciones)
