@@ -2,37 +2,53 @@
 
 Comandos para levantar MariaDB en desarrollo.
 
-## Levantar la base de datos
+## Decision de configuracion
+
+Docker Compose usa el archivo `.env` de la raiz del proyecto para leer los datos de MariaDB.
+
+Se tomo esta decision para evitar duplicar valores en varios sitios. Asi, el backend y Docker usan las mismas variables:
+
+- `DB_NAME`
+- `DB_USER`
+- `DB_PASSWORD`
+- `DB_ROOT_PASSWORD`
+- `DB_PORT`
+
+De esta forma, si cambia el nombre de la base de datos, el usuario o el puerto, solo hay que actualizar `.env` y mantener `.env.example` como plantilla documentada.
+
+Como el archivo `docker-compose-dev.yml` esta dentro de la carpeta `docker/`, los comandos usan `--env-file .env` para indicar de forma explicita que las variables se leen desde el `.env` de la raiz.
+
+## Comandos habituales
+
+Levantar MariaDB:
 
 ```bash
-docker compose -f docker/docker-compose-dev.yml up -d
+docker compose --env-file .env -f docker/docker-compose-dev.yml up -d
 ```
 
-## Ver contenedores
+Parar MariaDB:
 
 ```bash
-docker compose -f docker/docker-compose-dev.yml ps
+docker compose --env-file .env -f docker/docker-compose-dev.yml down
 ```
 
-## Ver logs
+Ver contenedores:
 
 ```bash
-docker compose -f docker/docker-compose-dev.yml logs -f mariadb
+docker compose --env-file .env -f docker/docker-compose-dev.yml ps
 ```
 
-## Parar la base de datos
+Ver logs:
 
 ```bash
-docker compose -f docker/docker-compose-dev.yml down
+docker compose --env-file .env -f docker/docker-compose-dev.yml logs -f mariadb
 ```
 
-## Reiniciar desde cero
-
-Este comando borra el volumen de datos y vuelve a cargar `schema.sql` y `seeds.sql`.
+Recrear la base desde cero:
 
 ```bash
-docker compose -f docker/docker-compose-dev.yml down -v
-docker compose -f docker/docker-compose-dev.yml up -d
+docker compose --env-file .env -f docker/docker-compose-dev.yml down -v
+docker compose --env-file .env -f docker/docker-compose-dev.yml up -d
 ```
 
 ## Datos de conexion
@@ -40,9 +56,9 @@ docker compose -f docker/docker-compose-dev.yml up -d
 ```text
 Host: localhost
 Puerto: 3306
-Base de datos: matamounstruos
-Usuario: matamounstruos_dev
-Password: matamounstruos_dev_pass
+Base de datos: matamounstruosdb
+Usuario: usuario configurado en `DB_USER`
+Password: password configurado en `DB_PASSWORD`
 ```
 
 ## Conectar con DBeaver en macOS
@@ -50,7 +66,7 @@ Password: matamounstruos_dev_pass
 1. Levanta MariaDB:
 
 ```bash
-docker compose -f docker/docker-compose-dev.yml up -d
+docker compose --env-file .env -f docker/docker-compose-dev.yml up -d
 ```
 
 2. Abre DBeaver.
@@ -62,9 +78,9 @@ docker compose -f docker/docker-compose-dev.yml up -d
 ```text
 Server Host: localhost
 Port: 3306
-Database: matamounstruos
-Username: matamounstruos_dev
-Password: matamounstruos_dev_pass
+Database: matamounstruosdb
+Username: valor de `DB_USER`
+Password: valor de `DB_PASSWORD`
 ```
 
 7. Pulsa `Test Connection`.

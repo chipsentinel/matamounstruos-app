@@ -647,6 +647,17 @@ Ejemplos de archivos que normalmente no se suben:
 - Credenciales.
 - Archivos generados automáticamente.
 
+En proyectos Node.js conviene crear o revisar `.gitignore` antes de instalar dependencias con `npm install`.
+
+Ejemplo mínimo:
+
+```gitignore
+node_modules/
+.env
+```
+
+`node_modules/` debe existir solo en local. Las dependencias se reconstruyen a partir de `package.json` y `package-lock.json`.
+
 Comprobar si un archivo está ignorado:
 
 ```bash
@@ -758,6 +769,48 @@ Solución habitual:
 ```bash
 git pull --rebase origin nombre-rama
 git push origin nombre-rama
+```
+
+### El push falla porque se subio node_modules
+
+Este error puede aparecer si se instala Node antes de tener `.gitignore` preparado y `node_modules/` entra en commits locales.
+
+Sintomas:
+
+- El push falla con errores de red, RPC o desconexion inesperada.
+- La pull request no muestra todos los commits esperados.
+- `git diff --stat` muestra muchos archivos dentro de `node_modules/`.
+
+Comprobar si Git esta siguiendo `node_modules/`:
+
+```bash
+git ls-files backend/node_modules
+```
+
+Si aparecen muchos archivos, `node_modules/` entro en Git.
+
+Solucion aplicada en este proyecto:
+
+1. Crear una rama de copia de seguridad.
+2. Reescribir los commits locales no subidos para eliminar `backend/node_modules` de la historia.
+3. Comprobar que ya no queda trackeado.
+4. Volver a hacer push.
+
+Comprobacion final:
+
+```bash
+git ls-files backend/node_modules
+```
+
+El resultado esperado es que no devuelva archivos.
+
+Aprendizaje:
+
+Antes de ejecutar `npm install`, revisar que `.gitignore` contiene:
+
+```gitignore
+node_modules/
+.env
 ```
 
 ### Hay conflictos despues de un rebase

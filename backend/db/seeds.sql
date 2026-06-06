@@ -27,8 +27,8 @@ INSERT INTO cartas (nombre, valor, tipoResultado, idBaraja) VALUES
     ('APTO', 8, 'APTO', 1),
     ('APTO', 9, 'APTO', 1),
     ('ESTUDIANTE EJEMPLAR', 10, 'APTO', 1),
-    ('REINA VANESA', 11, 'PRUEBA_OTRA_VEZ', 1),
-    ('REY SANTI', 12, 'PRUEBA_OTRA_VEZ', 1);
+    ('REINA', 11, 'PRUEBA_OTRA_VEZ', 1),
+    ('REY', 12, 'PRUEBA_OTRA_VEZ', 1);
 
 INSERT INTO tarjetas (titulo, contenido, idBaraja) VALUES
     ('Crear una rama', 

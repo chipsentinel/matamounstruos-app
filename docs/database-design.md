@@ -186,6 +186,8 @@ Las tablas se podrán crear siguiendo el modelo relacional con nombres en plural
 
 La primera baraja podrá cargarse como datos iniciales en `seeds.sql`, incluyendo sus 12 cartas y las tarjetas formativas relacionadas.
 
+En desarrollo, MariaDB se levanta con Docker Compose y toma la configuracion desde variables de entorno. El backend usa esas mismas variables para conectarse a la base de datos mediante un pool de conexiones.
+
 También servirá para preparar la API REST. Cada tabla podrá tener sus operaciones básicas:
 
 - Crear registros.

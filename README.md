@@ -25,12 +25,12 @@ La primera baraja prevista tendrá un máximo de 12 cartas, tomando como referen
 
 Ejemplo de primera baraja:
 
-- 1 AUTORIA APROBADA        (APTO)
-- 2, 3 y 4 NO APTO          (NO_APTO)
-- 5, 6, 7, 8, 9 APTO        (APTO)
-- 10 ESTUDIANTE EJEMPLAR    (APTO)
-- 11 REINA VANESA           (PRUEBA_OTRA_VEZ)
-- 12 REY SANTI              (PRUEBA_OTRA_VEZ)
+- 1 AUTORIA APROBADA      (APTO)
+- 2, 3 y 4 NO APTO        (NO_APTO)
+- 5, 6, 7, 8, 9 APTO      (APTO)
+- 10 ESTUDIANTE EJEMPLAR  (APTO)
+- 11 REINA                (PRUEBA_OTRA_VEZ)
+- 12 REY                  (PRUEBA_OTRA_VEZ)
 
 Cuando salga una carta con resultado `APTO`, la aplicación mostrará un mensaje de aprobado y podrá preguntar si se quiere probar otra vez.
 
@@ -63,18 +63,29 @@ Funcionalidades principales:
 - Mostrar una tarjeta formativa cuando el resultado sea `NO_APTO` o `PRUEBA_OTRA_VEZ`.
 - Mantener la relación entre usuarios, barajas, cartas y tarjetas.
 
-## Tecnologías
+## Tecnologias
 
-Este apartado se completará cuando se cierre la elección definitiva de tecnologías.
+Este apartado recoge las tecnologias iniciales elegidas para el desarrollo.
 
-Tecnologías previstas:
+Tecnologias previstas:
 
-- Backend:
-- Frontend:
-- Base de datos:
-- Control de versiones:
-- Contenedores:
-- Testing:
+- Backend: Node.js, Express, CORS, dotenv y driver `mariadb`.
+- Frontend: Pendiente.
+- Base de datos: MariaDB.
+- Control de versiones: Git y GitHub.
+- Contenedores: Docker Compose para el entorno de desarrollo de MariaDB.
+- Testing: Pendiente.
+
+## Configuracion local
+
+El backend usa variables de entorno para arrancar Express y conectar con MariaDB. El archivo `.env` queda fuera del repositorio y `.env.example` sirve como plantilla.
+
+Docker Compose tambien usa las variables `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_ROOT_PASSWORD` y `DB_PORT` para crear el contenedor local de MariaDB.
+
+Endpoints iniciales de comprobacion:
+
+- `GET /`: comprueba que la API Express responde.
+- `GET /health/db`: comprueba que el backend conecta con MariaDB.
 
 ## Documentación
 
