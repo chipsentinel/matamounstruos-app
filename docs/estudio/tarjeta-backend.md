@@ -93,6 +93,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 
 | Recurso | Ruta base | Descripcion |
 | --- | --- | --- |
+| Usuario | `/usuarios` | Persona que usa la aplicacion. |
 | Baraja | `/barajas` | Agrupa cartas de una tematica o nivel. |
 | Carta | `/cartas` | Pregunta o reto asociado a una baraja. |
 | Juego | `/juego` | Flujo para obtener carta aleatoria y resolver el resultado. |
@@ -104,6 +105,8 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | --- | --- | --- | --- |
 | GET | `/` | Comprobar que la API esta operativa. | Configurado |
 | GET | `/health/db` | Comprobar conexion backend-MariaDB. | Configurado y probado |
+| GET | `/usuarios` | Listar usuarios con `idUsuario`, `nombre` y `rol`. | Configurado y probado |
+| POST | `/usuarios` | Crear un usuario normal con `nombre` y `password`. | Configurado y probado |
 | GET | `/barajas` | Listar barajas. | Previsto |
 | POST | `/barajas` | Crear una baraja. | Previsto |
 | GET | `/barajas/:id` | Consultar una baraja concreta. | Previsto |
@@ -121,15 +124,19 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 
 ```json
 {
-  "pendiente": "pendiente"
+  "nombre": "manolo",
+  "password": "1234"
 }
 ```
+
+En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica `rol DEFAULT FALSE` para que los usuarios creados por esta ruta sean usuarios normales.
 
 ## Datos de salida
 
 ```json
 {
-  "pendiente": "pendiente"
+  "message": "Usuario creado",
+  "idUsuario": 4
 }
 ```
 
@@ -137,6 +144,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 
 - No permitir cartas duplicadas dentro de una misma baraja.
 - Impedir eliminar una baraja que tenga cartas asociadas.
+- No permitir que un usuario se cree como admin enviando `rol` en el registro basico.
 - Validar que los datos obligatorios lleguen en las peticiones de creacion y actualizacion.
 - Devolver respuestas de error claras cuando no exista el recurso solicitado.
 
