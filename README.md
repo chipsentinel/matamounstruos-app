@@ -63,18 +63,24 @@ Funcionalidades principales:
 - Mostrar una tarjeta formativa cuando el resultado sea `NO_APTO` o `PRUEBA_OTRA_VEZ`.
 - Mantener la relación entre usuarios, barajas, cartas y tarjetas.
 
-## Tecnologías
+## Tecnologias
 
-Este apartado se completará cuando se cierre la elección definitiva de tecnologías.
+Este apartado recoge las tecnologias iniciales elegidas para el desarrollo.
 
-Tecnologías previstas:
+Tecnologias previstas:
 
-- Backend:
-- Frontend:
-- Base de datos:
-- Control de versiones:
-- Contenedores:
-- Testing:
+- Backend: Node.js, Express, CORS, dotenv y driver `mariadb`.
+- Frontend: Pendiente.
+- Base de datos: MariaDB.
+- Control de versiones: Git y GitHub.
+- Contenedores: Docker Compose para el entorno de desarrollo de MariaDB.
+- Testing: Pendiente.
+
+## Configuracion local
+
+El backend usa variables de entorno para arrancar Express y conectar con MariaDB. El archivo `.env` queda fuera del repositorio y `.env.example` sirve como plantilla.
+
+Docker Compose tambien usa las variables `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_ROOT_PASSWORD` y `DB_PORT` para crear el contenedor local de MariaDB.
 
 ## Documentación
 

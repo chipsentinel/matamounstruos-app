@@ -11,6 +11,7 @@ La intención es preparar los endpoints, validaciones y respuestas que más adel
 - [Dependencias iniciales](#dependencias-iniciales)
 - [Configuracion inicial](#configuracion-inicial)
 - [Servidor Express](#servidor-express)
+- [Conexion MariaDB](#conexion-mariadb)
 - [Recurso principal](#recurso-principal)
 - [Endpoints](#endpoints)
 - [Datos de entrada](#datos-de-entrada)
@@ -62,6 +63,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | `DB_USER` | Usuario de base de datos. |
 | `DB_PASSWORD` | Password de base de datos. |
 | `DB_NAME` | Nombre de la base de datos. |
+| `DB_ROOT_PASSWORD` | Password root de MariaDB usada por Docker. |
 | `PORT` | Puerto del servidor Express. |
 
 ## Servidor Express
@@ -74,6 +76,15 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | `express.json()` | Configurado | Permite recibir cuerpos de peticion en formato JSON. |
 | `PORT` | Configurado | Usa el puerto definido en `.env` o `3000` por defecto. |
 | Ruta `/` | Configurada | Ruta inicial para comprobar que la API responde. |
+
+## Conexion MariaDB
+
+| Elemento | Estado | Explicacion |
+| --- | --- | --- |
+| `backend/src/config/db.js` | Preparado | Crea un pool de conexiones reutilizables a MariaDB. |
+| `mariadb.createPool()` | Preparado | Usa las variables `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` y `DB_NAME`. |
+| `docker-compose-dev.yml` | Configurado | Usa variables del `.env` para crear la base, usuario y password. |
+| `DB_ROOT_PASSWORD` | Configurado | Password del usuario root de MariaDB usado por Docker. |
 
 ## Recurso principal
 
@@ -179,6 +190,7 @@ Pendiente.
 - [Dependencias iniciales](#dependencias-iniciales)
 - [Configuracion inicial](#configuracion-inicial)
 - [Servidor Express](#servidor-express)
+- [Conexion MariaDB](#conexion-mariadb)
 - [Recurso principal](#recurso-principal)
 - [Endpoints](#endpoints)
 - [Validaciones](#validaciones)
