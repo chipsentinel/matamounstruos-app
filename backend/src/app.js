@@ -7,7 +7,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') }); // ca
 // importar rutas de comprobacion
 const healthRoutes = require('./routes/healthRoutes'); 
 const usuarioRoutes = require('./routes/usuarioRoutes');
-
+const barajaRoutes = require('./routes/barajaRoutes');
 
 // crear la aplicacion de express
 const app = express();
@@ -22,6 +22,7 @@ app.use(express.json()); // permitir que express lea datos en formato JSON
 // usar rutas de comprobacion del sistema
 app.use('/health', healthRoutes);
 app.use('/usuarios', usuarioRoutes);
+app.use('/barajas', barajaRoutes);
 
 // ruta de prueba para comprobar que la API funciona
 app.get('/', (req, res) => {
