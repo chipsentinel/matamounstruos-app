@@ -9,6 +9,7 @@ La intención es preparar los endpoints, validaciones y respuestas que más adel
 - [Objetivo](#objetivo)
 - [Conceptos principales](#conceptos-principales)
 - [Dependencias iniciales](#dependencias-iniciales)
+- [Configuracion inicial](#configuracion-inicial)
 - [Recurso principal](#recurso-principal)
 - [Endpoints](#endpoints)
 - [Datos de entrada](#datos-de-entrada)
@@ -44,6 +45,23 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | `dotenv` | Produccion | Cargar configuracion desde variables de entorno. |
 | `cors` | Produccion | Permitir peticiones desde el frontend durante el desarrollo. |
 | `nodemon` | Desarrollo | Reiniciar el servidor automaticamente al cambiar archivos. |
+
+## Configuracion inicial
+
+| Archivo | Se comitea | Uso |
+| --- | --- | --- |
+| `.env` | No | Guarda variables reales del entorno local. |
+| `.env.example` | Si | Sirve como plantilla para saber que variables necesita el backend. |
+| `.gitignore` | Si | Evita subir `node_modules/` y `.env`. |
+
+| Variable | Uso |
+| --- | --- |
+| `DB_HOST` | Host de MariaDB. |
+| `DB_PORT` | Puerto de MariaDB. |
+| `DB_USER` | Usuario de base de datos. |
+| `DB_PASSWORD` | Password de base de datos. |
+| `DB_NAME` | Nombre de la base de datos. |
+| `PORT` | Puerto del servidor Express. |
 
 ## Recurso principal
 
@@ -146,6 +164,7 @@ Pendiente.
 - [Indice](#indice)
 - [Objetivo](#objetivo)
 - [Dependencias iniciales](#dependencias-iniciales)
+- [Configuracion inicial](#configuracion-inicial)
 - [Recurso principal](#recurso-principal)
 - [Endpoints](#endpoints)
 - [Validaciones](#validaciones)
