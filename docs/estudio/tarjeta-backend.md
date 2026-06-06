@@ -107,10 +107,10 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | GET | `/health/db` | Comprobar conexion backend-MariaDB. | Configurado y probado |
 | GET | `/usuarios` | Listar usuarios con `idUsuario`, `nombre` y `rol`. | Configurado y probado |
 | POST | `/usuarios` | Crear un usuario normal con `nombre` y `password`. | Configurado y probado |
-| GET | `/barajas` | Listar barajas. | Previsto |
-| POST | `/barajas` | Crear una baraja. | Previsto |
-| GET | `/barajas/:id` | Consultar una baraja concreta. | Previsto |
-| PUT | `/barajas/:id` | Actualizar una baraja. | Previsto |
+| GET | `/barajas` | Listar barajas. | Configurado |
+| POST | `/barajas` | Crear una baraja. | Configurado |
+| GET | `/barajas/:id` | Consultar una baraja concreta. | Configurado |
+| PUT | `/barajas/:id` | Actualizar nombre y descripcion de una baraja. | Configurado |
 | DELETE | `/barajas/:id` | Eliminar una baraja si no tiene cartas asociadas. | Previsto |
 | GET | `/cartas` | Listar cartas. | Previsto |
 | POST | `/cartas` | Crear una carta. | Previsto |
@@ -122,6 +122,8 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 
 ## Datos de entrada
 
+### POST /usuarios
+
 ```json
 {
   "nombre": "manolo",
@@ -131,12 +133,52 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 
 En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica `rol DEFAULT FALSE` para que los usuarios creados por esta ruta sean usuarios normales.
 
+### POST /barajas
+
+```json
+{
+  "nombre": "baraja-test",
+  "descripcion": "Baraja de prueba",
+  "idUsuario": 1
+}
+```
+
+### PUT /barajas/:id
+
+```json
+{
+  "nombre": "baraja-editada",
+  "descripcion": "Descripcion actualizada"
+}
+```
+
+En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario de la baraja durante una edicion normal.
+
 ## Datos de salida
+
+### POST /usuarios
 
 ```json
 {
   "message": "Usuario creado",
   "idUsuario": 4
+}
+```
+
+### POST /barajas
+
+```json
+{
+  "message": "Baraja creada",
+  "idBaraja": 4
+}
+```
+
+### PUT /barajas/:id
+
+```json
+{
+  "message": "Baraja actualizada"
 }
 ```
 

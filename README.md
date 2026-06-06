@@ -87,6 +87,7 @@ Endpoints iniciales de comprobacion:
 - `GET /`: comprueba que la API Express responde.
 - `GET /health/db`: comprueba que el backend conecta con MariaDB.
 - `GET /usuarios` y `POST /usuarios`: endpoints basicos iniciales para listar y crear usuarios normales.
+- `GET /barajas`, `GET /barajas/:id`, `POST /barajas` y `PUT /barajas/:id`: endpoints iniciales para consultar, crear y actualizar barajas.
 
 ## Documentación
 
