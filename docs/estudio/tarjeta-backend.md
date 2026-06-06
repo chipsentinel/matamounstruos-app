@@ -76,15 +76,18 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | `express.json()` | Configurado | Permite recibir cuerpos de peticion en formato JSON. |
 | `PORT` | Configurado | Usa el puerto definido en `.env` o `3000` por defecto. |
 | Ruta `/` | Configurada | Ruta inicial para comprobar que la API responde. |
+| `backend/src/routes/healthRoutes.js` | Configurado | Define rutas tecnicas de comprobacion. |
+| `backend/src/controllers/healthController.js` | Configurado | Contiene la logica para comprobar la conexion con MariaDB. |
 
 ## Conexion MariaDB
 
 | Elemento | Estado | Explicacion |
 | --- | --- | --- |
-| `backend/src/config/db.js` | Preparado | Crea un pool de conexiones reutilizables a MariaDB. |
-| `mariadb.createPool()` | Preparado | Usa las variables `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` y `DB_NAME`. |
+| `backend/src/config/db.js` | Configurado | Crea un pool de conexiones reutilizables a MariaDB. |
+| `mariadb.createPool()` | Configurado | Usa las variables `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` y `DB_NAME`. |
 | `docker-compose-dev.yml` | Configurado | Usa variables del `.env` para crear la base, usuario y password. |
 | `DB_ROOT_PASSWORD` | Configurado | Password del usuario root de MariaDB usado por Docker. |
+| `GET /health/db` | Comprobado | Valida desde Express que el backend puede consultar MariaDB. |
 
 ## Recurso principal
 
@@ -100,6 +103,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | Metodo | Ruta | Uso | Estado |
 | --- | --- | --- | --- |
 | GET | `/` | Comprobar que la API esta operativa. | Configurado |
+| GET | `/health/db` | Comprobar conexion backend-MariaDB. | Configurado y probado |
 | GET | `/barajas` | Listar barajas. | Previsto |
 | POST | `/barajas` | Crear una baraja. | Previsto |
 | GET | `/barajas/:id` | Consultar una baraja concreta. | Previsto |

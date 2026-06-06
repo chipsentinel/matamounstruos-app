@@ -63,10 +63,18 @@ La base de datos se levanta con MariaDB en Docker.
 Comando principal:
 
 ```bash
-docker compose -f docker/docker-compose-dev.yml up -d
+docker compose --env-file .env -f docker/docker-compose-dev.yml up -d
 ```
 
 La guía de Docker y DBeaver está en `docker/README.md`.
+
+La base de datos usada en desarrollo se llama `matamounstruosdb`.
+
+La conexion desde el backend se comprueba con:
+
+```text
+GET /health/db
+```
 
 ## Reglas
 

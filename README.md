@@ -82,6 +82,11 @@ El backend usa variables de entorno para arrancar Express y conectar con MariaDB
 
 Docker Compose tambien usa las variables `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_ROOT_PASSWORD` y `DB_PORT` para crear el contenedor local de MariaDB.
 
+Endpoints iniciales de comprobacion:
+
+- `GET /`: comprueba que la API Express responde.
+- `GET /health/db`: comprueba que el backend conecta con MariaDB.
+
 ## Documentación
 
 Enlaces a la documentación del proyecto:
