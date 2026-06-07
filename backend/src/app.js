@@ -8,6 +8,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') }); // ca
 const healthRoutes = require('./routes/healthRoutes'); 
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const barajaRoutes = require('./routes/barajaRoutes');
+const cartaRoutes = require('./routes/cartaRoutes');
 
 // crear la aplicacion de express
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.json()); // permitir que express lea datos en formato JSON
 app.use('/health', healthRoutes);
 app.use('/usuarios', usuarioRoutes);
 app.use('/barajas', barajaRoutes);
+app.use('/cartas', cartaRoutes);
 
 // ruta de prueba para comprobar que la API funciona
 app.get('/', (req, res) => {
