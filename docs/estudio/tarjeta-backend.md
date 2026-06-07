@@ -112,11 +112,11 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | GET | `/barajas/:id` | Consultar una baraja concreta. | Configurado |
 | PUT | `/barajas/:id` | Actualizar nombre y descripcion de una baraja. | Configurado |
 | DELETE | `/barajas/:id` | Eliminar una baraja por identificador. | Configurado |
-| GET | `/cartas` | Listar cartas. | Previsto |
-| POST | `/cartas` | Crear una carta. | Previsto |
-| GET | `/cartas/:id` | Consultar una carta concreta. | Previsto |
-| PUT | `/cartas/:id` | Actualizar una carta. | Previsto |
-| DELETE | `/cartas/:id` | Eliminar una carta. | Previsto |
+| GET | `/cartas` | Listar cartas. | Configurado y probado |
+| POST | `/cartas` | Crear una carta. | Configurado y probado |
+| GET | `/cartas/:id` | Consultar una carta concreta. | Configurado y probado |
+| PUT | `/cartas/:id` | Actualizar una carta. | Configurado y probado |
+| DELETE | `/cartas/:id` | Eliminar una carta. | Configurado y probado |
 | GET | `/juego/cartas/aleatoria` | Obtener una carta aleatoria. | Previsto |
 | GET | `/juego/tarjeta-teoria` | Obtener una TarjetaTeoria asociada al resultado. | Previsto |
 
@@ -153,6 +153,29 @@ En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica
 ```
 
 En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario de la baraja durante una edicion normal.
+
+### POST /cartas
+
+```json
+{
+  "nombre": "AUTORIA APROBADA",
+  "valor": 1,
+  "tipoResultado": "APTO",
+  "idBaraja": 1
+}
+```
+
+### PUT /cartas/:id
+
+```json
+{
+  "nombre": "AUTORIA APROBADA",
+  "valor": 1,
+  "tipoResultado": "APTO"
+}
+```
+
+En `PUT /cartas/:id` no se modifica `idBaraja`, para no mover la carta de una baraja a otra durante una edicion normal.
 
 ## Datos de salida
 
@@ -191,6 +214,32 @@ En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario
 ```
 
 Si no existe una baraja con ese identificador, la API devuelve `404` con el mensaje `Baraja no encontrada`.
+
+### POST /cartas
+
+```json
+{
+  "message": "Carta creada"
+}
+```
+
+### PUT /cartas/:id
+
+```json
+{
+  "message": "Carta actualizada"
+}
+```
+
+### DELETE /cartas/:id
+
+```json
+{
+  "message": "Carta eliminada"
+}
+```
+
+Si no existe una carta con ese identificador, la API devuelve `404` con el mensaje `Carta no encontrada`.
 
 ## Validaciones
 
