@@ -29,7 +29,7 @@ app.use('/usuarios', usuarioRoutes);
 app.use('/barajas', barajaRoutes);
 app.use('/cartas', cartaRoutes);
 app.use('/tarjetas', tarjetaRoutes);
-// logica del negocio
+// logica del negocio (endpoint juego)
 app.use('/juego', juegoRoutes);
 
 
