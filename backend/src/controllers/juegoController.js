@@ -1,5 +1,6 @@
 const pool = require('../config/db'); // importar el pool de conexiones a mariadb
 
+
 const getCartaAleatoria = async (req, res) => {
     try {
         const {idBaraja}= req.params;
@@ -23,8 +24,53 @@ const getCartaAleatoria = async (req, res) => {
     }
 };
 
+const getTarjetaPorCarta = async (req, res) => {
+    try {
+        const {idCarta}= req.params;
+
+        const cartas = await pool.query(
+            'SELECT idCarta, tipoResultado, idBaraja FROM cartas WHERE idCarta = ?',
+            [idCarta]
+        );
+        
+        if (cartas.length === 0){
+            return res.status(404).json({
+                message: 'Carta no encontrada'
+            });
+        }
+
+        const carta = cartas[0];
+
+        // Si eres APTO no veras tarjeta de estudio
+        if (carta.tipoResultado === 'APTO') {
+            return res.json({
+                message: 'Eres APTO, has terminado'
+            });
+        }
+        
+        // Tarjeta aletoria para estudiar despues de haber resultado todo menos APTO
+        const tarjetas = await pool.query(
+            'SELECT idTarjeta, titulo, contenido, idBaraja FROM tarjetas WHERE idBaraja = ? ORDER BY RAND() LIMIT 1',
+            [carta.idBaraja]
+        );
+        
+        if (tarjetas.length === 0) {
+            return res.status(404).json({
+                message: 'Esta baraja no tiene Tarjetas'
+            })
+        }
+
+        res.json(tarjetas[0]);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
-    getCartaAleatoria
+    getCartaAleatoria,
+    getTarjetaPorCarta
 };
 
 /*
@@ -85,4 +131,81 @@ Su objetivo es obtener una carta aleatoria de una baraja concreta.
 
 9. module.exports
     Exporta getCartaAleatoria para poder usarla en juegoRoutes.js.
+
+
+Repaso de getTarjetaPorCarta:
+
+Esta funcion tambien pertenece a la logica de juego.
+Su objetivo es decidir si una carta necesita una tarjeta de estudio.
+
+La ruta prevista es:
+    /juego/tarjeta/aleatoria/:idCarta
+
+Si en Postman llamamos a:
+    /juego/tarjeta/aleatoria/3
+
+Entonces idCarta vale 3.
+
+1. const {idCarta}= req.params;
+    req.params recoge el idCarta que llega por la URL.
+    Ese id sirve para saber que carta se esta jugando o revisando.
+
+2. const cartas = await pool.query(...)
+    Consulta la tabla cartas para buscar la carta concreta.
+
+    Consulta SQL usada:
+        SELECT idCarta, tipoResultado, idBaraja
+        FROM cartas
+        WHERE idCarta = ?
+
+    SELECT: pide solo los campos necesarios para decidir el flujo.
+    FROM cartas: busca la informacion en la tabla cartas.
+    WHERE idCarta = ?: filtra por la carta recibida en la URL.
+
+3. if (cartas.length === 0)
+    Comprueba si no existe ninguna carta con ese id.
+    Si no existe, devuelve 404 con el mensaje Carta no encontrada.
+
+4. const carta = cartas[0];
+    Guarda la carta encontrada en una variable mas comoda.
+    Como se busca por idCarta, solo deberia haber una carta.
+
+5. if (carta.tipoResultado === 'APTO')
+    Si la carta es APTO, no hace falta mostrar tarjeta de estudio.
+    Por eso se devuelve un mensaje y se corta la funcion con return.
+
+6. const tarjetas = await pool.query(...)
+    Si la carta no es APTO, se busca una tarjeta de estudio.
+    La tarjeta se busca en la misma baraja que la carta.
+
+    Consulta SQL usada:
+        SELECT idTarjeta, titulo, contenido, idBaraja
+        FROM tarjetas
+        WHERE idBaraja = ?
+        ORDER BY RAND()
+        LIMIT 1
+
+    WHERE idBaraja = ?: filtra tarjetas de la misma baraja que la carta.
+    ORDER BY RAND(): mezcla las tarjetas al azar.
+    LIMIT 1: devuelve solo una tarjeta.
+
+7. [carta.idBaraja]
+    Sustituye el ? de la consulta SQL.
+    Usa la baraja de la carta para buscar una tarjeta relacionada.
+
+8. if (tarjetas.length === 0)
+    Comprueba si no hay tarjetas para esa baraja.
+    Si no hay tarjetas, devuelve 404.
+
+9. res.json(tarjetas[0])
+    Devuelve la primera tarjeta encontrada.
+    Como la consulta tiene LIMIT 1, solo necesitamos la posicion 0.
+
+10. catch (error)
+    Si falla la consulta o ocurre un error inesperado,
+    se responde con status 500 y el mensaje del error.
+
+11. module.exports
+    Exporta getTarjetaPorCarta junto a getCartaAleatoria
+    para poder usar ambas funciones en juegoRoutes.js.
 */
