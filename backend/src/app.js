@@ -10,6 +10,8 @@ const usuarioRoutes = require('./routes/usuarioRoutes');
 const barajaRoutes = require('./routes/barajaRoutes');
 const cartaRoutes = require('./routes/cartaRoutes');
 const tarjetaRoutes = require('./routes/tarjetaRoutes');
+// importar rutas de comprobación de logica de negocio
+const juegoRoutes = require('./routes/juegoRoutes');
 
 // crear la aplicacion de express
 const app = express();
@@ -27,6 +29,9 @@ app.use('/usuarios', usuarioRoutes);
 app.use('/barajas', barajaRoutes);
 app.use('/cartas', cartaRoutes);
 app.use('/tarjetas', tarjetaRoutes);
+// logica del negocio
+app.use('/juego', juegoRoutes);
+
 
 // ruta de prueba para comprobar que la API funciona
 app.get('/', (req, res) => {

@@ -59,5 +59,5 @@ const createTarjeta = async (req, res) => {
 module.exports = {
     getTarjetas,
     getIdTarjeta,
-    createTarjeta,
+    createTarjeta
 };
