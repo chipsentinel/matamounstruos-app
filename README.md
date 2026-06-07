@@ -90,6 +90,7 @@ Endpoints iniciales de comprobacion:
 - `GET /barajas`, `GET /barajas/:id`, `POST /barajas`, `PUT /barajas/:id` y `DELETE /barajas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar barajas.
 - `GET /cartas`, `GET /cartas/:id`, `POST /cartas`, `PUT /cartas/:id` y `DELETE /cartas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar cartas.
 - `GET /tarjetas`, `GET /tarjetas/:id` y `POST /tarjetas`: endpoints iniciales para consultar y crear tarjetas teoricas.
+- `GET /juego/cartas/aleatoria/:idBaraja`: endpoint inicial de juego para obtener una carta aleatoria de una baraja.
 
 ## Documentación
 

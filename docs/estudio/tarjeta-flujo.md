@@ -124,22 +124,25 @@ Posibles reglas futuras:
 
 ## Flujo tecnico basico
 
-1. El frontend solicita una carta o recibe el resultado de una carta.
-2. El backend devuelve el resultado.
+1. El frontend solicita una carta aleatoria de una baraja.
+2. El backend devuelve una carta con su resultado.
 3. Si el resultado requiere repaso, el frontend solicita tarjetas de la baraja.
 4. El backend devuelve una o varias tarjetas.
 5. El frontend muestra la tarjeta de repaso.
 
-Endpoint útil:
+Endpoint implementado:
 
-- `GET /barajas/{idBaraja}/tarjetas`
+- `GET /juego/cartas/aleatoria/:idBaraja`
+
+Endpoint previsto para tarjetas asociadas:
+
+- `GET /juego/tarjeta`
 
 Datos necesarios para este endpoint:
 
 - `idBaraja`: identifica la baraja seleccionada.
-- `idTarjeta`: identifica cada tarjeta devuelta.
-- `titulo`: permite mostrar un encabezado claro.
-- `contenido`: permite mostrar el material de repaso.
+- `idCarta`: identifica la carta obtenida.
+- `tipoResultado`: indica si se muestra mensaje positivo o contenido de repaso.
 
 ## Estados del flujo
 

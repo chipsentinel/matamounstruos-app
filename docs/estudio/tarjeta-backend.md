@@ -120,7 +120,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | GET | `/tarjetas` | Listar tarjetas teoricas. | Configurado |
 | GET | `/tarjetas/:id` | Consultar una tarjeta teorica concreta. | Configurado |
 | POST | `/tarjetas` | Crear una tarjeta teorica. | Configurado |
-| GET | `/juego/cartas/aleatoria` | Obtener una carta aleatoria. | Previsto |
+| GET | `/juego/cartas/aleatoria/:idBaraja` | Obtener una carta aleatoria de una baraja. | Configurado y probado |
 | GET | `/juego/tarjeta-teoria` | Obtener una TarjetaTeoria asociada al resultado. | Previsto |
 
 ## Datos de entrada
@@ -189,6 +189,10 @@ En `PUT /cartas/:id` no se modifica `idBaraja`, para no mover la carta de una ba
   "idBaraja": 1
 }
 ```
+
+### GET /juego/cartas/aleatoria/:idBaraja
+
+No necesita body. El identificador de la baraja se envia en la URL.
 
 ## Datos de salida
 
@@ -263,6 +267,20 @@ Si no existe una carta con ese identificador, la API devuelve `404` con el mensa
 ```
 
 Si no existe una tarjeta con ese identificador, la API devuelve `404` con el mensaje `Tarjeta no encontrada`.
+
+### GET /juego/cartas/aleatoria/:idBaraja
+
+```json
+{
+  "idCarta": 1,
+  "nombre": "AUTORIA APROBADA",
+  "valor": 1,
+  "tipoResultado": "APTO",
+  "idBaraja": 1
+}
+```
+
+Si la baraja no tiene cartas disponibles, la API devuelve `404` con el mensaje `Esta baraja no tiene cartas`.
 
 ## Validaciones
 
