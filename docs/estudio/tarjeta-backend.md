@@ -93,6 +93,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 
 | Recurso | Ruta base | Descripcion |
 | --- | --- | --- |
+| Usuario | `/usuarios` | Persona que usa la aplicacion. |
 | Baraja | `/barajas` | Agrupa cartas de una tematica o nivel. |
 | Carta | `/cartas` | Pregunta o reto asociado a una baraja. |
 | Juego | `/juego` | Flujo para obtener carta aleatoria y resolver el resultado. |
@@ -104,11 +105,13 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | --- | --- | --- | --- |
 | GET | `/` | Comprobar que la API esta operativa. | Configurado |
 | GET | `/health/db` | Comprobar conexion backend-MariaDB. | Configurado y probado |
-| GET | `/barajas` | Listar barajas. | Previsto |
-| POST | `/barajas` | Crear una baraja. | Previsto |
-| GET | `/barajas/:id` | Consultar una baraja concreta. | Previsto |
-| PUT | `/barajas/:id` | Actualizar una baraja. | Previsto |
-| DELETE | `/barajas/:id` | Eliminar una baraja si no tiene cartas asociadas. | Previsto |
+| GET | `/usuarios` | Listar usuarios con `idUsuario`, `nombre` y `rol`. | Configurado y probado |
+| POST | `/usuarios` | Crear un usuario normal con `nombre` y `password`. | Configurado y probado |
+| GET | `/barajas` | Listar barajas. | Configurado |
+| POST | `/barajas` | Crear una baraja. | Configurado |
+| GET | `/barajas/:id` | Consultar una baraja concreta. | Configurado |
+| PUT | `/barajas/:id` | Actualizar nombre y descripcion de una baraja. | Configurado |
+| DELETE | `/barajas/:id` | Eliminar una baraja por identificador. | Configurado |
 | GET | `/cartas` | Listar cartas. | Previsto |
 | POST | `/cartas` | Crear una carta. | Previsto |
 | GET | `/cartas/:id` | Consultar una carta concreta. | Previsto |
@@ -119,24 +122,81 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 
 ## Datos de entrada
 
+### POST /usuarios
+
 ```json
 {
-  "pendiente": "pendiente"
+  "nombre": "manolo",
+  "password": "1234"
 }
 ```
+
+En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica `rol DEFAULT FALSE` para que los usuarios creados por esta ruta sean usuarios normales.
+
+### POST /barajas
+
+```json
+{
+  "nombre": "baraja-test",
+  "descripcion": "Baraja de prueba",
+  "idUsuario": 1
+}
+```
+
+### PUT /barajas/:id
+
+```json
+{
+  "nombre": "baraja-editada",
+  "descripcion": "Descripcion actualizada"
+}
+```
+
+En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario de la baraja durante una edicion normal.
 
 ## Datos de salida
 
+### POST /usuarios
+
 ```json
 {
-  "pendiente": "pendiente"
+  "message": "Usuario creado",
+  "idUsuario": 4
 }
 ```
+
+### POST /barajas
+
+```json
+{
+  "message": "Baraja creada",
+  "idBaraja": 4
+}
+```
+
+### PUT /barajas/:id
+
+```json
+{
+  "message": "Baraja actualizada"
+}
+```
+
+### DELETE /barajas/:id
+
+```json
+{
+  "message": "Baraja eliminada"
+}
+```
+
+Si no existe una baraja con ese identificador, la API devuelve `404` con el mensaje `Baraja no encontrada`.
 
 ## Validaciones
 
 - No permitir cartas duplicadas dentro de una misma baraja.
-- Impedir eliminar una baraja que tenga cartas asociadas.
+- Impedir eliminar una baraja que tenga cartas asociadas. Pendiente de completar cuando se implemente el CRUD de cartas.
+- No permitir que un usuario se cree como admin enviando `rol` en el registro basico.
 - Validar que los datos obligatorios lleguen en las peticiones de creacion y actualizacion.
 - Devolver respuestas de error claras cuando no exista el recurso solicitado.
 
@@ -145,7 +205,7 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | Caso | Codigo | Mensaje | Solucion |
 | --- | --- | --- | --- |
 | Carta duplicada en la misma baraja | 409 | La carta ya existe en esta baraja. | Revisar la combinacion de carta y baraja antes de insertar. |
-| Baraja con cartas asociadas | 409 | No se puede eliminar una baraja con cartas asociadas. | Borrar o reasignar cartas antes de eliminar la baraja. |
+| Baraja con cartas asociadas | 409 | No se puede eliminar una baraja con cartas asociadas. | Pendiente de implementar junto al CRUD de cartas. |
 | Recurso no encontrado | 404 | Recurso no encontrado. | Comprobar el identificador usado en la ruta. |
 | Datos incompletos | 400 | Faltan datos obligatorios. | Validar el cuerpo de la peticion antes de enviarla. |
 
