@@ -117,6 +117,9 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | GET | `/cartas/:id` | Consultar una carta concreta. | Configurado y probado |
 | PUT | `/cartas/:id` | Actualizar una carta. | Configurado y probado |
 | DELETE | `/cartas/:id` | Eliminar una carta. | Configurado y probado |
+| GET | `/tarjetas` | Listar tarjetas teoricas. | Configurado |
+| GET | `/tarjetas/:id` | Consultar una tarjeta teorica concreta. | Configurado |
+| POST | `/tarjetas` | Crear una tarjeta teorica. | Configurado |
 | GET | `/juego/cartas/aleatoria` | Obtener una carta aleatoria. | Previsto |
 | GET | `/juego/tarjeta-teoria` | Obtener una TarjetaTeoria asociada al resultado. | Previsto |
 
@@ -176,6 +179,16 @@ En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario
 ```
 
 En `PUT /cartas/:id` no se modifica `idBaraja`, para no mover la carta de una baraja a otra durante una edicion normal.
+
+### POST /tarjetas
+
+```json
+{
+  "titulo": "Repaso backend",
+  "contenido": "Explicacion sobre rutas y controladores",
+  "idBaraja": 1
+}
+```
 
 ## Datos de salida
 
@@ -240,6 +253,16 @@ Si no existe una baraja con ese identificador, la API devuelve `404` con el mens
 ```
 
 Si no existe una carta con ese identificador, la API devuelve `404` con el mensaje `Carta no encontrada`.
+
+### POST /tarjetas
+
+```json
+{
+  "message": "Tarjeta creada"
+}
+```
+
+Si no existe una tarjeta con ese identificador, la API devuelve `404` con el mensaje `Tarjeta no encontrada`.
 
 ## Validaciones
 

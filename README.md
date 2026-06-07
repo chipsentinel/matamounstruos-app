@@ -89,6 +89,7 @@ Endpoints iniciales de comprobacion:
 - `GET /usuarios` y `POST /usuarios`: endpoints basicos iniciales para listar y crear usuarios normales.
 - `GET /barajas`, `GET /barajas/:id`, `POST /barajas`, `PUT /barajas/:id` y `DELETE /barajas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar barajas.
 - `GET /cartas`, `GET /cartas/:id`, `POST /cartas`, `PUT /cartas/:id` y `DELETE /cartas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar cartas.
+- `GET /tarjetas`, `GET /tarjetas/:id` y `POST /tarjetas`: endpoints iniciales para consultar y crear tarjetas teoricas.
 
 ## Documentación
 
