@@ -133,16 +133,16 @@ Posibles reglas futuras:
 Endpoint implementado:
 
 - `GET /juego/cartas/aleatoria/:idBaraja`
-
-Endpoint previsto para tarjetas asociadas:
-
-- `GET /juego/tarjeta`
+- `GET /juego/tarjeta/aleatoria/:idCarta`
 
 Datos necesarios para este endpoint:
 
 - `idBaraja`: identifica la baraja seleccionada.
 - `idCarta`: identifica la carta obtenida.
 - `tipoResultado`: indica si se muestra mensaje positivo o contenido de repaso.
+
+Si el resultado de la carta es `APTO`, no se devuelve tarjeta de estudio.
+Si el resultado es `NO_APTO` o `PRUEBA_OTRA_VEZ`, se busca una tarjeta aleatoria de la misma baraja.
 
 ## Estados del flujo
 
