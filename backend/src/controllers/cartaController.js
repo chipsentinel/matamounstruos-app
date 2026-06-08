@@ -40,6 +40,27 @@ const createCarta = async (req, res) => {
     try {
         const {nombre, valor, tipoResultado, idBaraja} = req.body;
 
+        // si la carta es mayor de 12 no se crea
+        if (valor > 12) {
+            return res.status(400).json({
+                message: 'La carta no puede valer mas de 12'
+            });
+        }
+
+        // solo puede haber 4 cartas del mismo valor
+        const cartaMismoValor = await pool.query(
+            'SELECT COUNT(*) AS total FROM cartas WHERE valor = ? AND idBaraja = ?',
+            [valor, idBaraja]
+        );
+
+        // aviso 209 de que no puede haber mas de 4 cartas del mismo valor
+        if (Number(cartaMismoValor[0].total) >= 4) {
+            return res.status(409).json({
+                message: 'NO puede haber mas de 4 cartas del mismo valor'
+            });
+        }
+
+
         const result = await pool.query(
             'INSERT INTO cartas (nombre, valor, tipoResultado, idBaraja) VALUES (?, ?, ?, ?)',
             [nombre, valor, tipoResultado, idBaraja]
@@ -47,7 +68,7 @@ const createCarta = async (req, res) => {
 
         res.status(201).json({
             message: 'Carta creada',
-            idBaraja: Number(result.insertId)
+            idCarta: Number(result.insertId)
         });
     } catch (error) {
         res.status(500).json({
