@@ -63,16 +63,44 @@ npm run dev
 
 | Pantalla | Que muestra | Acciones | Estado |
 | --- | --- | --- | --- |
-| Pendiente | Pendiente | Pendiente | Pendiente |
-| Pendiente | Pendiente | Pendiente | Pendiente |
-| Pendiente | Pendiente | Pendiente | Pendiente |
+| `HomeView` | Pantalla principal de la aplicacion. | Acceso inicial a las secciones principales. | Estructura inicial creada. |
+| `BarajasView` | Gestion de barajas. | Listar, crear, editar y eliminar barajas mas adelante. | Estructura inicial creada. |
+| `CartasView` | Gestion de cartas. | Listar, crear, editar y eliminar cartas mas adelante. | Estructura inicial creada. |
+| `TarjetasView` | Gestion de tarjetas de teoria. | Consultar y crear tarjetas mas adelante. | Estructura inicial creada. |
+| `JuegoView` | Vista principal del juego. | Seleccionar baraja y obtener carta aleatoria mas adelante. | Estructura inicial creada. |
+
+Las pantallas se han creado dentro de `frontend/src/views/`.
+
+En esta fase no se usa `react-router-dom`. La aplicacion cambia de vista mediante un estado en `App.jsx`, manteniendo una estructura sencilla y facil de defender.
 
 ## Componentes
 
 | Componente | Uso | Datos que necesita |
 | --- | --- | --- |
-| Pendiente | Pendiente | Pendiente |
-| Pendiente | Pendiente | Pendiente |
+| `Navbar` | Permite cambiar entre las vistas principales. | `vistaActual` y `cambiarVista`. |
+| `HomeView` | Pantalla de inicio. | No necesita datos externos en esta fase. |
+| `BarajasView` | Pantalla de gestion de barajas. | Mas adelante consumira la API de barajas. |
+| `CartasView` | Pantalla de gestion de cartas. | Mas adelante consumira la API de cartas. |
+| `TarjetasView` | Pantalla de gestion de tarjetas. | Mas adelante consumira la API de tarjetas. |
+| `JuegoView` | Pantalla del flujo de juego. | Mas adelante consumira la API de juego. |
+
+Estructura inicial del frontend:
+
+```text
+frontend/src/
+  components/
+    Navbar.jsx
+  views/
+    HomeView.jsx
+    BarajasView.jsx
+    CartasView.jsx
+    TarjetasView.jsx
+    JuegoView.jsx
+  App.jsx
+  main.jsx
+```
+
+Se evita crear carpetas adicionales como `layout/`, `ui/` o `services/` hasta que sean necesarias. La prioridad en esta fase es mantener el proyecto simple, claro y mantenible.
 
 ## Formularios
 
@@ -83,9 +111,17 @@ npm run dev
 
 ## Estados de pantalla
 
-- Pendiente.
-- Pendiente.
-- Pendiente.
+- `home`: muestra `HomeView`.
+- `barajas`: muestra `BarajasView`.
+- `cartas`: muestra `CartasView`.
+- `tarjetas`: muestra `TarjetasView`.
+- `juego`: muestra `JuegoView`.
+
+`App.jsx` mantiene el estado `vistaActual` con `useState`.
+
+La funcion `setVistaActual` se pasa a `Navbar` como `cambiarVista`, para que los botones de navegacion puedan cambiar la vista activa.
+
+`Navbar` tambien recibe `vistaActual` para marcar visualmente el boton de la seccion activa.
 
 ## Contenido de una tarjeta
 
@@ -111,15 +147,17 @@ Pendiente.
 
 | Caso | Problema | Solucion |
 | --- | --- | --- |
-| Pendiente | Pendiente | Pendiente |
-| Pendiente | Pendiente | Pendiente |
+| `vistaActual` aparece subrayado | La variable se recibe en `Navbar`, pero no se usa. | Usarla para marcar el boton activo o no pasarla como prop. |
+| No cambia la pantalla | El boton no llama a `cambiarVista` con el nombre correcto. | Revisar que coincidan valores como `barajas`, `cartas` o `juego`. |
+| No carga una vista | El componente no esta importado o exportado correctamente. | Revisar `import`, nombre del archivo y `export default`. |
 
 ## Material para futuras tarjetas
 
 | Titulo de tarjeta | Idea principal | Contenido clave |
 | --- | --- | --- |
-| Pendiente | Pendiente | Pendiente |
-| Pendiente | Pendiente | Pendiente |
+| Estructura inicial React | Separar componentes reutilizables y vistas principales. | `components/Navbar.jsx` y `views/*View.jsx`. |
+| Navegacion por estado | Cambiar de pantalla sin instalar router. | `useState`, `vistaActual` y `setVistaActual`. |
+| Navbar con Bootstrap | Crear una navegacion sencilla y responsive. | Clases `navbar`, `btn`, `d-flex`, `flex-wrap`. |
 
 Plantilla para ampliar tarjetas:
 
@@ -147,8 +185,8 @@ Pendiente.
 
 ## Dudas o decisiones pendientes
 
-- Definir estructura inicial de componentes.
-- Preparar llamadas al backend con `fetch()`.
+- Conectar llamadas al backend con `fetch()`.
+- Configurar SweetAlert2 en acciones concretas.
 
 ## Navegacion final
 

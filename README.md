@@ -106,6 +106,8 @@ Frontend inicial:
 - El proyecto React se ha creado dentro de `frontend/` usando Vite.
 - Bootstrap esta instalado e importado globalmente en `frontend/src/main.jsx`.
 - SweetAlert2 esta instalado y se importara en los componentes donde se use.
+- La estructura inicial usa `frontend/src/components/Navbar.jsx` y vistas en `frontend/src/views/`.
+- La navegacion inicial se resuelve con estado en `App.jsx`, sin añadir rutas hasta que sean necesarias.
 - El servidor de desarrollo se arranca desde `frontend/` con `npm run dev`.
 - Vite expone la aplicacion en `http://localhost:5173/`.
 - `frontend/.gitignore` evita subir dependencias y archivos generados como `node_modules/` y `dist/`.
