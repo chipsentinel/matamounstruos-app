@@ -111,8 +111,9 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | POST | `/barajas` | Crear una baraja. | Configurado |
 | GET | `/barajas/:id` | Consultar una baraja concreta. | Configurado |
 | PUT | `/barajas/:id` | Actualizar nombre y descripcion de una baraja. | Configurado |
-| DELETE | `/barajas/:id` | Eliminar una baraja por identificador. | Configurado |
+| DELETE | `/barajas/:id` | Eliminar una baraja por identificador si lo solicita el propietario o un admin. | Configurado y probado |
 | GET | `/cartas` | Listar cartas. | Configurado y probado |
+| GET | `/cartas/baraja/:idBaraja` | Listar cartas de una baraja concreta. | Configurado y probado |
 | POST | `/cartas` | Crear una carta. | Configurado y probado |
 | GET | `/cartas/:id` | Consultar una carta concreta. | Configurado y probado |
 | PUT | `/cartas/:id` | Actualizar una carta. | Configurado y probado |
@@ -230,11 +231,43 @@ No necesita body. El identificador de la carta se envia en la URL.
 
 ```json
 {
+  "idUsuario": 1
+}
+```
+
+En `DELETE /barajas/:id` se envia el usuario solicitante en el body. Sin login real, este dato permite comprobar si el usuario es propietario de la baraja o admin.
+
+Al eliminar una baraja se borran primero sus cartas asociadas.
+
+### GET /cartas/baraja/:idBaraja
+
+No necesita body. El identificador de la baraja se envia en la URL.
+
+### DELETE /barajas/:id
+
+```json
+{
   "message": "Baraja eliminada"
 }
 ```
 
 Si no existe una baraja con ese identificador, la API devuelve `404` con el mensaje `Baraja no encontrada`.
+Si el usuario solicitante no existe, devuelve `404` con el mensaje `Usuario no encontrado`.
+Si el usuario no es propietario ni admin, devuelve `403`.
+
+### GET /cartas/baraja/:idBaraja
+
+```json
+[
+  {
+    "idCarta": 1,
+    "nombre": "AUTORIA APROBADA",
+    "valor": 1,
+    "tipoResultado": "APTO",
+    "idBaraja": 1
+  }
+]
+```
 
 ### POST /cartas
 
@@ -305,8 +338,11 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 
 ## Validaciones
 
-- No permitir cartas duplicadas dentro de una misma baraja.
-- Impedir eliminar una baraja que tenga cartas asociadas. Pendiente de completar cuando se implemente el CRUD de cartas.
+- Limitar el valor de las cartas a un maximo de 12.
+- Permitir como maximo 4 cartas con el mismo valor dentro de una misma baraja.
+- No se implementa validacion de carta duplicada exacta porque la regla importante del modelo es controlar la repeticion por valor.
+- Permitir eliminar una baraja solo al propietario o a un usuario admin.
+- Al eliminar una baraja, borrar primero sus cartas asociadas.
 - No permitir que un usuario se cree como admin enviando `rol` en el registro basico.
 - Validar que los datos obligatorios lleguen en las peticiones de creacion y actualizacion.
 - Devolver respuestas de error claras cuando no exista el recurso solicitado.
@@ -315,8 +351,9 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 
 | Caso | Codigo | Mensaje | Solucion |
 | --- | --- | --- | --- |
-| Carta duplicada en la misma baraja | 409 | La carta ya existe en esta baraja. | Revisar la combinacion de carta y baraja antes de insertar. |
-| Baraja con cartas asociadas | 409 | No se puede eliminar una baraja con cartas asociadas. | Pendiente de implementar junto al CRUD de cartas. |
+| Valor de carta mayor que 12 | 400 | La carta no puede valer mas de 12. | Enviar un valor entre 1 y 12. |
+| Mas de 4 cartas con el mismo valor | 409 | NO puede haber mas de 4 cartas del mismo valor. | Usar otro valor o revisar las cartas de la baraja. |
+| Borrado de baraja sin permisos | 403 | No tiene permiso para eliminar esta baraja. | Usar el propietario de la baraja o un usuario admin. |
 | Recurso no encontrado | 404 | Recurso no encontrado. | Comprobar el identificador usado en la ruta. |
 | Datos incompletos | 400 | Faltan datos obligatorios. | Validar el cuerpo de la peticion antes de enviarla. |
 
