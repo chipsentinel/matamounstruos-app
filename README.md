@@ -70,7 +70,7 @@ Este apartado recoge las tecnologias iniciales elegidas para el desarrollo.
 Tecnologias previstas:
 
 - Backend: Node.js, Express, CORS, dotenv y driver `mariadb`.
-- Frontend: React con Vite. Bootstrap y SweetAlert2 quedan previstos para la siguiente fase.
+- Frontend: React con Vite, Bootstrap y SweetAlert2.
 - Base de datos: MariaDB.
 - Control de versiones: Git y GitHub.
 - Contenedores: Docker Compose para el entorno de desarrollo de MariaDB.
@@ -104,6 +104,8 @@ La coleccion de Postman con las pruebas principales se encuentra en `postman/mat
 Frontend inicial:
 
 - El proyecto React se ha creado dentro de `frontend/` usando Vite.
+- Bootstrap esta instalado e importado globalmente en `frontend/src/main.jsx`.
+- SweetAlert2 esta instalado y se importara en los componentes donde se use.
 - El servidor de desarrollo se arranca desde `frontend/` con `npm run dev`.
 - Vite expone la aplicacion en `http://localhost:5173/`.
 - `frontend/.gitignore` evita subir dependencias y archivos generados como `node_modules/` y `dist/`.

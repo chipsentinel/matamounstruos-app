@@ -33,8 +33,8 @@ La issue 4 se centra en crear la carpeta `frontend/`, instalar la base del proye
 | Vite | Herramienta para crear y levantar el proyecto frontend. | Usa `npm run dev` en desarrollo. |
 | Mobile-first | Forma de diseñar empezando por móvil. | Después se adapta a escritorio. |
 | `fetch()` | API de JavaScript para pedir datos al backend. | Se usara para consumir la API REST. |
-| Bootstrap | Framework CSS responsive. | Pendiente de instalar en la siguiente fase. |
-| SweetAlert2 | Libreria para alertas y confirmaciones. | Pendiente de instalar en la siguiente fase. |
+| Bootstrap | Framework CSS responsive. | Instalado e importado en `main.jsx`. |
+| SweetAlert2 | Libreria para alertas y confirmaciones. | Instalado; se importara en los componentes donde se use. |
 
 ## Configuracion inicial
 
@@ -46,8 +46,8 @@ La issue 4 se centra en crear la carpeta `frontend/`, instalar la base del proye
 | `npm install` | Ejecutado | Instala las dependencias base del proyecto. |
 | `npm run dev` | Comprobado | Arranca Vite en `http://localhost:5173/`. |
 | `frontend/.gitignore` | Revisado | Evita subir `node_modules/`, `dist/` y archivos locales. |
-| Bootstrap | Pendiente | Se instalara en la siguiente fase. |
-| SweetAlert2 | Pendiente | Se instalara en la siguiente fase. |
+| Bootstrap | Configurado | Instalado e importado globalmente en `frontend/src/main.jsx`. |
+| SweetAlert2 | Instalado | Disponible para mensajes y confirmaciones en componentes concretos. |
 
 Comandos usados en la fase inicial:
 
@@ -55,6 +55,7 @@ Comandos usados en la fase inicial:
 npm create vite@latest frontend
 cd frontend
 npm install
+npm install bootstrap sweetalert2
 npm run dev
 ```
 
@@ -146,8 +147,6 @@ Pendiente.
 
 ## Dudas o decisiones pendientes
 
-- Instalar y configurar Bootstrap.
-- Instalar y configurar SweetAlert2.
 - Definir estructura inicial de componentes.
 - Preparar llamadas al backend con `fetch()`.
 
