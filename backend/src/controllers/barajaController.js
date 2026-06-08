@@ -86,17 +86,54 @@ const updateBaraja = async (req, res) => {
 const deleteBaraja = async (req, res) => {
     try {
         const {id} = req.params;
+        const {idUsuario} = req.body; // identifico usuario para que solo pueda borrar el usurio
 
-        const result = await pool.query(
-            'DELETE FROM barajas WHERE idBaraja = ?',
+        // localizar si la baraja existe
+        const barajas = await pool.query(
+            'SELECT idBaraja, idUsuario FROM barajas WHERE idBaraja = ?',
             [id]
         );
 
-        if (result.affectedRows === 0) {
+        if (barajas.length === 0) {
             return res.status(404).json({
                 message: 'Baraja no encontrada'
             });
         }
+
+        // localizar si el usuario existe
+        const usuarios = await pool.query(
+            'SELECT idUsuario, rol FROM usuarios WHERE idUsuario = ?',
+            [idUsuario]
+        );
+
+        if (usuarios.length === 0) {
+            return res.status(404).json({
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        // guardar la baraja y el usuario encontrados
+        const baraja = barajas [0];
+        const usuario = usuarios [0];
+
+        // comprobar que solo pueda borrar el propietario o un admin
+        if (baraja.idUsuario !== Number(idUsuario) && usuario.rol !== 1){
+            return res.status(403).json({
+                message: 'No tiene permiso para eliminar esta baraja'
+            });
+        }
+
+        // borrar primero las cartas asociadas a la baraja
+        await pool.query(
+            'DELETE FROM cartas WHERE idBaraja = ?',
+            [id]
+        );
+
+        // borrar la baraja despues de borrar sus cartas
+        const result = await pool.query(
+            'DELETE FROM barajas WHERE idBaraja = ?',
+            [id]
+        );
 
         res.json({
             message: 'Baraja eliminada'

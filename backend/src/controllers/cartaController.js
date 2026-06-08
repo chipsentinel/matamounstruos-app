@@ -14,6 +14,24 @@ const getCartas = async (req, res) => {
     }
 };
 
+// para poder verificar que se borraron todas las cartas de la baraja
+const getCartasPorBaraja = async (req, res) => {
+    try {
+        const { idBaraja } = req.params;
+
+        const rows = await pool.query(
+            'SELECT idCarta, nombre, valor, tipoResultado, idBaraja FROM cartas WHERE idBaraja = ?',
+            [idBaraja]
+        );
+
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
 const getIdCarta = async (req, res) => {
     try {
         const { id } = req.params;
@@ -131,6 +149,7 @@ const deleteCarta = async (req, res) => {
 
 module.exports = {
     getCartas,
+    getCartasPorBaraja,
     getIdCarta,
     createCarta,
     updateCarta,
