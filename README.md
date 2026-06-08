@@ -99,6 +99,8 @@ Decisiones de negocio implementadas:
 - Cada baraja puede tener como maximo `4` cartas con el mismo valor.
 - Al borrar una baraja se comprueba que el solicitante sea propietario o admin y se eliminan primero sus cartas asociadas.
 
+La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json`.
+
 ## Documentación
 
 Enlaces a la documentación del proyecto:

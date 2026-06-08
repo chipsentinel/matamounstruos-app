@@ -18,6 +18,7 @@ La intención es preparar los endpoints, validaciones y respuestas que más adel
 - [Datos de salida](#datos-de-salida)
 - [Validaciones](#validaciones)
 - [Errores frecuentes](#errores-frecuentes)
+- [Pruebas en Postman](#pruebas-en-postman)
 - [Material para futuras tarjetas](#material-para-futuras-tarjetas)
 - [Dudas o decisiones pendientes](#dudas-o-decisiones-pendientes)
 - [Navegacion final](#navegacion-final)
@@ -356,6 +357,16 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 | Borrado de baraja sin permisos | 403 | No tiene permiso para eliminar esta baraja. | Usar el propietario de la baraja o un usuario admin. |
 | Recurso no encontrado | 404 | Recurso no encontrado. | Comprobar el identificador usado en la ruta. |
 | Datos incompletos | 400 | Faltan datos obligatorios. | Validar el cuerpo de la peticion antes de enviarla. |
+
+## Pruebas en Postman
+
+La coleccion de Postman con las pruebas principales del backend esta guardada en:
+
+```txt
+postman/matamounstruos-app.postman_collection.json
+```
+
+Incluye comprobaciones de usuarios, barajas, cartas, tarjetas, endpoints de juego, `health/db` y casos de error principales.
 
 ## Material para futuras tarjetas
 
