@@ -51,7 +51,7 @@ Relaciones:
 - Una baraja contiene varias cartas.
 - Una baraja contiene varias tarjetas de temario.
 
-En la primera versión, cada baraja tendrá como máximo 12 cartas. Esta regla se podrá controlar desde la API cuando se creen o modifiquen cartas.
+En la primera versión, el valor de las cartas se limita a un máximo de 12 y cada baraja puede tener como máximo 4 cartas con el mismo valor. Estas reglas se controlan desde la API.
 
 ### Carta
 
@@ -169,7 +169,10 @@ Se han tomado decisiones sencillas para que el modelo sea fácil de implementar:
 - `tipoResultado` se mantiene como una lista cerrada de valores.
 - Las tablas de la base de datos se nombran en plural para alinearlas con los recursos del backend.
 - Se usa `Tarjeta` como nombre de entidad y `idTarjeta` como identificador.
-- El máximo de 12 cartas por baraja se tratará como una regla de la aplicación.
+- El valor máximo de una carta es 12 y se valida desde el backend.
+- Se permite un máximo de 4 cartas con el mismo valor dentro de una misma baraja.
+- No se valida una carta duplicada exacta, porque la regla importante del modelo es controlar la repetición por valor.
+- Al eliminar una baraja desde la API, se comprueba que el solicitante sea propietario o admin y se eliminan primero sus cartas asociadas.
 - Las cartas con resultado `APTO` mostrarán un mensaje de aprobado.
 - Las cartas con resultado `NO_APTO` o `PRUEBA_OTRA_VEZ` mostrarán una tarjeta formativa.
 

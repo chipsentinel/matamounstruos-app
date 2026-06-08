@@ -1,9 +1,10 @@
 const express = require('express');
-const {getCartas, getIdCarta, createCarta, updateCarta, deleteCarta} = require('../controllers/cartaController');
+const {getCartas, getCartasPorBaraja, getIdCarta, createCarta, updateCarta, deleteCarta} = require('../controllers/cartaController');
 
 const router = express.Router();
 
 router.get('/', getCartas);
+router.get('/baraja/:idBaraja', getCartasPorBaraja);
 router.get('/:id', getIdCarta);
 router.post('/', createCarta);
 router.put('/:id', updateCarta);

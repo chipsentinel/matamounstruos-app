@@ -1,0 +1,895 @@
+{
+  "info": {
+    "_postman_id": "11574098-a1ae-4629-bda7-a68141ec7279",
+    "name": "matamounstruos-app",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49087894"
+  },
+  "item": [
+    {
+      "name": "usuarios",
+      "item": [
+        {
+          "name": "getUsuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createUsuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"manolo\",\n  \"password\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "barajas",
+      "item": [
+        {
+          "name": "getBarajas",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"manolo\",\n    \"password\": 1234 \n},"
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getIdBaraja",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/barajas/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getIdBaraja 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/barajas/20",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "20"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createBaraja",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateBaraja",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"baraja-test\",\n    \"descripcion\": \"Baraja de prueba\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateBaraja 404",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"baraja-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/60",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "60"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteBaraja",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteBaraja 404 (usuario)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 200\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteBaraja 404 (baraja)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/60",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "60"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteBaraja 403",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "cartas",
+      "item": [
+        {
+          "name": "getCartas",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"manolo\",\n    \"password\": 1234 \n},"
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCartasPorBaraja",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"manolo\",\n    \"password\": 1234 \n},"
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas/baraja/7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas",
+                "baraja",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getIdCarta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/cartas/7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getIdCarta 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/cartas/200",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas",
+                "200"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createCarta",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"AUTORIA TEST\",\n    \"valor\": 2,\n    \"tipoResultado\": \"APTO\",\n    \"idBaraja\": 7\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createCarta 400",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"AUTORIA TEST\",\n    \"valor\": 13,\n    \"tipoResultado\": \"APTO\",\n    \"idBaraja\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createCarta 409",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"AUTORIA TEST\",\n    \"valor\": 1,\n    \"tipoResultado\": \"APTO\",\n    \"idBaraja\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateCarta",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"AUTORIA TEST-update\",\n    \"valor\": 1,\n    \"tipoResultado\": \"APTO\",\n    \"idBaraja\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas/13",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas",
+                "13"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateCarta 404",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"AUTORIA TEST-update\",\n    \"valor\": 1,\n    \"tipoResultado\": \"APTO\",\n    \"idBaraja\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas/200",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas",
+                "200"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteCarta",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas/13",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas",
+                "13"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteCarta 404",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/cartas/200",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "cartas",
+                "200"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "tarjetas",
+      "item": [
+        {
+          "name": "getTarjetas",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"manolo\",\n    \"password\": 1234 \n},"
+            },
+            "url": {
+              "raw": "http://localhost:3000/tarjetas/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "tarjetas",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getIdTarjeta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/tarjetas/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "tarjetas",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getIdTarjeta 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/tarjetas/200",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "tarjetas",
+                "200"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createTarjeta",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Repaso backend-TEST\",\n  \"contenido\": \"Explicacion sobre rutas y controladores-TEST\",\n  \"idBaraja\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/tarjetas/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "tarjetas",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "juego",
+      "item": [
+        {
+          "name": "getCartaAleatoria",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"manolo\",\n    \"password\": 1234 \n},"
+            },
+            "url": {
+              "raw": "http://localhost:3000/juego/cartas/aleatoria/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "juego",
+                "cartas",
+                "aleatoria",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCartaAleatoria 404",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"manolo\",\n    \"password\": 1234 \n},"
+            },
+            "url": {
+              "raw": "http://localhost:3000/juego/cartas/aleatoria/200",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "juego",
+                "cartas",
+                "aleatoria",
+                "200"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getTarjetaPorCarta",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"manolo\",\n    \"password\": 1234 \n},"
+            },
+            "url": {
+              "raw": "http://localhost:3000/juego/tarjeta/aleatoria/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "juego",
+                "tarjeta",
+                "aleatoria",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getTarjetaPorCarta 404",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"manolo\",\n    \"password\": 1234 \n},"
+            },
+            "url": {
+              "raw": "http://localhost:3000/juego/tarjeta/aleatoria/200",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "juego",
+                "tarjeta",
+                "aleatoria",
+                "200"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "EXPRESS",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "health/db",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/health/db",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "health",
+            "db"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

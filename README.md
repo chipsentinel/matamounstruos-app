@@ -88,10 +88,18 @@ Endpoints iniciales de comprobacion:
 - `GET /health/db`: comprueba que el backend conecta con MariaDB.
 - `GET /usuarios` y `POST /usuarios`: endpoints basicos iniciales para listar y crear usuarios normales.
 - `GET /barajas`, `GET /barajas/:id`, `POST /barajas`, `PUT /barajas/:id` y `DELETE /barajas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar barajas.
-- `GET /cartas`, `GET /cartas/:id`, `POST /cartas`, `PUT /cartas/:id` y `DELETE /cartas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar cartas.
+- `GET /cartas`, `GET /cartas/:id`, `GET /cartas/baraja/:idBaraja`, `POST /cartas`, `PUT /cartas/:id` y `DELETE /cartas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar cartas.
 - `GET /tarjetas`, `GET /tarjetas/:id` y `POST /tarjetas`: endpoints iniciales para consultar y crear tarjetas teoricas.
 - `GET /juego/cartas/aleatoria/:idBaraja`: endpoint inicial de juego para obtener una carta aleatoria de una baraja.
 - `GET /juego/tarjeta/aleatoria/:idCarta`: endpoint inicial de juego para obtener una tarjeta de repaso segun el resultado de una carta.
+
+Decisiones de negocio implementadas:
+
+- Las cartas no pueden tener valor superior a `12`.
+- Cada baraja puede tener como maximo `4` cartas con el mismo valor.
+- Al borrar una baraja se comprueba que el solicitante sea propietario o admin y se eliminan primero sus cartas asociadas.
+
+La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json`.
 
 ## Documentación
 
