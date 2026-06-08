@@ -112,13 +112,16 @@ La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD par
 | GET | `/barajas/:id` | Consultar una baraja concreta. | Configurado |
 | PUT | `/barajas/:id` | Actualizar nombre y descripcion de una baraja. | Configurado |
 | DELETE | `/barajas/:id` | Eliminar una baraja por identificador. | Configurado |
-| GET | `/cartas` | Listar cartas. | Previsto |
-| POST | `/cartas` | Crear una carta. | Previsto |
-| GET | `/cartas/:id` | Consultar una carta concreta. | Previsto |
-| PUT | `/cartas/:id` | Actualizar una carta. | Previsto |
-| DELETE | `/cartas/:id` | Eliminar una carta. | Previsto |
-| GET | `/juego/cartas/aleatoria` | Obtener una carta aleatoria. | Previsto |
-| GET | `/juego/tarjeta-teoria` | Obtener una TarjetaTeoria asociada al resultado. | Previsto |
+| GET | `/cartas` | Listar cartas. | Configurado y probado |
+| POST | `/cartas` | Crear una carta. | Configurado y probado |
+| GET | `/cartas/:id` | Consultar una carta concreta. | Configurado y probado |
+| PUT | `/cartas/:id` | Actualizar una carta. | Configurado y probado |
+| DELETE | `/cartas/:id` | Eliminar una carta. | Configurado y probado |
+| GET | `/tarjetas` | Listar tarjetas teoricas. | Configurado |
+| GET | `/tarjetas/:id` | Consultar una tarjeta teorica concreta. | Configurado |
+| POST | `/tarjetas` | Crear una tarjeta teorica. | Configurado |
+| GET | `/juego/cartas/aleatoria/:idBaraja` | Obtener una carta aleatoria de una baraja. | Configurado y probado |
+| GET | `/juego/tarjeta/aleatoria/:idCarta` | Obtener una tarjeta de repaso segun el resultado de una carta. | Configurado |
 
 ## Datos de entrada
 
@@ -153,6 +156,47 @@ En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica
 ```
 
 En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario de la baraja durante una edicion normal.
+
+### POST /cartas
+
+```json
+{
+  "nombre": "AUTORIA APROBADA",
+  "valor": 1,
+  "tipoResultado": "APTO",
+  "idBaraja": 1
+}
+```
+
+### PUT /cartas/:id
+
+```json
+{
+  "nombre": "AUTORIA APROBADA",
+  "valor": 1,
+  "tipoResultado": "APTO"
+}
+```
+
+En `PUT /cartas/:id` no se modifica `idBaraja`, para no mover la carta de una baraja a otra durante una edicion normal.
+
+### POST /tarjetas
+
+```json
+{
+  "titulo": "Repaso backend",
+  "contenido": "Explicacion sobre rutas y controladores",
+  "idBaraja": 1
+}
+```
+
+### GET /juego/cartas/aleatoria/:idBaraja
+
+No necesita body. El identificador de la baraja se envia en la URL.
+
+### GET /juego/tarjeta/aleatoria/:idCarta
+
+No necesita body. El identificador de la carta se envia en la URL.
 
 ## Datos de salida
 
@@ -191,6 +235,73 @@ En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario
 ```
 
 Si no existe una baraja con ese identificador, la API devuelve `404` con el mensaje `Baraja no encontrada`.
+
+### POST /cartas
+
+```json
+{
+  "message": "Carta creada"
+}
+```
+
+### PUT /cartas/:id
+
+```json
+{
+  "message": "Carta actualizada"
+}
+```
+
+### DELETE /cartas/:id
+
+```json
+{
+  "message": "Carta eliminada"
+}
+```
+
+Si no existe una carta con ese identificador, la API devuelve `404` con el mensaje `Carta no encontrada`.
+
+### POST /tarjetas
+
+```json
+{
+  "message": "Tarjeta creada"
+}
+```
+
+Si no existe una tarjeta con ese identificador, la API devuelve `404` con el mensaje `Tarjeta no encontrada`.
+
+### GET /juego/cartas/aleatoria/:idBaraja
+
+```json
+{
+  "idCarta": 1,
+  "nombre": "AUTORIA APROBADA",
+  "valor": 1,
+  "tipoResultado": "APTO",
+  "idBaraja": 1
+}
+```
+
+Si la baraja no tiene cartas disponibles, la API devuelve `404` con el mensaje `Esta baraja no tiene cartas`.
+
+### GET /juego/tarjeta/aleatoria/:idCarta
+
+Si la carta tiene resultado `APTO`, la API devuelve un mensaje indicando que no necesita tarjeta de estudio.
+
+Si la carta tiene resultado `NO_APTO` o `PRUEBA_OTRA_VEZ`, devuelve una tarjeta aleatoria de la misma baraja:
+
+```json
+{
+  "idTarjeta": 1,
+  "titulo": "Repaso backend",
+  "contenido": "Explicacion sobre rutas y controladores",
+  "idBaraja": 1
+}
+```
+
+Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada`.
 
 ## Validaciones
 
