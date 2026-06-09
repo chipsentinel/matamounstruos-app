@@ -1,4 +1,9 @@
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Accordion from 'react-bootstrap/Accordion';
+import Pagination from 'react-bootstrap/Pagination';
+import Form from 'react-bootstrap/Form';
 
 function TematicaView() {
   return (
@@ -12,8 +17,82 @@ function TematicaView() {
         </Card.Body>
       </Card>
       
+      {/* Tarjeta ( queda previsto para el futuro PUT y DELETE) */}
       <div className="tematica-panel">
+        <ButtonGroup size="lg" className="mb-2">
+          <Button>Crear</Button>
+          <Button>Editar</Button> {/* No funciona */}
+          <Button>Borrar</Button> {/* No funciona */}
+        </ButtonGroup>
 
+        {/* Tarjeta ( en el futuro pondre titulo + contenido de las tarjetas cuando se despliegue) */}
+        <section className="mb-4">
+          <Accordion defaultActiveKey="0" flush>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>Baraja: Autoría Gitflow</Accordion.Header>
+              <Accordion.Body>
+                Aquí se verán las tarjetas de esta baraja.
+              </Accordion.Body>
+            </Accordion.Item>
+
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>Baraja: SQL básico</Accordion.Header>
+              <Accordion.Body>
+                Aquí se verán las tarjetas de esta baraja.
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+
+          <Pagination>
+            <Pagination.First />
+            <Pagination.Prev />
+            <Pagination.Item>{1}</Pagination.Item>
+            <Pagination.Ellipsis />
+
+            <Pagination.Item>{10}</Pagination.Item>
+            <Pagination.Item>{11}</Pagination.Item>
+            <Pagination.Item active>{12}</Pagination.Item>
+            <Pagination.Item>{13}</Pagination.Item>
+            <Pagination.Item disabled>{14}</Pagination.Item>
+
+            <Pagination.Ellipsis />
+            <Pagination.Item>{20}</Pagination.Item>
+            <Pagination.Next />
+            <Pagination.Last />
+          </Pagination>
+        </section>
+
+        <div className="carta-form">
+          <Form>
+            <fieldset disabled>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="disabledSelect">Temática</Form.Label>
+                <div className="d-flex flex-column flex-md-row gap-2">
+                  <Form.Select id="disabledSelect">
+                    <option>Selecciona Baraja</option>
+                  </Form.Select>
+                  <Form.Select id="disabledSelect">
+                    <option>Selecciona Tarjeta</option>
+                  </Form.Select>
+                </div>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="disabledTextInput">Datos</Form.Label>
+                <Form.Control id="disabledTextInput" placeholder="Título" />
+                <Form.Control id="disabledTextInput" placeholder="Contenido" />
+              </Form.Group>
+    
+              <Form.Group className="mb-3">
+                <Form.Check
+                  type="checkbox"
+                  id="disabledFieldsetCheck"
+                  label="Can't check this"
+                />
+              </Form.Group>
+              <Button type="submit">Submit</Button>
+            </fieldset>
+          </Form>
+        </div>
       </div>
 
       <div className="actions">
