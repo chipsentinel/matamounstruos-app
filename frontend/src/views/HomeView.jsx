@@ -17,7 +17,7 @@ function HomeView() {
           </Card.Body>
           </Card>
           
-          <div className="home-actions">
+          <div className="actions">
             <Card style={{ width: '18rem' }}>
             <Card.Body>
                 <Card.Title>Crea tu baraja</Card.Title>
