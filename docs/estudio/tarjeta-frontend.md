@@ -48,6 +48,7 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | `frontend/.gitignore` | Revisado | Evita subir `node_modules/`, `dist/` y archivos locales. |
 | Bootstrap | Configurado | Instalado e importado globalmente en `frontend/src/main.jsx`. |
 | SweetAlert2 | Instalado | Disponible para mensajes y confirmaciones en componentes concretos. |
+| Logotipo | Añadido | Se guarda en `frontend/src/assets/` para usarlo en la navegacion y pantalla principal. |
 
 Comandos usados en la fase inicial:
 
@@ -64,9 +65,9 @@ npm run dev
 | Pantalla | Que muestra | Acciones | Estado |
 | --- | --- | --- | --- |
 | `HomeView` | Pantalla principal de la aplicacion. | Acceso inicial a las secciones principales. | Estructura inicial creada. |
-| `BarajasView` | Gestion de barajas. | Listar, crear, editar y eliminar barajas mas adelante. | Estructura inicial creada. |
-| `CartasView` | Gestion de cartas. | Listar, crear, editar y eliminar cartas mas adelante. | Estructura inicial creada. |
-| `TarjetasView` | Gestion de tarjetas de teoria. | Consultar y crear tarjetas mas adelante. | Estructura inicial creada. |
+| `BarajaView` | Gestion conjunta de barajas y cartas. | Listar, crear, editar y eliminar contenido de baraja mas adelante. | Estructura inicial creada. |
+| `TematicaView` | Gestion de tarjetas tematicas. | Consultar y crear tarjetas mas adelante. | Estructura inicial creada. |
+| `CardUsuario` | Acceso previo para secciones administrativas. | Simular identificacion antes de entrar en `Baraja` o `Tematica`. | Estructura inicial creada. |
 | `JuegoView` | Vista principal del juego. | Seleccionar baraja y obtener carta aleatoria mas adelante. | Estructura inicial creada. |
 
 Las pantallas se han creado dentro de `frontend/src/views/`.
@@ -78,29 +79,36 @@ En esta fase no se usa `react-router-dom`. La aplicacion cambia de vista mediant
 | Componente | Uso | Datos que necesita |
 | --- | --- | --- |
 | `Navbar` | Permite cambiar entre las vistas principales. | `vistaActual` y `cambiarVista`. |
+| `CardUsuario` | Muestra el acceso de usuario antes de entrar en zonas administrativas. | `onAcceso`. |
 | `HomeView` | Pantalla de inicio. | No necesita datos externos en esta fase. |
-| `BarajasView` | Pantalla de gestion de barajas. | Mas adelante consumira la API de barajas. |
-| `CartasView` | Pantalla de gestion de cartas. | Mas adelante consumira la API de cartas. |
-| `TarjetasView` | Pantalla de gestion de tarjetas. | Mas adelante consumira la API de tarjetas. |
+| `BarajaView` | Pantalla de gestion de barajas y cartas. | Mas adelante consumira las API de barajas y cartas. |
+| `TematicaView` | Pantalla de gestion de tarjetas tematicas. | Mas adelante consumira la API de tarjetas. |
 | `JuegoView` | Pantalla del flujo de juego. | Mas adelante consumira la API de juego. |
 
 Estructura inicial del frontend:
 
 ```text
 frontend/src/
+  assets/
+    logo-full.webp
+    logo-icon.webp
   components/
     Navbar.jsx
+    CardUsuario.jsx
   views/
     HomeView.jsx
-    BarajasView.jsx
-    CartasView.jsx
-    TarjetasView.jsx
+    BarajaView.jsx
+    TematicaView.jsx
     JuegoView.jsx
   App.jsx
   main.jsx
 ```
 
 Se evita crear carpetas adicionales como `layout/`, `ui/` o `services/` hasta que sean necesarias. La prioridad en esta fase es mantener el proyecto simple, claro y mantenible.
+
+La navegacion visible se simplifica a `Inicio`, `Baraja`, `Tematica` y `Juego`. El logo funciona como acceso a inicio.
+
+`Baraja` agrupa la gestion de barajas y cartas para reducir secciones en la interfaz. `Tematica` representa las tarjetas de teoria con un nombre mas claro para el usuario.
 
 ## Formularios
 
@@ -112,16 +120,18 @@ Se evita crear carpetas adicionales como `layout/`, `ui/` o `services/` hasta qu
 ## Estados de pantalla
 
 - `home`: muestra `HomeView`.
-- `barajas`: muestra `BarajasView`.
-- `cartas`: muestra `CartasView`.
-- `tarjetas`: muestra `TarjetasView`.
+- `usuario`: muestra `CardUsuario`.
+- `baraja`: muestra `BarajaView`.
+- `tematica`: muestra `TematicaView`.
 - `juego`: muestra `JuegoView`.
 
 `App.jsx` mantiene el estado `vistaActual` con `useState`.
 
-La funcion `setVistaActual` se pasa a `Navbar` como `cambiarVista`, para que los botones de navegacion puedan cambiar la vista activa.
+La funcion `cambiarVista` se pasa a `Navbar` para controlar la navegacion desde un unico punto.
 
 `Navbar` tambien recibe `vistaActual` para marcar visualmente el boton de la seccion activa.
+
+Las secciones `baraja` y `tematica` requieren pasar antes por `CardUsuario` si todavia no hay un usuario activo. En esta fase el acceso se simula y queda preparado para conectarlo mas adelante con una peticion `POST`.
 
 ## Contenido de una tarjeta
 
@@ -148,8 +158,9 @@ Pendiente.
 | Caso | Problema | Solucion |
 | --- | --- | --- |
 | `vistaActual` aparece subrayado | La variable se recibe en `Navbar`, pero no se usa. | Usarla para marcar el boton activo o no pasarla como prop. |
-| No cambia la pantalla | El boton no llama a `cambiarVista` con el nombre correcto. | Revisar que coincidan valores como `barajas`, `cartas` o `juego`. |
+| No cambia la pantalla | El boton no llama a `cambiarVista` con el nombre correcto. | Revisar que coincidan valores como `baraja`, `tematica` o `juego`. |
 | No carga una vista | El componente no esta importado o exportado correctamente. | Revisar `import`, nombre del archivo y `export default`. |
+| No aparece `CardUsuario` | La `Navbar` llama directamente a `setVistaActual`. | Pasar la funcion `cambiarVista` para aplicar la comprobacion de usuario. |
 
 ## Material para futuras tarjetas
 
@@ -158,6 +169,7 @@ Pendiente.
 | Estructura inicial React | Separar componentes reutilizables y vistas principales. | `components/Navbar.jsx` y `views/*View.jsx`. |
 | Navegacion por estado | Cambiar de pantalla sin instalar router. | `useState`, `vistaActual` y `setVistaActual`. |
 | Navbar con Bootstrap | Crear una navegacion sencilla y responsive. | Clases `navbar`, `btn`, `d-flex`, `flex-wrap`. |
+| Acceso previo | Proteger secciones administrativas sin autenticacion real todavia. | `usuarioActivo`, `vistaPendiente` y `CardUsuario`. |
 
 Plantilla para ampliar tarjetas:
 
