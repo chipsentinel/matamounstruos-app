@@ -11,6 +11,9 @@ La intención es preparar cómo se mostrará el contenido de repaso al usuario d
 - [Configuracion inicial](#configuracion-inicial)
 - [Pantallas](#pantallas)
 - [Componentes](#componentes)
+- [React-Bootstrap](#react-bootstrap)
+- [Imagenes y assets](#imagenes-y-assets)
+- [Estructura responsive base](#estructura-responsive-base)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Contenido de una tarjeta](#contenido-de-una-tarjeta)
@@ -34,6 +37,7 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | Mobile-first | Forma de diseñar empezando por móvil. | Después se adapta a escritorio. |
 | `fetch()` | API de JavaScript para pedir datos al backend. | Se usara para consumir la API REST. |
 | Bootstrap | Framework CSS responsive. | Instalado e importado en `main.jsx`. |
+| React-Bootstrap | Componentes Bootstrap adaptados a React. | Se usa para trabajar con `Card`, `Form` y `Button` como componentes JSX. |
 | SweetAlert2 | Libreria para alertas y confirmaciones. | Instalado; se importara en los componentes donde se use. |
 
 ## Configuracion inicial
@@ -47,6 +51,7 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | `npm run dev` | Comprobado | Arranca Vite en `http://localhost:5173/`. |
 | `frontend/.gitignore` | Revisado | Evita subir `node_modules/`, `dist/` y archivos locales. |
 | Bootstrap | Configurado | Instalado e importado globalmente en `frontend/src/main.jsx`. |
+| React-Bootstrap | Instalado | Permite usar componentes como `Card`, `Form` y `Button` desde React. |
 | SweetAlert2 | Instalado | Disponible para mensajes y confirmaciones en componentes concretos. |
 | Logotipo | Añadido | Se guarda en `frontend/src/assets/` para usarlo en la navegacion y pantalla principal. |
 
@@ -56,7 +61,7 @@ Comandos usados en la fase inicial:
 npm create vite@latest frontend
 cd frontend
 npm install
-npm install bootstrap sweetalert2
+npm install bootstrap sweetalert2 react-bootstrap
 npm run dev
 ```
 
@@ -110,12 +115,126 @@ La navegacion visible se simplifica a `Inicio`, `Baraja`, `Tematica` y `Juego`. 
 
 `Baraja` agrupa la gestion de barajas y cartas para reducir secciones en la interfaz. `Tematica` representa las tarjetas de teoria con un nombre mas claro para el usuario.
 
+## React-Bootstrap
+
+Bootstrap puede usarse de dos formas en el frontend:
+
+| Forma | Ejemplo | Uso |
+| --- | --- | --- |
+| Clases Bootstrap | `className="container py-4"` | Utilidades de layout, espaciado, flex y botones simples. |
+| Componentes React-Bootstrap | `<Card>`, `<Form>`, `<Button>` | Componentes visuales ya adaptados a React. |
+
+Cuando se copia un ejemplo de Bootstrap HTML oficial dentro de React, hay que adaptarlo a JSX:
+
+| HTML | JSX |
+| --- | --- |
+| `class` | `className` |
+| `for` | `htmlFor` |
+| `<input>` | `<input />` |
+| `checked` | `defaultChecked` si no se controla con estado |
+
+Con React-Bootstrap esta conversion se reduce porque se trabaja directamente con componentes:
+
+```jsx
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+```
+
+Esta opcion se usa para mantener la maquetacion sencilla y evitar crear componentes visuales desde cero.
+
+## Imagenes y assets
+
+Las imagenes dentro de `frontend/src/assets/` se importan desde el componente que las usa.
+
+Ejemplo:
+
+```jsx
+import logoFull from '../assets/logo-full.webp'
+```
+
+Despues se usa la variable importada:
+
+```jsx
+<Card.Img variant="top" src={logoFull} />
+```
+
+No se recomienda usar rutas relativas directas como `src="../assets/logo-full.webp"` en componentes React, porque Vite gestiona los assets mediante imports.
+
+Si una imagen estuviera en `frontend/public/`, entonces se podria referenciar desde la raiz publica.
+
+## Estructura responsive base
+
+Cada vista puede empezar con una seccion contenedora:
+
+```jsx
+<section className="container py-4">
+  ...
+</section>
+```
+
+Este contenedor ayuda a:
+
+- Agrupar todo el contenido de la vista.
+- Mantener margenes responsive.
+- Separar visualmente la vista de la navegacion.
+- Devolver un unico elemento padre desde el `return`.
+
+Cuando una vista contiene varias cards, React necesita que esten dentro de un elemento padre:
+
+```jsx
+<section className="container py-4 d-flex flex-column gap-3">
+  <Card>...</Card>
+  <Card>...</Card>
+</section>
+```
+
+Para organizar cards relacionadas sin decidir todavia todo el responsive, se puede usar un `div` intermedio:
+
+```jsx
+<div className="d-flex flex-column gap-3">
+  <Card>...</Card>
+  <Card>...</Card>
+</div>
+```
+
+Mas adelante ese `div` podra cambiarse por un grid Bootstrap:
+
+```jsx
+<div className="row g-3">
+  <div className="col-12 col-md-4">...</div>
+  <div className="col-12 col-md-4">...</div>
+  <div className="col-12 col-md-4">...</div>
+</div>
+```
+
+La idea es empezar en columna para movil y adaptar despues a escritorio.
+
 ## Formularios
 
 | Campo | Tipo | Obligatorio | Notas |
 | --- | --- | --- | --- |
-| Pendiente | Pendiente | Pendiente | Pendiente |
-| Pendiente | Pendiente | Pendiente | Pendiente |
+| Nombre | Texto | Si | Identifica al usuario de forma simple. |
+| Password | Password | Si | Se usara para el acceso o registro. |
+| Tipo de acceso | Radio | Si | Permite elegir entre conectarse o registrarse. |
+
+En `CardUsuario`, el formulario puede empezar con React-Bootstrap:
+
+```jsx
+<Form onSubmit={manejarAcceso}>
+  <Form.Group className="mb-3" controlId="usuarioNombre">
+    <Form.Label>Nombre</Form.Label>
+    <Form.Control type="text" placeholder="Nick" />
+  </Form.Group>
+
+  <Form.Group className="mb-3" controlId="usuarioPassword">
+    <Form.Label>Password</Form.Label>
+    <Form.Control type="password" placeholder="Password" />
+  </Form.Group>
+</Form>
+```
+
+En esta fase los botones de acceso pueden simular la entrada del usuario. Mas adelante el formulario se conectara con una peticion `POST`.
 
 ## Estados de pantalla
 
@@ -161,6 +280,8 @@ Pendiente.
 | No cambia la pantalla | El boton no llama a `cambiarVista` con el nombre correcto. | Revisar que coincidan valores como `baraja`, `tematica` o `juego`. |
 | No carga una vista | El componente no esta importado o exportado correctamente. | Revisar `import`, nombre del archivo y `export default`. |
 | No aparece `CardUsuario` | La `Navbar` llama directamente a `setVistaActual`. | Pasar la funcion `cambiarVista` para aplicar la comprobacion de usuario. |
+| La imagen no se muestra | Se usa una ruta relativa directa a `src/assets`. | Importar la imagen y usar la variable en `src`. |
+| Varias cards dan error | El `return` devuelve varios elementos hermanos sin padre. | Envolverlas en `section`, `div` o fragment. |
 
 ## Material para futuras tarjetas
 
@@ -170,6 +291,9 @@ Pendiente.
 | Navegacion por estado | Cambiar de pantalla sin instalar router. | `useState`, `vistaActual` y `setVistaActual`. |
 | Navbar con Bootstrap | Crear una navegacion sencilla y responsive. | Clases `navbar`, `btn`, `d-flex`, `flex-wrap`. |
 | Acceso previo | Proteger secciones administrativas sin autenticacion real todavia. | `usuarioActivo`, `vistaPendiente` y `CardUsuario`. |
+| React-Bootstrap | Usar componentes Bootstrap dentro de React. | `Card`, `Form`, `Button`. |
+| Assets en Vite | Cargar imagenes desde `src/assets`. | `import logoFull from '../assets/logo-full.webp'`. |
+| Cards responsive | Agrupar cards para preparar desktop. | `section`, `d-flex`, `row`, `col-md-*`. |
 
 Plantilla para ampliar tarjetas:
 
@@ -208,6 +332,9 @@ Pendiente.
 - [Configuracion inicial](#configuracion-inicial)
 - [Pantallas](#pantallas)
 - [Componentes](#componentes)
+- [React-Bootstrap](#react-bootstrap)
+- [Imagenes y assets](#imagenes-y-assets)
+- [Estructura responsive base](#estructura-responsive-base)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Material para futuras tarjetas](#material-para-futuras-tarjetas)
