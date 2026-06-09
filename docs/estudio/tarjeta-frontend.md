@@ -14,6 +14,7 @@ La intención es preparar cómo se mostrará el contenido de repaso al usuario d
 - [React-Bootstrap](#react-bootstrap)
 - [Imagenes y assets](#imagenes-y-assets)
 - [Estructura responsive base](#estructura-responsive-base)
+- [BarajaView](#barajaview)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Contenido de una tarjeta](#contenido-de-una-tarjeta)
@@ -210,6 +211,63 @@ Mas adelante ese `div` podra cambiarse por un grid Bootstrap:
 
 La idea es empezar en columna para movil y adaptar despues a escritorio.
 
+## BarajaView
+
+`BarajaView` agrupa la gestion de barajas y cartas dentro de una misma pantalla.
+
+La estructura inicial queda dividida en bloques:
+
+| Bloque | Uso | Estado |
+| --- | --- | --- |
+| Header | Presenta la vista de gestion de barajas y cartas. | Maquetacion inicial. |
+| Acciones | Botones para `Crear`, `Editar` y `Borrar`. | Visual, sin logica conectada. |
+| Selector de tipo | Botones para elegir entre `Baraja` y `Carta`. | Visual, sin estado especifico todavia. |
+| Listado | Muestra barajas y, mas adelante, sus cartas. | Preparado con `Accordion`. |
+| Paginacion | Deja preparada la navegacion por paginas. | Preparada con `Pagination`. |
+| `baraja-form` | Espacio para crear, editar o borrar barajas. | Formulario placeholder. |
+| `carta-form` | Espacio para crear, editar o borrar cartas. | Formulario placeholder. |
+
+El listado de barajas se prepara con `Accordion`:
+
+```jsx
+<Accordion defaultActiveKey="0" flush>
+  <Accordion.Item eventKey="0">
+    <Accordion.Header>Baraja: Autoría Gitflow</Accordion.Header>
+    <Accordion.Body>
+      Aquí se verán las cartas de esta baraja.
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>
+```
+
+Este componente encaja porque permite desplegar una baraja y mostrar sus cartas dentro.
+
+Debajo del listado se puede usar `Pagination`:
+
+```jsx
+<Pagination>
+  <Pagination.First />
+  <Pagination.Prev />
+  <Pagination.Item active>{1}</Pagination.Item>
+  <Pagination.Next />
+  <Pagination.Last />
+</Pagination>
+```
+
+La paginacion queda como estructura visual. Mas adelante se conectara con los datos reales si el listado crece.
+
+Los formularios se separan para no mezclar responsabilidades:
+
+```text
+baraja-form
+  crear / editar / borrar barajas
+
+carta-form
+  crear / editar / borrar cartas
+```
+
+Mas adelante los botones de accion y tipo decidiran que formulario se muestra y que operacion se prepara.
+
 ## Formularios
 
 | Campo | Tipo | Obligatorio | Notas |
@@ -217,6 +275,11 @@ La idea es empezar en columna para movil y adaptar despues a escritorio.
 | Nombre | Texto | Si | Identifica al usuario de forma simple. |
 | Password | Password | Si | Se usara para el acceso o registro. |
 | Tipo de acceso | Radio | Si | Permite elegir entre conectarse o registrarse. |
+| Nombre de baraja | Texto | Si | Se usara en `baraja-form`. |
+| Descripcion de baraja | Texto | No | Se usara en `baraja-form`. |
+| Baraja seleccionada | Select | Si | Permite relacionar cartas con una baraja. |
+| Carta seleccionada | Select | Segun accion | Se usara al editar o borrar cartas. |
+| Tipo de resultado | Select | Si | Valores previstos: `APTO`, `NO_APTO`, `PRUEBA_OTRA_VEZ`. |
 
 En `CardUsuario`, el formulario puede empezar con React-Bootstrap:
 
@@ -282,6 +345,7 @@ Pendiente.
 | No aparece `CardUsuario` | La `Navbar` llama directamente a `setVistaActual`. | Pasar la funcion `cambiarVista` para aplicar la comprobacion de usuario. |
 | La imagen no se muestra | Se usa una ruta relativa directa a `src/assets`. | Importar la imagen y usar la variable en `src`. |
 | Varias cards dan error | El `return` devuelve varios elementos hermanos sin padre. | Envolverlas en `section`, `div` o fragment. |
+| Dos selects tienen el mismo id | Se copian varios ejemplos con `id` repetido. | Usar identificadores unicos como `selectBaraja` y `selectCarta`. |
 
 ## Material para futuras tarjetas
 
@@ -294,6 +358,8 @@ Pendiente.
 | React-Bootstrap | Usar componentes Bootstrap dentro de React. | `Card`, `Form`, `Button`. |
 | Assets en Vite | Cargar imagenes desde `src/assets`. | `import logoFull from '../assets/logo-full.webp'`. |
 | Cards responsive | Agrupar cards para preparar desktop. | `section`, `d-flex`, `row`, `col-md-*`. |
+| Barajas desplegables | Mostrar barajas y cartas en un mismo panel. | `Accordion` y `Pagination`. |
+| Formularios separados | Mantener barajas y cartas en bloques distintos. | `baraja-form` y `carta-form`. |
 
 Plantilla para ampliar tarjetas:
 
@@ -335,6 +401,7 @@ Pendiente.
 - [React-Bootstrap](#react-bootstrap)
 - [Imagenes y assets](#imagenes-y-assets)
 - [Estructura responsive base](#estructura-responsive-base)
+- [BarajaView](#barajaview)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Material para futuras tarjetas](#material-para-futuras-tarjetas)
