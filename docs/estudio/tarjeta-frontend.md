@@ -15,6 +15,7 @@ La intención es preparar cómo se mostrará el contenido de repaso al usuario d
 - [Imagenes y assets](#imagenes-y-assets)
 - [Estructura responsive base](#estructura-responsive-base)
 - [BarajaView](#barajaview)
+- [TematicaView](#tematicaview)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Contenido de una tarjeta](#contenido-de-una-tarjeta)
@@ -268,6 +269,46 @@ carta-form
 
 Mas adelante los botones de accion y tipo decidiran que formulario se muestra y que operacion se prepara.
 
+## TematicaView
+
+`TematicaView` agrupa la gestion inicial de tarjetas tematicas.
+
+La estructura inicial queda dividida en bloques:
+
+| Bloque | Uso | Estado |
+| --- | --- | --- |
+| Header | Presenta la vista de tematica y tarjetas de teoria. | Maquetacion inicial. |
+| Acciones | Botones para `Crear`, `Editar` y `Borrar`. | Visual, sin logica conectada. |
+| Listado | Muestra barajas y, mas adelante, las tarjetas asociadas. | Preparado con `Accordion`. |
+| Paginacion | Deja preparada la navegacion por paginas. | Preparada con `Pagination`. |
+| Formulario | Espacio para crear o modificar tarjetas. | Formulario placeholder. |
+
+El listado se prepara tambien con `Accordion`, igual que en `BarajaView`, porque una baraja puede tener varias tarjetas tematicas asociadas:
+
+```jsx
+<Accordion defaultActiveKey="0" flush>
+  <Accordion.Item eventKey="0">
+    <Accordion.Header>Baraja: Autoría Gitflow</Accordion.Header>
+    <Accordion.Body>
+      Aquí se verán las tarjetas de esta baraja.
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>
+```
+
+La paginacion queda debajo del listado para mantener el mismo patron visual que en `BarajaView`.
+
+El formulario inicial de tematica queda preparado con:
+
+```text
+select de baraja
+select de tarjeta
+titulo
+contenido
+```
+
+En esta fase los botones `Editar` y `Borrar` quedan como parte visual del panel. La funcionalidad real se añadira cuando se conecte el frontend con la API.
+
 ## Formularios
 
 | Campo | Tipo | Obligatorio | Notas |
@@ -280,6 +321,9 @@ Mas adelante los botones de accion y tipo decidiran que formulario se muestra y 
 | Baraja seleccionada | Select | Si | Permite relacionar cartas con una baraja. |
 | Carta seleccionada | Select | Segun accion | Se usara al editar o borrar cartas. |
 | Tipo de resultado | Select | Si | Valores previstos: `APTO`, `NO_APTO`, `PRUEBA_OTRA_VEZ`. |
+| Tarjeta seleccionada | Select | Segun accion | Se usara al editar o borrar tarjetas. |
+| Titulo de tarjeta | Texto | Si | Titulo de la tarjeta tematica. |
+| Contenido de tarjeta | Texto | Si | Explicacion o material de repaso. |
 
 En `CardUsuario`, el formulario puede empezar con React-Bootstrap:
 
@@ -360,6 +404,7 @@ Pendiente.
 | Cards responsive | Agrupar cards para preparar desktop. | `section`, `d-flex`, `row`, `col-md-*`. |
 | Barajas desplegables | Mostrar barajas y cartas en un mismo panel. | `Accordion` y `Pagination`. |
 | Formularios separados | Mantener barajas y cartas en bloques distintos. | `baraja-form` y `carta-form`. |
+| Tematicas desplegables | Mostrar tarjetas asociadas a una baraja. | `Accordion`, `Pagination` y formulario de tarjeta. |
 
 Plantilla para ampliar tarjetas:
 
@@ -402,6 +447,7 @@ Pendiente.
 - [Imagenes y assets](#imagenes-y-assets)
 - [Estructura responsive base](#estructura-responsive-base)
 - [BarajaView](#barajaview)
+- [TematicaView](#tematicaview)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Material para futuras tarjetas](#material-para-futuras-tarjetas)
