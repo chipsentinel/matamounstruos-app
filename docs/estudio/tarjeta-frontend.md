@@ -23,7 +23,7 @@ La intención es preparar cómo se mostrará el contenido de repaso al usuario d
 
 Preparar el frontend de Matamounstruos App con React y Vite, siguiendo un enfoque responsive mobile-first.
 
-La issue 4 se centra en crear la carpeta `frontend/`, instalar la base del proyecto, conectar más adelante con el backend mediante `fetch()` y construir la interfaz primero para móvil y después para escritorio.
+La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar la base del proyecto, conectar más adelante con el backend mediante `fetch()` y construir la interfaz primero para móvil y después para escritorio.
 
 ## Conceptos principales
 
