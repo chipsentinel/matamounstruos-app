@@ -27,7 +27,7 @@ La intención es preparar los endpoints, validaciones y respuestas que más adel
 
 Preparar el backend REST de Matamounstruos App para gestionar barajas, cartas y el flujo principal del juego.
 
-La issue 3 se centra en configurar Express, conectar con MariaDB, crear CRUD para Baraja y Carta, y exponer endpoints de juego para obtener una carta aleatoria y mostrar una TarjetaTeoria cuando corresponda.
+La fase inicial del backend se centra en configurar Express, conectar con MariaDB, crear CRUD para Baraja y Carta, y exponer endpoints de juego para obtener una carta aleatoria y mostrar una TarjetaTeoria cuando corresponda.
 
 ## Conceptos principales
 

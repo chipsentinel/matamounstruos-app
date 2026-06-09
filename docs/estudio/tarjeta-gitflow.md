@@ -28,6 +28,7 @@ El objetivo es trabajar de forma ordenada, dejando un historial claro de cambios
 - [Guardar cambios temporalmente](#guardar-cambios-temporalmente)
 - [Corregir commits](#corregir-commits)
 - [Revertir cambios](#revertir-cambios)
+- [Volver al estado remoto de una rama](#volver-al-estado-remoto-de-una-rama)
 - [Gitignore](#gitignore)
 - [Etiquetas y versiones](#etiquetas-y-versiones)
 - [Errores frecuentes](#errores-frecuentes)
@@ -635,6 +636,67 @@ Diferencia importante:
 
 Para un proyecto de clase o una rama compartida, `git revert` suele ser más fácil de justificar y más seguro.
 
+## Volver al estado remoto de una rama
+
+Este caso aparece cuando se han creado cambios locales por error y se quiere dejar la rama exactamente igual que está en GitHub.
+
+Ejemplo del proyecto:
+
+- Se estaba trabajando en `feature/frontend-react`.
+- Se crearon archivos o carpetas locales para probar una estructura de frontend.
+- No se queria conservar ese trabajo.
+- El objetivo era volver al estado remoto de `origin/feature/frontend-react`.
+
+Primero se revisa el estado:
+
+```bash
+git status --short
+```
+
+Despues se comprueba la rama actual:
+
+```bash
+git branch --show-current
+```
+
+Si no se esta en la rama correcta:
+
+```bash
+git switch feature/frontend-react
+```
+
+Actualizar la informacion del remoto:
+
+```bash
+git fetch origin
+```
+
+Dejar la rama local igual que la rama remota:
+
+```bash
+git reset --hard origin/feature/frontend-react
+```
+
+Si ademas hay archivos o carpetas nuevas sin seguimiento, se puede comprobar antes que borraria Git:
+
+```bash
+git clean -fdn
+```
+
+Si el resultado es correcto, se eliminan:
+
+```bash
+git clean -fd
+```
+
+Diferencia importante:
+
+- `git pull origin feature/frontend-react --force` no sirve para limpiar todos los cambios locales.
+- `git reset --hard origin/feature/frontend-react` vuelve al ultimo estado conocido de la rama remota.
+- `git clean -fd` elimina archivos nuevos que Git todavia no seguia.
+
+Este flujo debe usarse solo cuando se tiene claro que los cambios locales no se quieren conservar.
+
 ## Gitignore
 
 El archivo `.gitignore` sirve para evitar subir archivos que no deben formar parte del repositorio.
@@ -865,6 +927,7 @@ Este apartado sirve para convertir la guia en tarjetas de estudio dentro de la a
 | Guardar cambios temporales | Apartar cambios sin hacer commit. | `git stash` |
 | Recuperar trabajo | Consultar movimientos anteriores de Git. | `git reflog` |
 | Revertir un commit | Deshacer cambios sin romper el historial compartido. | `git revert id` |
+| Volver al remoto | Descartar cambios locales y dejar la rama como en GitHub. | `git reset --hard origin/rama` |
 | Marcar una entrega | Crear una referencia de version o entrega. | `git tag v1.0.0` |
 | Configurar identidad | Indicar nombre y correo para los commits. | `git config --global user.name` |
 | Clonar repositorio | Descargar el proyecto en otro equipo. | `git clone url` |
