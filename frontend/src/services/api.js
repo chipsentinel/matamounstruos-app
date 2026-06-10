@@ -1,4 +1,4 @@
-// CUIDADO LOS IMPORTS SE PONEN SOLOS CUANDO 'export'
+// CUIDADO no queremos imports hata que diga lo contrario
 
 const API_URL = 'http://localhost:3000'
 
@@ -99,9 +99,28 @@ export function deleteCarta(idCarta, idUsuario) {
 }
 
 // Tarjetas
+export function getTarjetas() {
+    return request('/tarjetas')
+}
+
+export function getIdTarjeta(idTarjeta) {
+    return request(`/tarjetas/${idTarjeta}`)
+}
+
+export function createTarjeta(tarjeta) {
+    return request('/tarjetas',{
+        method: 'POST',
+        body: JSON.stringify(tarjeta),
+    })
+}
 
 // Juego
+export function getCartaAleatoriaDeBaraja(idBaraja) {
+    return request(`/juego/carta/aleatoria/${idBaraja}`)
+}
 
-
+export function getTarjetaAleatoriaDeCarta(idCarta) {
+    return request(`/juego/tarjeta/aleatoria/${idCarta}`)
+}
 
 // especial ojo a escribir bien stringify
