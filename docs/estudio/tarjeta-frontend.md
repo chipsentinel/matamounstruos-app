@@ -118,6 +118,8 @@ La navegacion visible se simplifica a `Inicio`, `Baraja`, `Tematica` y `Juego`. 
 
 `Baraja` agrupa la gestion de barajas y cartas para reducir secciones en la interfaz. `Tematica` representa las tarjetas de teoria con un nombre mas claro para el usuario.
 
+La `Navbar` se implementa con React-Bootstrap para mantener coherencia con el resto de componentes visuales. El logo actua como boton de inicio y las secciones activas se marcan con colores suaves inspirados en la maqueta inicial.
+
 ## React-Bootstrap
 
 Bootstrap puede usarse de dos formas en el frontend:
@@ -440,6 +442,7 @@ Pendiente.
 | Varias cards dan error | El `return` devuelve varios elementos hermanos sin padre. | Envolverlas en `section`, `div` o fragment. |
 | Dos selects tienen el mismo id | Se copian varios ejemplos con `id` repetido. | Usar identificadores unicos como `selectBaraja` y `selectCarta`. |
 | Texto encima de imagen no se coloca bien | Falta un contenedor relativo para posicionar el resultado. | Usar `position-relative` en el padre y `position-absolute` en el texto. |
+| No se aplican estilos de la navbar | `App.css` no esta importado o Bootstrap pisa los estilos propios. | Importar Bootstrap como base en `main.jsx` y `App.css` desde `App.jsx`. |
 
 ## Material para futuras tarjetas
 
@@ -448,6 +451,7 @@ Pendiente.
 | Estructura inicial React | Separar componentes reutilizables y vistas principales. | `components/Navbar.jsx` y `views/*View.jsx`. |
 | Navegacion por estado | Cambiar de pantalla sin instalar router. | `useState`, `vistaActual` y `setVistaActual`. |
 | Navbar con Bootstrap | Crear una navegacion sencilla y responsive. | Clases `navbar`, `btn`, `d-flex`, `flex-wrap`. |
+| Navbar con React-Bootstrap | Mantener la navegacion coherente con el resto de componentes. | `BootstrapNavbar`, `Container`, `Nav`, `Button` y `Form`. |
 | Acceso previo | Proteger secciones administrativas sin autenticacion real todavia. | `usuarioActivo`, `vistaPendiente` y `CardUsuario`. |
 | React-Bootstrap | Usar componentes Bootstrap dentro de React. | `Card`, `Form`, `Button`. |
 | Assets en Vite | Cargar imagenes desde `src/assets`. | `import logoFull from '../assets/logo-full.webp'`. |
