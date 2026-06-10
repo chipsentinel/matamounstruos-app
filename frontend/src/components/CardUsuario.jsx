@@ -9,8 +9,8 @@ function CardUsuario({ onAcceso }) {
   }
 
   return (
-    <section className="container py-4">
-      <Card>
+    <section className="container py-4 view-container">
+      <Card className="view-card">
         <Card.Body>
           <Card.Title>Identificate</Card.Title>
           <Card.Text>
@@ -20,7 +20,7 @@ function CardUsuario({ onAcceso }) {
           <Form onSubmit={manejarAcceso}>
             <Form.Group className="mb-3" controlId="usuarioNick">
               <Form.Label>Nick</Form.Label>
-              <Form.Control type="test" placeholder="Nick" />
+              <Form.Control type="text" placeholder="Nick" />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="usuarioPassword">

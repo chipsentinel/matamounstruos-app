@@ -8,8 +8,8 @@ import Form from 'react-bootstrap/Form';
 
 function BarajaView() {
   return (
-    <section className="container py-4 d-flex flex-column gap-3">
-      <Card style={{ width: '18rem' }} className="mb-2">
+    <section className="container py-4 d-flex flex-column gap-3 view-container">
+      <Card className="view-card mb-2">
         <Card.Body>
           <Card.Title> Gestión de Barajas y Cartas </Card.Title>
           <Card.Text>
@@ -18,7 +18,7 @@ function BarajaView() {
         </Card.Body>
       </Card>
       
-      <div className="baraja-panel">
+      <div className="baraja-panel view-panel">
         <ButtonGroup size="lg" className="mb-2">
           <Button>Crear</Button>
           <Button>Editar</Button>
@@ -68,24 +68,24 @@ function BarajaView() {
 
         <div className="baraja-form">
           <Form>
-            <fieldset disabled>
+            <fieldset>
               <Form.Group className="mb-3">
-                <Form.Label htmlFor="disabledSelect">Barajas</Form.Label>
-                <Form.Select id="disabledSelect">
+                <Form.Label htmlFor="selectBarajaForm">Barajas</Form.Label>
+                <Form.Select id="selectBarajaForm">
                   <option>Selecciona Baraja</option>
                 </Form.Select>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label htmlFor="disabledTextInput">Datos</Form.Label>
-                <Form.Control id="disabledTextInput" placeholder="Nombre" />
+                <Form.Label htmlFor="inputNombreBaraja">Datos</Form.Label>
+                <Form.Control id="inputNombreBaraja" placeholder="Nombre" />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Control id="disabledTextInput" placeholder="Escribe aquí la descripcion" />
+                <Form.Control id="inputDescripcionBaraja" placeholder="Escribe aquí la descripcion" />
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Check
                   type="checkbox"
-                  id="disabledFieldsetCheck"
+                  id="checkBarajaForm"
                   label="Can't check this"
                 />
               </Form.Group>
@@ -96,31 +96,31 @@ function BarajaView() {
         </div>
         <div className="carta-form">
           <Form>
-            <fieldset disabled>
+            <fieldset>
               <Form.Group className="mb-3">
-                <Form.Label htmlFor="disabledSelect">Cartas</Form.Label>
+                <Form.Label htmlFor="selectBarajaCarta">Cartas</Form.Label>
                 <div className="d-flex flex-column flex-md-row gap-2">
-                  <Form.Select id="disabledSelect">
+                  <Form.Select id="selectBarajaCarta">
                     <option>Selecciona Baraja</option>
                   </Form.Select>
-                  <Form.Select id="disabledSelect">
+                  <Form.Select id="selectCartaForm">
                     <option>Selecciona Carta</option>
                   </Form.Select>
                 </div>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label htmlFor="disabledTextInput">Datos</Form.Label>
-                <Form.Control id="disabledTextInput" placeholder="Nombre" />
+                <Form.Label htmlFor="inputNombreCarta">Datos</Form.Label>
+                <Form.Control id="inputNombreCarta" placeholder="Nombre" />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Select id="disabledSelect">
+                <Form.Select id="selectTipoResultado">
                     <option>Tipo de Resultado</option>
                   </Form.Select>
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Check
                   type="checkbox"
-                  id="disabledFieldsetCheck"
+                  id="checkCartaForm"
                   label="Can't check this"
                 />
               </Form.Group>
@@ -130,16 +130,16 @@ function BarajaView() {
         </div>
       </div>
 
-      <div className="actions">
-            <Card style={{ width: '18rem' }}>
-            <Card.Body>
-                <Card.Title>Crea tu temática</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Infenta tus tarjetas</Card.Subtitle>
-                <Card.Text>
-                Diseña tu propio material para jugar, repasar, memorizar...
-                </Card.Text>
-                <Card.Link href="#">Card Link</Card.Link>
-            </Card.Body>
+      <div className="actions view-actions">
+           <Card className="action-card">
+              <Card.Body>
+                  <Card.Title>Crea tu temática</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">Inventa tus tarjetas</Card.Subtitle>
+                  <Card.Text>
+                  Diseña tu propio material para jugar, repasar, memorizar...
+                  </Card.Text>
+                  <Card.Link href="#">Card Link</Card.Link>
+              </Card.Body>
             </Card>
           </div>
     </section>

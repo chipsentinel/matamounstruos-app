@@ -6,8 +6,8 @@ import cartaStandar from '../assets/carta-standar.webp'
 
 function JuegoView() {
   return (
-    <section className="container py-4 d-flex flex-column gap-3">
-      <Card style={{ width: '18rem' }} className="mb-2">
+    <section className="container py-4 d-flex flex-column gap-3 view-container">
+      <Card className="view-card mb-2">
         <Card.Body>
           <Card.Title> Juego </Card.Title>
           <Card.Text>
@@ -16,23 +16,23 @@ function JuegoView() {
         </Card.Body>
       </Card>
 
-      <div className="juego-panel">
+      <div className="juego-panel view-panel">
         <section className="mb-4">
             {/* Aqui he dudado entre elegir acordeon sobre form */}
             <Form.Group className="mb-3">
-                <Form.Select id="disabledSelect">
+                <Form.Select id="selectBarajaJuego">
                     <option>Elige tu Baraja</option>
                 </Form.Select>
             </Form.Group>
-            <Card style={{ width: '18rem' }} className="mb-3">
+            <Card className="game-card mb-3">
             <div className="position-relative">
-                <Card.Img variant="top" src={cartaStandar} />
+               <Card.Img className="card-image" variant="top" src={cartaStandar} />
 
                 {/* Resultado visual de ejemplo. Mas adelante vendra de la API. */}
-                <div className="position-absolute top-50 start-50 translate-middle text-center bg-light bg-opacity-75 p-2 rounded">
-                <h3 className="mb-1">Reina</h3>
-                <p className="mb-1">Valor: 11</p>
-                <strong>PRUEBA_OTRA_VEZ</strong>
+                <div className="card-result-content position-absolute top-50 start-50 translate-middle text-center bg-light bg-opacity-75 p-2 rounded">
+                    <h3 className="mb-1">Reina</h3>
+                    <p className="mb-1">Valor: 11</p>
+                    <strong>PRUEBA_OTRA_VEZ</strong>
                 </div>
             </div>
 
@@ -43,7 +43,7 @@ function JuegoView() {
             </Card>
 
             {/* Esta tarjeta solo se mostrara si el resultado es NO_APTO o PRUEBA_OTRA_VEZ. */}
-            <Card style={{ width: '18rem' }}>
+            <Card className="game-card">
             <Card.Body>
                 <Card.Title>Tarjeta temática</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
@@ -58,8 +58,8 @@ function JuegoView() {
         </section>
       </div>
 
-      <div className="actions">
-            <Card style={{ width: '18rem' }}>
+      <div className="actions view-actions">
+            <Card className="action-card">
             <Card.Body>
                 <Card.Title>Crea tu baraja</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Baraja y Cartas</Card.Subtitle>
@@ -70,10 +70,10 @@ function JuegoView() {
             </Card.Body>
             </Card>
 
-            <Card style={{ width: '18rem' }}>
+            <Card className="action-card">
             <Card.Body>
                 <Card.Title>Crea tu temática</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Infenta tus tarjetas</Card.Subtitle>
+                <Card.Subtitle className="mb-2 text-muted">Inventa tus tarjetas</Card.Subtitle>
                 <Card.Text>
                 Diseña tu propio material para jugar, repasar, memorizar...
                 </Card.Text>

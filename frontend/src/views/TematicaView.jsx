@@ -7,8 +7,8 @@ import Form from 'react-bootstrap/Form';
 
 function TematicaView() {
   return (
-    <section className="container py-4 d-flex flex-column gap-3">
-      <Card style={{ width: '18rem' }} className="mb-2">
+    <section className="container py-4 d-flex flex-column gap-3 view-container">
+      <Card className="view-card mb-2">
         <Card.Body>
           <Card.Title> Temática </Card.Title>
           <Card.Text>
@@ -18,7 +18,7 @@ function TematicaView() {
       </Card>
       
       {/* Tarjeta ( queda previsto para el futuro PUT y DELETE) */}
-      <div className="tematica-panel">
+      <div className="tematica-panel view-panel">
         <ButtonGroup size="lg" className="mb-2">
           <Button>Crear</Button>
           <Button>Editar</Button> {/* No funciona */}
@@ -64,28 +64,28 @@ function TematicaView() {
 
         <div className="carta-form">
           <Form>
-            <fieldset disabled>
+            <fieldset>
               <Form.Group className="mb-3">
-                <Form.Label htmlFor="disabledSelect">Temática</Form.Label>
+                <Form.Label htmlFor="selectBarajaTematica">Temática</Form.Label>
                 <div className="d-flex flex-column flex-md-row gap-2">
-                  <Form.Select id="disabledSelect">
+                  <Form.Select id="selectBarajaTematica">
                     <option>Selecciona Baraja</option>
                   </Form.Select>
-                  <Form.Select id="disabledSelect">
+                  <Form.Select id="selectTarjetaTematica">
                     <option>Selecciona Tarjeta</option>
                   </Form.Select>
                 </div>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label htmlFor="disabledTextInput">Datos</Form.Label>
-                <Form.Control id="disabledTextInput" placeholder="Título" />
-                <Form.Control id="disabledTextInput" placeholder="Contenido" />
+                <Form.Label htmlFor="inputTituloTarjeta">Datos</Form.Label>
+                <Form.Control id="inputTituloTarjeta" placeholder="Título" />
+                <Form.Control id="inputContenidoTarjeta" placeholder="Contenido" />
               </Form.Group>
     
               <Form.Group className="mb-3">
                 <Form.Check
                   type="checkbox"
-                  id="disabledFieldsetCheck"
+                  id="checkTematicaForm"
                   label="Can't check this"
                 />
               </Form.Group>
@@ -95,8 +95,8 @@ function TematicaView() {
         </div>
       </div>
 
-      <div className="actions">
-            <Card style={{ width: '18rem' }}>
+      <div className="actions view-actions">
+            <Card className="action-card">
             <Card.Body>
                 <Card.Title>Crea tu baraja</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Baraja y Cartas</Card.Subtitle>
