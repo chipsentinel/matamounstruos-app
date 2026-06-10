@@ -16,6 +16,7 @@ La intención es preparar cómo se mostrará el contenido de repaso al usuario d
 - [Estructura responsive base](#estructura-responsive-base)
 - [BarajaView](#barajaview)
 - [TematicaView](#tematicaview)
+- [JuegoView](#juegoview)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Contenido de una tarjeta](#contenido-de-una-tarjeta)
@@ -309,6 +310,53 @@ contenido
 
 En esta fase los botones `Editar` y `Borrar` quedan como parte visual del panel. La funcionalidad real se añadira cuando se conecte el frontend con la API.
 
+## JuegoView
+
+`JuegoView` prepara la estructura visual del flujo de juego.
+
+La estructura inicial queda dividida en bloques:
+
+| Bloque | Uso | Estado |
+| --- | --- | --- |
+| Header | Presenta la vista de juego. | Maquetacion inicial. |
+| Selector de baraja | Permite elegir la baraja que se usara para jugar. | Visual, sin datos de API. |
+| Carta visual | Muestra una carta base con resultado de ejemplo. | Preparada con asset local. |
+| Resultado | Deja espacio para `nombre`, `valor` y `tipoResultado`. | Placeholder visual. |
+| Tarjeta tematica | Representa el repaso asociado a `NO_APTO` o `PRUEBA_OTRA_VEZ`. | Placeholder visual. |
+| Acciones | Botones para iniciar o repetir la jugada. | Visual, sin logica conectada. |
+
+La carta base se carga desde `frontend/src/assets/`:
+
+```jsx
+import cartaStandar from '../assets/carta-standar.webp'
+```
+
+Para escribir informacion encima de la carta se usa un contenedor relativo y contenido absoluto:
+
+```jsx
+<div className="position-relative">
+  <Card.Img variant="top" src={cartaStandar} />
+
+  <div className="position-absolute top-50 start-50 translate-middle text-center">
+    <h3>Reina</h3>
+    <p>Valor: 11</p>
+    <strong>PRUEBA_OTRA_VEZ</strong>
+  </div>
+</div>
+```
+
+El flujo previsto es:
+
+```text
+elegir baraja
+sacar carta
+mostrar carta y resultado
+si el resultado requiere repaso, mostrar tarjeta tematica
+permitir repetir la jugada
+```
+
+En esta fase no se conecta todavia con la API. Los textos y resultados son placeholders para validar la estructura visual.
+
 ## Formularios
 
 | Campo | Tipo | Obligatorio | Notas |
@@ -324,6 +372,7 @@ En esta fase los botones `Editar` y `Borrar` quedan como parte visual del panel.
 | Tarjeta seleccionada | Select | Segun accion | Se usara al editar o borrar tarjetas. |
 | Titulo de tarjeta | Texto | Si | Titulo de la tarjeta tematica. |
 | Contenido de tarjeta | Texto | Si | Explicacion o material de repaso. |
+| Baraja de juego | Select | Si | Permite elegir con que baraja se jugara. |
 
 En `CardUsuario`, el formulario puede empezar con React-Bootstrap:
 
@@ -390,6 +439,7 @@ Pendiente.
 | La imagen no se muestra | Se usa una ruta relativa directa a `src/assets`. | Importar la imagen y usar la variable en `src`. |
 | Varias cards dan error | El `return` devuelve varios elementos hermanos sin padre. | Envolverlas en `section`, `div` o fragment. |
 | Dos selects tienen el mismo id | Se copian varios ejemplos con `id` repetido. | Usar identificadores unicos como `selectBaraja` y `selectCarta`. |
+| Texto encima de imagen no se coloca bien | Falta un contenedor relativo para posicionar el resultado. | Usar `position-relative` en el padre y `position-absolute` en el texto. |
 
 ## Material para futuras tarjetas
 
@@ -405,6 +455,8 @@ Pendiente.
 | Barajas desplegables | Mostrar barajas y cartas en un mismo panel. | `Accordion` y `Pagination`. |
 | Formularios separados | Mantener barajas y cartas en bloques distintos. | `baraja-form` y `carta-form`. |
 | Tematicas desplegables | Mostrar tarjetas asociadas a una baraja. | `Accordion`, `Pagination` y formulario de tarjeta. |
+| Carta de juego | Superponer resultado sobre una imagen base. | `position-relative`, `position-absolute` y `Card.Img`. |
+| Flujo de juego | Preparar la experiencia antes de conectar API. | Selector de baraja, carta visual y tarjeta tematica. |
 
 Plantilla para ampliar tarjetas:
 
@@ -448,6 +500,7 @@ Pendiente.
 - [Estructura responsive base](#estructura-responsive-base)
 - [BarajaView](#barajaview)
 - [TematicaView](#tematicaview)
+- [JuegoView](#juegoview)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Material para futuras tarjetas](#material-para-futuras-tarjetas)
