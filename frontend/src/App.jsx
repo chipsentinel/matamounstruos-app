@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import './App.css'
+
 import Navbar from './components/Navbar'
 import CardUsuario from './components/CardUsuario'
 
@@ -12,6 +14,7 @@ function App() {
   const [vistaActual, setVistaActual] = useState('home')
   const [usuarioActivo, setUsuarioActivo] = useState(false) // Empieza en false porque el usuario aun no se ha identificado.
   const [vistaPendiente, setVistaPendiente] = useState(null) // Guarda la vista protegida a la que se queria entrar despues del acceso.
+  const vistaNavbar = vistaActual === 'usuario' && vistaPendiente ? vistaPendiente : vistaActual
 
   // Controla el cambio de vista y envia antes a identificacion si la seccion requiere usuario.
   function cambiarVista(vista) {
@@ -35,7 +38,7 @@ function App() {
 
   return (
     <>
-      <Navbar vistaActual={vistaActual} cambiarVista={cambiarVista} />
+      <Navbar vistaActual={vistaNavbar} cambiarVista={cambiarVista} />
 
       {vistaActual === 'home' && <HomeView />}
       {vistaActual === 'usuario' && <CardUsuario onAcceso={accederComoUsuario} />}

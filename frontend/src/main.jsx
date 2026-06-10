@@ -1,10 +1,10 @@
 // import BASE de React
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+// estilos globales externos
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import App from './App.jsx'
-// estilos globale externos
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
