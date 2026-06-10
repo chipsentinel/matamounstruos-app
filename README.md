@@ -108,6 +108,8 @@ Frontend inicial:
 - SweetAlert2 esta instalado y se importara en los componentes donde se use.
 - La estructura inicial usa `frontend/src/components/Navbar.jsx` y vistas en `frontend/src/views/`.
 - La navegacion inicial se resuelve con estado en `App.jsx`, sin añadir rutas hasta que sean necesarias.
+- La navegacion visible se simplifica en Inicio, Baraja, Tematica y Juego.
+- El logo inicial se guarda en `frontend/src/assets/` para usarlo como identidad visual de la aplicacion.
 - El servidor de desarrollo se arranca desde `frontend/` con `npm run dev`.
 - Vite expone la aplicacion en `http://localhost:5173/`.
 - `frontend/.gitignore` evita subir dependencias y archivos generados como `node_modules/` y `dist/`.

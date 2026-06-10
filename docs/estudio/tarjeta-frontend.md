@@ -11,6 +11,12 @@ La intención es preparar cómo se mostrará el contenido de repaso al usuario d
 - [Configuracion inicial](#configuracion-inicial)
 - [Pantallas](#pantallas)
 - [Componentes](#componentes)
+- [React-Bootstrap](#react-bootstrap)
+- [Imagenes y assets](#imagenes-y-assets)
+- [Estructura responsive base](#estructura-responsive-base)
+- [BarajaView](#barajaview)
+- [TematicaView](#tematicaview)
+- [JuegoView](#juegoview)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Contenido de una tarjeta](#contenido-de-una-tarjeta)
@@ -34,6 +40,7 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | Mobile-first | Forma de diseñar empezando por móvil. | Después se adapta a escritorio. |
 | `fetch()` | API de JavaScript para pedir datos al backend. | Se usara para consumir la API REST. |
 | Bootstrap | Framework CSS responsive. | Instalado e importado en `main.jsx`. |
+| React-Bootstrap | Componentes Bootstrap adaptados a React. | Se usa para trabajar con `Card`, `Form` y `Button` como componentes JSX. |
 | SweetAlert2 | Libreria para alertas y confirmaciones. | Instalado; se importara en los componentes donde se use. |
 
 ## Configuracion inicial
@@ -47,7 +54,9 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | `npm run dev` | Comprobado | Arranca Vite en `http://localhost:5173/`. |
 | `frontend/.gitignore` | Revisado | Evita subir `node_modules/`, `dist/` y archivos locales. |
 | Bootstrap | Configurado | Instalado e importado globalmente en `frontend/src/main.jsx`. |
+| React-Bootstrap | Instalado | Permite usar componentes como `Card`, `Form` y `Button` desde React. |
 | SweetAlert2 | Instalado | Disponible para mensajes y confirmaciones en componentes concretos. |
+| Logotipo | Añadido | Se guarda en `frontend/src/assets/` para usarlo en la navegacion y pantalla principal. |
 
 Comandos usados en la fase inicial:
 
@@ -55,7 +64,7 @@ Comandos usados en la fase inicial:
 npm create vite@latest frontend
 cd frontend
 npm install
-npm install bootstrap sweetalert2
+npm install bootstrap sweetalert2 react-bootstrap
 npm run dev
 ```
 
@@ -64,9 +73,9 @@ npm run dev
 | Pantalla | Que muestra | Acciones | Estado |
 | --- | --- | --- | --- |
 | `HomeView` | Pantalla principal de la aplicacion. | Acceso inicial a las secciones principales. | Estructura inicial creada. |
-| `BarajasView` | Gestion de barajas. | Listar, crear, editar y eliminar barajas mas adelante. | Estructura inicial creada. |
-| `CartasView` | Gestion de cartas. | Listar, crear, editar y eliminar cartas mas adelante. | Estructura inicial creada. |
-| `TarjetasView` | Gestion de tarjetas de teoria. | Consultar y crear tarjetas mas adelante. | Estructura inicial creada. |
+| `BarajaView` | Gestion conjunta de barajas y cartas. | Listar, crear, editar y eliminar contenido de baraja mas adelante. | Estructura inicial creada. |
+| `TematicaView` | Gestion de tarjetas tematicas. | Consultar y crear tarjetas mas adelante. | Estructura inicial creada. |
+| `CardUsuario` | Acceso previo para secciones administrativas. | Simular identificacion antes de entrar en `Baraja` o `Tematica`. | Estructura inicial creada. |
 | `JuegoView` | Vista principal del juego. | Seleccionar baraja y obtener carta aleatoria mas adelante. | Estructura inicial creada. |
 
 Las pantallas se han creado dentro de `frontend/src/views/`.
@@ -78,23 +87,26 @@ En esta fase no se usa `react-router-dom`. La aplicacion cambia de vista mediant
 | Componente | Uso | Datos que necesita |
 | --- | --- | --- |
 | `Navbar` | Permite cambiar entre las vistas principales. | `vistaActual` y `cambiarVista`. |
+| `CardUsuario` | Muestra el acceso de usuario antes de entrar en zonas administrativas. | `onAcceso`. |
 | `HomeView` | Pantalla de inicio. | No necesita datos externos en esta fase. |
-| `BarajasView` | Pantalla de gestion de barajas. | Mas adelante consumira la API de barajas. |
-| `CartasView` | Pantalla de gestion de cartas. | Mas adelante consumira la API de cartas. |
-| `TarjetasView` | Pantalla de gestion de tarjetas. | Mas adelante consumira la API de tarjetas. |
+| `BarajaView` | Pantalla de gestion de barajas y cartas. | Mas adelante consumira las API de barajas y cartas. |
+| `TematicaView` | Pantalla de gestion de tarjetas tematicas. | Mas adelante consumira la API de tarjetas. |
 | `JuegoView` | Pantalla del flujo de juego. | Mas adelante consumira la API de juego. |
 
 Estructura inicial del frontend:
 
 ```text
 frontend/src/
+  assets/
+    logo-full.webp
+    logo-icon.webp
   components/
     Navbar.jsx
+    CardUsuario.jsx
   views/
     HomeView.jsx
-    BarajasView.jsx
-    CartasView.jsx
-    TarjetasView.jsx
+    BarajaView.jsx
+    TematicaView.jsx
     JuegoView.jsx
   App.jsx
   main.jsx
@@ -102,26 +114,299 @@ frontend/src/
 
 Se evita crear carpetas adicionales como `layout/`, `ui/` o `services/` hasta que sean necesarias. La prioridad en esta fase es mantener el proyecto simple, claro y mantenible.
 
+La navegacion visible se simplifica a `Inicio`, `Baraja`, `Tematica` y `Juego`. El logo funciona como acceso a inicio.
+
+`Baraja` agrupa la gestion de barajas y cartas para reducir secciones en la interfaz. `Tematica` representa las tarjetas de teoria con un nombre mas claro para el usuario.
+
+## React-Bootstrap
+
+Bootstrap puede usarse de dos formas en el frontend:
+
+| Forma | Ejemplo | Uso |
+| --- | --- | --- |
+| Clases Bootstrap | `className="container py-4"` | Utilidades de layout, espaciado, flex y botones simples. |
+| Componentes React-Bootstrap | `<Card>`, `<Form>`, `<Button>` | Componentes visuales ya adaptados a React. |
+
+Cuando se copia un ejemplo de Bootstrap HTML oficial dentro de React, hay que adaptarlo a JSX:
+
+| HTML | JSX |
+| --- | --- |
+| `class` | `className` |
+| `for` | `htmlFor` |
+| `<input>` | `<input />` |
+| `checked` | `defaultChecked` si no se controla con estado |
+
+Con React-Bootstrap esta conversion se reduce porque se trabaja directamente con componentes:
+
+```jsx
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+```
+
+Esta opcion se usa para mantener la maquetacion sencilla y evitar crear componentes visuales desde cero.
+
+## Imagenes y assets
+
+Las imagenes dentro de `frontend/src/assets/` se importan desde el componente que las usa.
+
+Ejemplo:
+
+```jsx
+import logoFull from '../assets/logo-full.webp'
+```
+
+Despues se usa la variable importada:
+
+```jsx
+<Card.Img variant="top" src={logoFull} />
+```
+
+No se recomienda usar rutas relativas directas como `src="../assets/logo-full.webp"` en componentes React, porque Vite gestiona los assets mediante imports.
+
+Si una imagen estuviera en `frontend/public/`, entonces se podria referenciar desde la raiz publica.
+
+## Estructura responsive base
+
+Cada vista puede empezar con una seccion contenedora:
+
+```jsx
+<section className="container py-4">
+  ...
+</section>
+```
+
+Este contenedor ayuda a:
+
+- Agrupar todo el contenido de la vista.
+- Mantener margenes responsive.
+- Separar visualmente la vista de la navegacion.
+- Devolver un unico elemento padre desde el `return`.
+
+Cuando una vista contiene varias cards, React necesita que esten dentro de un elemento padre:
+
+```jsx
+<section className="container py-4 d-flex flex-column gap-3">
+  <Card>...</Card>
+  <Card>...</Card>
+</section>
+```
+
+Para organizar cards relacionadas sin decidir todavia todo el responsive, se puede usar un `div` intermedio:
+
+```jsx
+<div className="d-flex flex-column gap-3">
+  <Card>...</Card>
+  <Card>...</Card>
+</div>
+```
+
+Mas adelante ese `div` podra cambiarse por un grid Bootstrap:
+
+```jsx
+<div className="row g-3">
+  <div className="col-12 col-md-4">...</div>
+  <div className="col-12 col-md-4">...</div>
+  <div className="col-12 col-md-4">...</div>
+</div>
+```
+
+La idea es empezar en columna para movil y adaptar despues a escritorio.
+
+## BarajaView
+
+`BarajaView` agrupa la gestion de barajas y cartas dentro de una misma pantalla.
+
+La estructura inicial queda dividida en bloques:
+
+| Bloque | Uso | Estado |
+| --- | --- | --- |
+| Header | Presenta la vista de gestion de barajas y cartas. | Maquetacion inicial. |
+| Acciones | Botones para `Crear`, `Editar` y `Borrar`. | Visual, sin logica conectada. |
+| Selector de tipo | Botones para elegir entre `Baraja` y `Carta`. | Visual, sin estado especifico todavia. |
+| Listado | Muestra barajas y, mas adelante, sus cartas. | Preparado con `Accordion`. |
+| Paginacion | Deja preparada la navegacion por paginas. | Preparada con `Pagination`. |
+| `baraja-form` | Espacio para crear, editar o borrar barajas. | Formulario placeholder. |
+| `carta-form` | Espacio para crear, editar o borrar cartas. | Formulario placeholder. |
+
+El listado de barajas se prepara con `Accordion`:
+
+```jsx
+<Accordion defaultActiveKey="0" flush>
+  <Accordion.Item eventKey="0">
+    <Accordion.Header>Baraja: Autoría Gitflow</Accordion.Header>
+    <Accordion.Body>
+      Aquí se verán las cartas de esta baraja.
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>
+```
+
+Este componente encaja porque permite desplegar una baraja y mostrar sus cartas dentro.
+
+Debajo del listado se puede usar `Pagination`:
+
+```jsx
+<Pagination>
+  <Pagination.First />
+  <Pagination.Prev />
+  <Pagination.Item active>{1}</Pagination.Item>
+  <Pagination.Next />
+  <Pagination.Last />
+</Pagination>
+```
+
+La paginacion queda como estructura visual. Mas adelante se conectara con los datos reales si el listado crece.
+
+Los formularios se separan para no mezclar responsabilidades:
+
+```text
+baraja-form
+  crear / editar / borrar barajas
+
+carta-form
+  crear / editar / borrar cartas
+```
+
+Mas adelante los botones de accion y tipo decidiran que formulario se muestra y que operacion se prepara.
+
+## TematicaView
+
+`TematicaView` agrupa la gestion inicial de tarjetas tematicas.
+
+La estructura inicial queda dividida en bloques:
+
+| Bloque | Uso | Estado |
+| --- | --- | --- |
+| Header | Presenta la vista de tematica y tarjetas de teoria. | Maquetacion inicial. |
+| Acciones | Botones para `Crear`, `Editar` y `Borrar`. | Visual, sin logica conectada. |
+| Listado | Muestra barajas y, mas adelante, las tarjetas asociadas. | Preparado con `Accordion`. |
+| Paginacion | Deja preparada la navegacion por paginas. | Preparada con `Pagination`. |
+| Formulario | Espacio para crear o modificar tarjetas. | Formulario placeholder. |
+
+El listado se prepara tambien con `Accordion`, igual que en `BarajaView`, porque una baraja puede tener varias tarjetas tematicas asociadas:
+
+```jsx
+<Accordion defaultActiveKey="0" flush>
+  <Accordion.Item eventKey="0">
+    <Accordion.Header>Baraja: Autoría Gitflow</Accordion.Header>
+    <Accordion.Body>
+      Aquí se verán las tarjetas de esta baraja.
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>
+```
+
+La paginacion queda debajo del listado para mantener el mismo patron visual que en `BarajaView`.
+
+El formulario inicial de tematica queda preparado con:
+
+```text
+select de baraja
+select de tarjeta
+titulo
+contenido
+```
+
+En esta fase los botones `Editar` y `Borrar` quedan como parte visual del panel. La funcionalidad real se añadira cuando se conecte el frontend con la API.
+
+## JuegoView
+
+`JuegoView` prepara la estructura visual del flujo de juego.
+
+La estructura inicial queda dividida en bloques:
+
+| Bloque | Uso | Estado |
+| --- | --- | --- |
+| Header | Presenta la vista de juego. | Maquetacion inicial. |
+| Selector de baraja | Permite elegir la baraja que se usara para jugar. | Visual, sin datos de API. |
+| Carta visual | Muestra una carta base con resultado de ejemplo. | Preparada con asset local. |
+| Resultado | Deja espacio para `nombre`, `valor` y `tipoResultado`. | Placeholder visual. |
+| Tarjeta tematica | Representa el repaso asociado a `NO_APTO` o `PRUEBA_OTRA_VEZ`. | Placeholder visual. |
+| Acciones | Botones para iniciar o repetir la jugada. | Visual, sin logica conectada. |
+
+La carta base se carga desde `frontend/src/assets/`:
+
+```jsx
+import cartaStandar from '../assets/carta-standar.webp'
+```
+
+Para escribir informacion encima de la carta se usa un contenedor relativo y contenido absoluto:
+
+```jsx
+<div className="position-relative">
+  <Card.Img variant="top" src={cartaStandar} />
+
+  <div className="position-absolute top-50 start-50 translate-middle text-center">
+    <h3>Reina</h3>
+    <p>Valor: 11</p>
+    <strong>PRUEBA_OTRA_VEZ</strong>
+  </div>
+</div>
+```
+
+El flujo previsto es:
+
+```text
+elegir baraja
+sacar carta
+mostrar carta y resultado
+si el resultado requiere repaso, mostrar tarjeta tematica
+permitir repetir la jugada
+```
+
+En esta fase no se conecta todavia con la API. Los textos y resultados son placeholders para validar la estructura visual.
+
 ## Formularios
 
 | Campo | Tipo | Obligatorio | Notas |
 | --- | --- | --- | --- |
-| Pendiente | Pendiente | Pendiente | Pendiente |
-| Pendiente | Pendiente | Pendiente | Pendiente |
+| Nombre | Texto | Si | Identifica al usuario de forma simple. |
+| Password | Password | Si | Se usara para el acceso o registro. |
+| Tipo de acceso | Radio | Si | Permite elegir entre conectarse o registrarse. |
+| Nombre de baraja | Texto | Si | Se usara en `baraja-form`. |
+| Descripcion de baraja | Texto | No | Se usara en `baraja-form`. |
+| Baraja seleccionada | Select | Si | Permite relacionar cartas con una baraja. |
+| Carta seleccionada | Select | Segun accion | Se usara al editar o borrar cartas. |
+| Tipo de resultado | Select | Si | Valores previstos: `APTO`, `NO_APTO`, `PRUEBA_OTRA_VEZ`. |
+| Tarjeta seleccionada | Select | Segun accion | Se usara al editar o borrar tarjetas. |
+| Titulo de tarjeta | Texto | Si | Titulo de la tarjeta tematica. |
+| Contenido de tarjeta | Texto | Si | Explicacion o material de repaso. |
+| Baraja de juego | Select | Si | Permite elegir con que baraja se jugara. |
+
+En `CardUsuario`, el formulario puede empezar con React-Bootstrap:
+
+```jsx
+<Form onSubmit={manejarAcceso}>
+  <Form.Group className="mb-3" controlId="usuarioNombre">
+    <Form.Label>Nombre</Form.Label>
+    <Form.Control type="text" placeholder="Nick" />
+  </Form.Group>
+
+  <Form.Group className="mb-3" controlId="usuarioPassword">
+    <Form.Label>Password</Form.Label>
+    <Form.Control type="password" placeholder="Password" />
+  </Form.Group>
+</Form>
+```
+
+En esta fase los botones de acceso pueden simular la entrada del usuario. Mas adelante el formulario se conectara con una peticion `POST`.
 
 ## Estados de pantalla
 
 - `home`: muestra `HomeView`.
-- `barajas`: muestra `BarajasView`.
-- `cartas`: muestra `CartasView`.
-- `tarjetas`: muestra `TarjetasView`.
+- `usuario`: muestra `CardUsuario`.
+- `baraja`: muestra `BarajaView`.
+- `tematica`: muestra `TematicaView`.
 - `juego`: muestra `JuegoView`.
 
 `App.jsx` mantiene el estado `vistaActual` con `useState`.
 
-La funcion `setVistaActual` se pasa a `Navbar` como `cambiarVista`, para que los botones de navegacion puedan cambiar la vista activa.
+La funcion `cambiarVista` se pasa a `Navbar` para controlar la navegacion desde un unico punto.
 
 `Navbar` tambien recibe `vistaActual` para marcar visualmente el boton de la seccion activa.
+
+Las secciones `baraja` y `tematica` requieren pasar antes por `CardUsuario` si todavia no hay un usuario activo. En esta fase el acceso se simula y queda preparado para conectarlo mas adelante con una peticion `POST`.
 
 ## Contenido de una tarjeta
 
@@ -148,8 +433,13 @@ Pendiente.
 | Caso | Problema | Solucion |
 | --- | --- | --- |
 | `vistaActual` aparece subrayado | La variable se recibe en `Navbar`, pero no se usa. | Usarla para marcar el boton activo o no pasarla como prop. |
-| No cambia la pantalla | El boton no llama a `cambiarVista` con el nombre correcto. | Revisar que coincidan valores como `barajas`, `cartas` o `juego`. |
+| No cambia la pantalla | El boton no llama a `cambiarVista` con el nombre correcto. | Revisar que coincidan valores como `baraja`, `tematica` o `juego`. |
 | No carga una vista | El componente no esta importado o exportado correctamente. | Revisar `import`, nombre del archivo y `export default`. |
+| No aparece `CardUsuario` | La `Navbar` llama directamente a `setVistaActual`. | Pasar la funcion `cambiarVista` para aplicar la comprobacion de usuario. |
+| La imagen no se muestra | Se usa una ruta relativa directa a `src/assets`. | Importar la imagen y usar la variable en `src`. |
+| Varias cards dan error | El `return` devuelve varios elementos hermanos sin padre. | Envolverlas en `section`, `div` o fragment. |
+| Dos selects tienen el mismo id | Se copian varios ejemplos con `id` repetido. | Usar identificadores unicos como `selectBaraja` y `selectCarta`. |
+| Texto encima de imagen no se coloca bien | Falta un contenedor relativo para posicionar el resultado. | Usar `position-relative` en el padre y `position-absolute` en el texto. |
 
 ## Material para futuras tarjetas
 
@@ -158,6 +448,15 @@ Pendiente.
 | Estructura inicial React | Separar componentes reutilizables y vistas principales. | `components/Navbar.jsx` y `views/*View.jsx`. |
 | Navegacion por estado | Cambiar de pantalla sin instalar router. | `useState`, `vistaActual` y `setVistaActual`. |
 | Navbar con Bootstrap | Crear una navegacion sencilla y responsive. | Clases `navbar`, `btn`, `d-flex`, `flex-wrap`. |
+| Acceso previo | Proteger secciones administrativas sin autenticacion real todavia. | `usuarioActivo`, `vistaPendiente` y `CardUsuario`. |
+| React-Bootstrap | Usar componentes Bootstrap dentro de React. | `Card`, `Form`, `Button`. |
+| Assets en Vite | Cargar imagenes desde `src/assets`. | `import logoFull from '../assets/logo-full.webp'`. |
+| Cards responsive | Agrupar cards para preparar desktop. | `section`, `d-flex`, `row`, `col-md-*`. |
+| Barajas desplegables | Mostrar barajas y cartas en un mismo panel. | `Accordion` y `Pagination`. |
+| Formularios separados | Mantener barajas y cartas en bloques distintos. | `baraja-form` y `carta-form`. |
+| Tematicas desplegables | Mostrar tarjetas asociadas a una baraja. | `Accordion`, `Pagination` y formulario de tarjeta. |
+| Carta de juego | Superponer resultado sobre una imagen base. | `position-relative`, `position-absolute` y `Card.Img`. |
+| Flujo de juego | Preparar la experiencia antes de conectar API. | Selector de baraja, carta visual y tarjeta tematica. |
 
 Plantilla para ampliar tarjetas:
 
@@ -196,6 +495,12 @@ Pendiente.
 - [Configuracion inicial](#configuracion-inicial)
 - [Pantallas](#pantallas)
 - [Componentes](#componentes)
+- [React-Bootstrap](#react-bootstrap)
+- [Imagenes y assets](#imagenes-y-assets)
+- [Estructura responsive base](#estructura-responsive-base)
+- [BarajaView](#barajaview)
+- [TematicaView](#tematicaview)
+- [JuegoView](#juegoview)
 - [Formularios](#formularios)
 - [Estados de pantalla](#estados-de-pantalla)
 - [Material para futuras tarjetas](#material-para-futuras-tarjetas)

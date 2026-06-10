@@ -1,22 +1,46 @@
 import { useState } from 'react'
+
 import Navbar from './components/Navbar'
+import CardUsuario from './components/CardUsuario'
+
 import HomeView from './views/HomeView'
-import BarajasView from './views/BarajasView'
-import CartasView from './views/CartasView'
-import TarjetasView from './views/TarjetasView'
+import BarajaView from './views/BarajaView'
+import TematicaView from './views/TematicaView'
 import JuegoView from './views/JuegoView'
 
 function App() {
   const [vistaActual, setVistaActual] = useState('home')
+  const [usuarioActivo, setUsuarioActivo] = useState(false) // Empieza en false porque el usuario aun no se ha identificado.
+  const [vistaPendiente, setVistaPendiente] = useState(null) // Guarda la vista protegida a la que se queria entrar despues del acceso.
+
+  // Controla el cambio de vista y envia antes a identificacion si la seccion requiere usuario.
+  function cambiarVista(vista) {
+    const necesitaUsuario = vista === 'baraja' || vista === 'tematica'
+
+    if (necesitaUsuario && !usuarioActivo) {
+      setVistaPendiente(vista)
+      setVistaActual('usuario')
+      return
+    }
+
+    setVistaActual(vista)
+  }
+
+  // Simula el acceso de usuario y redirige a la vista que habia quedado pendiente.
+  function accederComoUsuario() {
+    setUsuarioActivo(true)
+    setVistaActual(vistaPendiente || 'home')
+    setVistaPendiente(null)
+  }
 
   return (
     <>
-      <Navbar vistaActual={vistaActual} cambiarVista={setVistaActual} />
+      <Navbar vistaActual={vistaActual} cambiarVista={cambiarVista} />
 
       {vistaActual === 'home' && <HomeView />}
-      {vistaActual === 'barajas' && <BarajasView />}
-      {vistaActual === 'cartas' && <CartasView />}
-      {vistaActual === 'tarjetas' && <TarjetasView />}
+      {vistaActual === 'usuario' && <CardUsuario onAcceso={accederComoUsuario} />}
+      {vistaActual === 'baraja' && <BarajaView />}
+      {vistaActual === 'tematica' && <TematicaView />}
       {vistaActual === 'juego' && <JuegoView />}
     </>
   )
