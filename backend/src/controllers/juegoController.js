@@ -1,7 +1,7 @@
 const pool = require('../config/db'); // importar el pool de conexiones a mariadb
 
 
-const getCartaAleatoria = async (req, res) => {
+const getCartaAleatoriaDeBaraja = async (req, res) => {
     try {
         const {idBaraja}= req.params;
 
@@ -24,7 +24,7 @@ const getCartaAleatoria = async (req, res) => {
     }
 };
 
-const getTarjetaPorCarta = async (req, res) => {
+const getTarjetaAleatoriaDeCarta = async (req, res) => {
     try {
         const {idCarta}= req.params;
 
@@ -69,8 +69,8 @@ const getTarjetaPorCarta = async (req, res) => {
 };
 
 module.exports = {
-    getCartaAleatoria,
-    getTarjetaPorCarta
+    getCartaAleatoriaDeBaraja,
+    getTarjetaAleatoriaDeCarta
 };
 
 /*

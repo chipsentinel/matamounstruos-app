@@ -1,10 +1,10 @@
 const express = require('express');
-const {getCartaAleatoria, getTarjetaPorCarta} = require('../controllers/juegoController');
+const {getCartaAleatoriaDeBaraja, getTarjetaAleatoriaDeCarta} = require('../controllers/juegoController');
 
 const router = express.Router();
 
-router.get('/cartas/aleatoria/:idBaraja', getCartaAleatoria);
-router.get('/tarjeta/aleatoria/:idCarta', getTarjetaPorCarta);
+router.get('/carta/aleatoria/:idBaraja', getCartaAleatoriaDeBaraja);
+router.get('/tarjeta/aleatoria/:idCarta', getTarjetaAleatoriaDeCarta);
 
 
 module.exports = router;
