@@ -117,7 +117,7 @@ frontend/src/
 
 Se evita crear carpetas adicionales como `layout/` o `ui/` hasta que sean necesarias. La prioridad sigue siendo mantener el proyecto simple, claro y mantenible.
 
-`services/api.js` se añade cuando empieza la conexion con backend. Centraliza la URL base, la funcion comun `request()` y las llamadas `fetch()` de usuarios, barajas y cartas.
+`services/api.js` se añade cuando empieza la conexion con backend. Centraliza la URL base, la funcion comun `request()` y las llamadas `fetch()` de usuarios, barajas, cartas, tarjetas y juego.
 
 La navegacion visible se simplifica a `Inicio`, `Baraja`, `Tematica` y `Juego`. El logo funciona como acceso a inicio.
 
@@ -164,6 +164,8 @@ En esta fase quedan preparadas funciones para:
 - Usuarios: `getUsuarios` y `createUsuario`.
 - Barajas: `getBarajas`, `getIdBaraja`, `createBaraja`, `updateBaraja` y `deleteBaraja`.
 - Cartas: `getCartas`, `getCartasPorBaraja`, `getIdCarta`, `createCarta`, `updateCarta` y `deleteCarta`.
+- Tarjetas: `getTarjetas`, `getIdTarjeta` y `createTarjeta`.
+- Juego: `getCartaAleatoriaDeBaraja` y `getTarjetaAleatoriaDeCarta`.
 
 ## Imagenes y assets
 

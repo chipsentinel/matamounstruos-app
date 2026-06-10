@@ -122,7 +122,7 @@ La fase inicial del backend se centra en configurar Express, conectar con MariaD
 | GET | `/tarjetas` | Listar tarjetas teoricas. | Configurado |
 | GET | `/tarjetas/:id` | Consultar una tarjeta teorica concreta. | Configurado |
 | POST | `/tarjetas` | Crear una tarjeta teorica. | Configurado |
-| GET | `/juego/cartas/aleatoria/:idBaraja` | Obtener una carta aleatoria de una baraja. | Configurado y probado |
+| GET | `/juego/carta/aleatoria/:idBaraja` | Obtener una carta aleatoria de una baraja. | Configurado y probado |
 | GET | `/juego/tarjeta/aleatoria/:idCarta` | Obtener una tarjeta de repaso segun el resultado de una carta. | Configurado |
 
 ## Datos de entrada
@@ -192,7 +192,7 @@ En `PUT /cartas/:id` no se modifica `idBaraja`, para no mover la carta de una ba
 }
 ```
 
-### GET /juego/cartas/aleatoria/:idBaraja
+### GET /juego/carta/aleatoria/:idBaraja
 
 No necesita body. El identificador de la baraja se envia en la URL.
 
@@ -319,7 +319,7 @@ Si el usuario no es propietario ni admin, devuelve `403`.
 
 Si no existe una tarjeta con ese identificador, la API devuelve `404` con el mensaje `Tarjeta no encontrada`.
 
-### GET /juego/cartas/aleatoria/:idBaraja
+### GET /juego/carta/aleatoria/:idBaraja
 
 ```json
 {
