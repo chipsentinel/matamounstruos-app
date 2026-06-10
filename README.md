@@ -98,6 +98,8 @@ Decisiones de negocio implementadas:
 - Las cartas no pueden tener valor superior a `12`.
 - Cada baraja puede tener como maximo `4` cartas con el mismo valor.
 - Al borrar una baraja se comprueba que el solicitante sea propietario o admin y se eliminan primero sus cartas asociadas.
+- Al crear una carta se comprueba que la baraja asociada exista.
+- Al borrar una carta se comprueba que el solicitante sea propietario de la baraja asociada o admin.
 
 La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json`.
 
@@ -110,6 +112,7 @@ Frontend inicial:
 - La navegacion inicial se resuelve con estado en `App.jsx`, sin añadir rutas hasta que sean necesarias.
 - La navegacion visible se simplifica en Inicio, Baraja, Tematica y Juego, usando el logo como acceso a inicio.
 - La navbar se construye con React-Bootstrap y se ajusta con estilos propios en `App.css`.
+- Se crea `frontend/src/services/api.js` como base para centralizar las llamadas `fetch()` al backend.
 - El logo inicial se guarda en `frontend/src/assets/` para usarlo como identidad visual de la aplicacion.
 - El servidor de desarrollo se arranca desde `frontend/` con `npm run dev`.
 - Vite expone la aplicacion en `http://localhost:5173/`.

@@ -12,6 +12,7 @@ La intención es preparar cómo se mostrará el contenido de repaso al usuario d
 - [Pantallas](#pantallas)
 - [Componentes](#componentes)
 - [React-Bootstrap](#react-bootstrap)
+- [Servicio API](#servicio-api)
 - [Imagenes y assets](#imagenes-y-assets)
 - [Estructura responsive base](#estructura-responsive-base)
 - [BarajaView](#barajaview)
@@ -103,6 +104,8 @@ frontend/src/
   components/
     Navbar.jsx
     CardUsuario.jsx
+  services/
+    api.js
   views/
     HomeView.jsx
     BarajaView.jsx
@@ -112,7 +115,9 @@ frontend/src/
   main.jsx
 ```
 
-Se evita crear carpetas adicionales como `layout/`, `ui/` o `services/` hasta que sean necesarias. La prioridad en esta fase es mantener el proyecto simple, claro y mantenible.
+Se evita crear carpetas adicionales como `layout/` o `ui/` hasta que sean necesarias. La prioridad sigue siendo mantener el proyecto simple, claro y mantenible.
+
+`services/api.js` se añade cuando empieza la conexion con backend. Centraliza la URL base, la funcion comun `request()` y las llamadas `fetch()` de usuarios, barajas y cartas.
 
 La navegacion visible se simplifica a `Inicio`, `Baraja`, `Tematica` y `Juego`. El logo funciona como acceso a inicio.
 
@@ -147,6 +152,18 @@ import Form from 'react-bootstrap/Form'
 ```
 
 Esta opcion se usa para mantener la maquetacion sencilla y evitar crear componentes visuales desde cero.
+
+## Servicio API
+
+`frontend/src/services/api.js` centraliza las peticiones al backend con `fetch()`.
+
+La funcion base `request(endpoint, options)` une la URL del backend con cada endpoint, convierte la respuesta a JSON y lanza errores usando el campo `message` devuelto por la API.
+
+En esta fase quedan preparadas funciones para:
+
+- Usuarios: `getUsuarios` y `createUsuario`.
+- Barajas: `getBarajas`, `getIdBaraja`, `createBaraja`, `updateBaraja` y `deleteBaraja`.
+- Cartas: `getCartas`, `getCartasPorBaraja`, `getIdCarta`, `createCarta`, `updateCarta` y `deleteCarta`.
 
 ## Imagenes y assets
 
@@ -454,6 +471,7 @@ Pendiente.
 | Navbar con React-Bootstrap | Mantener la navegacion coherente con el resto de componentes. | `BootstrapNavbar`, `Container`, `Nav`, `Button` y `Form`. |
 | Acceso previo | Proteger secciones administrativas sin autenticacion real todavia. | `usuarioActivo`, `vistaPendiente` y `CardUsuario`. |
 | React-Bootstrap | Usar componentes Bootstrap dentro de React. | `Card`, `Form`, `Button`. |
+| Servicio API frontend | Centralizar las llamadas al backend. | `services/api.js`, `request()` y funciones por recurso. |
 | Assets en Vite | Cargar imagenes desde `src/assets`. | `import logoFull from '../assets/logo-full.webp'`. |
 | Cards responsive | Agrupar cards para preparar desktop. | `section`, `d-flex`, `row`, `col-md-*`. |
 | Barajas desplegables | Mostrar barajas y cartas en un mismo panel. | `Accordion` y `Pagination`. |
@@ -500,6 +518,7 @@ Pendiente.
 - [Pantallas](#pantallas)
 - [Componentes](#componentes)
 - [React-Bootstrap](#react-bootstrap)
+- [Servicio API](#servicio-api)
 - [Imagenes y assets](#imagenes-y-assets)
 - [Estructura responsive base](#estructura-responsive-base)
 - [BarajaView](#barajaview)

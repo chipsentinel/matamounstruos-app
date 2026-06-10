@@ -290,11 +290,24 @@ Si el usuario no es propietario ni admin, devuelve `403`.
 
 ```json
 {
+  "idUsuario": 1
+}
+```
+
+En `DELETE /cartas/:id` se envia el usuario solicitante en el body. La API comprueba si el usuario es propietario de la baraja asociada a la carta o admin antes de eliminarla.
+
+Respuesta correcta:
+
+```json
+{
   "message": "Carta eliminada"
 }
 ```
 
 Si no existe una carta con ese identificador, la API devuelve `404` con el mensaje `Carta no encontrada`.
+Si el usuario solicitante no existe, devuelve `404` con el mensaje `Usuario no encontrado`.
+Si la baraja asociada a la carta no existe, devuelve `404` con el mensaje `Baraja no encontrada`.
+Si el usuario no es propietario ni admin, devuelve `403`.
 
 ### POST /tarjetas
 
@@ -341,9 +354,11 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 
 - Limitar el valor de las cartas a un maximo de 12.
 - Permitir como maximo 4 cartas con el mismo valor dentro de una misma baraja.
+- Comprobar que la baraja exista antes de crear una carta asociada.
 - No se implementa validacion de carta duplicada exacta porque la regla importante del modelo es controlar la repeticion por valor.
 - Permitir eliminar una baraja solo al propietario o a un usuario admin.
 - Al eliminar una baraja, borrar primero sus cartas asociadas.
+- Permitir eliminar una carta solo al propietario de su baraja o a un usuario admin.
 - No permitir que un usuario se cree como admin enviando `rol` en el registro basico.
 - Validar que los datos obligatorios lleguen en las peticiones de creacion y actualizacion.
 - Devolver respuestas de error claras cuando no exista el recurso solicitado.
@@ -354,7 +369,9 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 | --- | --- | --- | --- |
 | Valor de carta mayor que 12 | 400 | La carta no puede valer mas de 12. | Enviar un valor entre 1 y 12. |
 | Mas de 4 cartas con el mismo valor | 409 | NO puede haber mas de 4 cartas del mismo valor. | Usar otro valor o revisar las cartas de la baraja. |
+| Carta asociada a baraja inexistente | 404 | Baraja no encontrada. | Usar un `idBaraja` existente. |
 | Borrado de baraja sin permisos | 403 | No tiene permiso para eliminar esta baraja. | Usar el propietario de la baraja o un usuario admin. |
+| Borrado de carta sin permisos | 403 | No tiene permiso para eliminar esta carta. | Usar el propietario de la baraja asociada o un usuario admin. |
 | Recurso no encontrado | 404 | Recurso no encontrado. | Comprobar el identificador usado en la ruta. |
 | Datos incompletos | 400 | Faltan datos obligatorios. | Validar el cuerpo de la peticion antes de enviarla. |
 
