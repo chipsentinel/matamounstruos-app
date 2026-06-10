@@ -1,47 +1,86 @@
+import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Form from 'react-bootstrap/Form'
+import Nav from 'react-bootstrap/Nav'
+import BootstrapNavbar from 'react-bootstrap/Navbar'
 import logoIcon from '../assets/logo-icon.webp'
 
 function Navbar({ vistaActual, cambiarVista }) {
   return (
-    <nav className="navbar navbar-dark bg-dark px-3">
+    <BootstrapNavbar className="app-navbar">
+      <Container fluid className="app-navbar-content p-0 d-flex flex-column flex-md-row gap-2 align-items-stretch align-items-md-center">
+        <Nav className="d-flex flex-row flex-wrap gap-2 align-items-center">
+          <Button
+            className={`app-navbar-logo-button ${
+              vistaActual === 'home' ? 'app-navbar-home-active' : ''
+            }`}
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => cambiarVista('home')}
+            aria-label="Ir a inicio"
+            type="button"
+          >
+            <img
+              className="app-navbar-logo"
+              src={logoIcon}
+              alt="Matamounstruos"
+            />
+          </Button>
 
-      <div className="d-flex flex-wrap gap-2 align-item-center">
-        <button
-          className={`btn btn-sm ${vistaActual === 'home' ? 'btn-light' : 'btn-outline-light'}`}
-          onClick={() => cambiarVista('home')}
-          arial-label="Ir a inicio"
+          <Button
+            className={`${
+              vistaActual === 'baraja' ? 'app-navbar-baraja-active' : ''
+            }`}
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => cambiarVista('baraja')}
+            type="button"
+          >
+            Baraja
+          </Button>
+
+          <Button
+            className={`${
+              vistaActual === 'tematica' ? 'app-navbar-tematica-active' : ''
+            }`}
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => cambiarVista('tematica')}
+            type="button"
+          >
+            Temática
+          </Button>
+
+          <Button
+            className={`${
+              vistaActual === 'juego' ? 'app-navbar-juego-active' : ''
+            }`}
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => cambiarVista('juego')}
+            type="button"
+          >
+            Juego
+          </Button>
+        </Nav>
+
+        {/* Buscador visual. Mas adelante se conectara a la logica de busqueda. */}
+        <Form
+          className="d-flex gap-2 app-navbar-search ms-md-auto"
+          onSubmit={(event) => event.preventDefault()}
         >
-          <img src={logoIcon} alt="Matamounstruos" width="40" height="30"/>
-        </button>
+          <Form.Control
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
 
-        <button
-          className={`btn btn-sm ${vistaActual === 'baraja' ? 'btn-light' : 'btn-outline-light'}`}
-          onClick={() => cambiarVista('baraja')}
-        >
-          Baraja
-        </button>
-
-        <button
-          className={`btn btn-sm ${vistaActual === 'tematica' ? 'btn-light' : 'btn-outline-light'}`}
-          onClick={() => cambiarVista('tematica')}
-        >
-          Temática
-        </button>
-
-        <button
-          className={`btn btn-sm ${vistaActual === 'juego' ? 'btn-light' : 'btn-outline-light'}`}
-          onClick={() => cambiarVista('juego')}
-        >
-          Juego
-        </button>
-      </div>
-
-      {/* buscador sin logica */}
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-
-    </nav>
+          <Button variant="outline-info" type="submit">
+            Search
+          </Button>
+        </Form>
+      </Container>
+    </BootstrapNavbar>
   )
 }
 
