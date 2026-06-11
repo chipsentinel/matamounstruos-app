@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Swal from 'sweetalert2';
 
 // Funciones del servicio API que conectan la vista de juego con el backend.
 import {
@@ -52,6 +53,32 @@ function JuegoView() {
 
     cargarDatosIniciales();
   }, []);
+
+  // Muestra los errores como alertas rojas con SweetAlert2.
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Atención',
+      text: error,
+    });
+  }, [error]);
+
+  // Muestra los mensajes del juego como alertas verdes con SweetAlert2.
+  useEffect(() => {
+    if (!mensajeJuego) {
+      return;
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Juego',
+      text: mensajeJuego,
+    });
+  }, [mensajeJuego]);
 
   // Saca una carta aleatoria de la baraja elegida.
   async function jugarCarta() {
@@ -213,13 +240,6 @@ function JuegoView() {
             </Card>
           </div>
 
-          {error && (
-            <p className="text-danger mb-0">{error}</p>
-          )}
-
-          {mensajeJuego && (
-            <p className="text-success mb-0">{mensajeJuego}</p>
-          )}
         </section>
       </div>
 
