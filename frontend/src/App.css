@@ -10,6 +10,11 @@
   margin-inline: auto;
 }
 
+.view-card .card-img-top {
+  max-height: 500px;
+  object-fit: contain;
+}
+
 .view-panel {
   display: flex;
   flex-direction: column;
@@ -24,6 +29,18 @@
 
 .action-card {
   width: 100%;
+}
+
+.home-action-cards {
+  display: flex;
+  flex-direction: row; /* con reverse haria cambio de direcion */
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.home-action-cards .action-card {
+  flex: 1;
+  min-width: 250px;
 }
 
 .game-card {
@@ -163,7 +180,7 @@
 }
 
 .app-navbar .btn-sm:not(.app-navbar-logo-button) {
-  width: 82px;
+  width: 65px;
   min-height: 34px;
   padding-inline: 0.6rem;
   font-size: 0.85rem;
@@ -257,4 +274,37 @@
   font-size: 0.9rem;
   font-weight: 600;
   white-space: nowrap;
+}
+
+/* evitar borde y resaltado al interactuar con el logo de la navbar */
+.app-navbar-logo-button,
+.app-navbar-logo-button:hover,
+.app-navbar-logo-button:focus,
+.app-navbar-logo-button:active,
+.app-navbar-logo-button:focus-visible {
+  border-color: transparent;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent;
+}
+
+/* mostrar una linea inferior al pasar el raton por los botones de navegacion */
+.app-navbar .btn-sm:not(.app-navbar-logo-button) {
+  position: relative;
+}
+
+.app-navbar .btn-sm:not(.app-navbar-logo-button)::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: -4px;
+  height: 2px;
+  background-color: #93c47d;
+  border-radius: 999px;
+  opacity: 0;
+}
+
+.app-navbar .btn-sm:not(.app-navbar-logo-button):hover::after {
+  opacity: 1;
 }

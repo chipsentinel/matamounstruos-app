@@ -77,7 +77,7 @@ function Navbar({ vistaActual, cambiarVista, usuarioActivo }) {
             onClick={() => cambiarVista('tematica')}
             type="button"
           >
-            Temática
+            Tema
           </Button>
 
           <Button
@@ -106,14 +106,14 @@ function Navbar({ vistaActual, cambiarVista, usuarioActivo }) {
         >
           <Form.Control
             type="search"
-            placeholder="Search"
+            placeholder="Buscar"
             aria-label="Search"
             value={busqueda}
             onChange={(event) => setBusqueda(event.target.value)}
           />
 
           <Button variant="outline-info" type="submit">
-            Search
+            Buscar
           </Button>
         </Form>
       </Container>
