@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Accordion from 'react-bootstrap/Accordion';
 import Form from 'react-bootstrap/Form';
+import Swal from 'sweetalert2';
 
 // Funciones del servicio API que piden barajas y usuarios al backend.
 import {
@@ -37,6 +38,7 @@ function BarajaView({ usuarioActivo }) {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState('');
   const [mensajeFormulario, setMensajeFormulario] = useState('');
+  const [informeError, setInformeError] = useState(null);
 
   // Pide las barajas al backend y actualiza el listado en pantalla.
   async function cargarBarajas() {
@@ -80,11 +82,32 @@ function BarajaView({ usuarioActivo }) {
     cargarDatosIniciales();
   }, []);
 
+  // Muestra errores del backend con SweetAlert2 y guarda el informe IT si llega un 422.
+  function gestionarErrorBackend(error) {
+    const mensaje = error.data?.reason || error.message;
+
+    setError(mensaje);
+
+    if (error.status === 422) {
+      setInformeError({
+        url: error.url,
+        codigo: error.status,
+      });
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: error.status === 422 ? 'Modo pruebas denegado' : 'Error',
+      text: mensaje,
+    });
+  }
+
   // Crea una baraja usando el usuario identificado en CardUsuario.
   async function crearNuevaBaraja(event) {
     event.preventDefault();
     setError('');
     setMensajeFormulario('');
+    setInformeError(null);
 
     try {
       if (!usuarioActivo?.idUsuario) {
@@ -106,9 +129,10 @@ function BarajaView({ usuarioActivo }) {
       setNombreBaraja('');
       setDescripcionBaraja('');
       setMensajeFormulario('Baraja creada correctamente.');
+      Swal.fire('Baraja creada', 'La baraja se ha guardado correctamente.', 'success');
       await recargarDatos();
     } catch (error) {
-      setError(error.message);
+      gestionarErrorBackend(error);
     }
   }
 
@@ -117,6 +141,7 @@ function BarajaView({ usuarioActivo }) {
     event.preventDefault();
     setError('');
     setMensajeFormulario('');
+    setInformeError(null);
 
     try {
       if (!idBarajaFormulario) {
@@ -138,9 +163,10 @@ function BarajaView({ usuarioActivo }) {
       setNombreBaraja('');
       setDescripcionBaraja('');
       setMensajeFormulario('Baraja editada correctamente.');
+      Swal.fire('Baraja editada', 'Los cambios se han guardado correctamente.', 'success');
       await recargarDatos();
     } catch (error) {
-      setError(error.message);
+      gestionarErrorBackend(error);
     }
   }
 
@@ -149,6 +175,7 @@ function BarajaView({ usuarioActivo }) {
     event.preventDefault();
     setError('');
     setMensajeFormulario('');
+    setInformeError(null);
 
     try {
       if (!usuarioActivo?.idUsuario) {
@@ -161,14 +188,29 @@ function BarajaView({ usuarioActivo }) {
         return;
       }
 
+      // Confirma el borrado antes de enviar la peticion al backend.
+      const confirmacion = await Swal.fire({
+        icon: 'warning',
+        title: 'Borrar baraja',
+        text: 'Esta accion eliminara la baraja seleccionada.',
+        showCancelButton: true,
+        confirmButtonText: 'Borrar',
+        cancelButtonText: 'Cancelar',
+      });
+
+      if (!confirmacion.isConfirmed) {
+        return;
+      }
+
       await deleteBaraja(idBarajaFormulario, usuarioActivo.idUsuario);
 
       setIdBarajaFormulario('');
       setBarajaSeleccionada(null);
       setMensajeFormulario('Baraja borrada correctamente.');
+      Swal.fire('Baraja borrada', 'La baraja se ha eliminado correctamente.', 'success');
       await recargarDatos();
     } catch (error) {
-      setError(error.message);
+      gestionarErrorBackend(error);
     }
   }
 
@@ -344,6 +386,13 @@ function BarajaView({ usuarioActivo }) {
             </Form>
           )}
         </div>
+
+        {informeError && (
+          <div className="border border-danger rounded p-2 mb-3">
+            <strong>Informe IT:</strong> URL {informeError.url} | Código{' '}
+            {informeError.codigo}
+          </div>
+        )}
 
         {error && (
           <p className="text-danger mb-0">{error}</p>

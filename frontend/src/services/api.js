@@ -5,7 +5,8 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 // Funcion base para centralizar las peticiones fetch al backend.
 async function request(endpoint, options = {}) {
-    const response =await fetch(`${API_URL}${endpoint}`, {
+    const requestUrl = `${API_URL}${endpoint}`
+    const response =await fetch(requestUrl, {
         headers: {
             'Content-Type': 'application/json',
             ...options.headers,
@@ -16,7 +17,11 @@ async function request(endpoint, options = {}) {
     const data = await response.json()
 
     if (!response.ok){
-        throw new Error(data.message || 'Error de peticion')
+        const error = new Error(data.reason || data.message || 'Error de peticion')
+        error.status = response.status
+        error.url = requestUrl
+        error.data = data
+        throw error
     }
 
     return data
