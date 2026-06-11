@@ -1,0 +1,7 @@
+# Dependencias, build local y archivos privados fuera del contexto Docker.
+node_modules
+dist
+npm-debug.log
+.env
+.DS_Store
+coverage

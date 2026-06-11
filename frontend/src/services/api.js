@@ -1,7 +1,7 @@
-// CUIDADO no queremos imports hata que diga lo contrario
+// CUIDADO: no queremos imports hasta que haga falta consumir estas funciones en las vistas.
 
-const API_URL = 'http://localhost:3000'
-
+// URL base del backend. En Docker/Vite puede llegar desde VITE_API_URL.
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 // Funcion base para centralizar las peticiones fetch al backend.
 async function request(endpoint, options = {}) {
