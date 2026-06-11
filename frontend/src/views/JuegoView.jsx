@@ -134,50 +134,84 @@ function JuegoView() {
             </Form.Select>
           </Form.Group>
 
-          <Card className="game-card mb-3">
-            <div className="position-relative">
-              <Card.Img className="card-image" variant="top" src={cartaStandar} />
+          <div className="actions view-actions home-action-cards juego-action-cards">
+            <Card className="game-card action-card">
+              <div className="position-relative">
+                <Card.Img className="card-image" variant="top" src={cartaStandar} />
 
-              <div className="card-result-content position-absolute top-50 start-50 translate-middle text-center bg-light bg-opacity-75 p-2 rounded">
-                {cartaActual ? (
-                  <>
-                    <h3 className="mb-1">{cartaActual.nombre}</h3>
-                    <p className="mb-1">Valor: {cartaActual.valor}</p>
-                    <strong>{cartaActual.tipoResultado}</strong>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="mb-1">Carta</h3>
-                    <p className="mb-0">Selecciona baraja y juega.</p>
-                  </>
+                {tarjetaActual && (
+                  <div className="card-topic-content position-absolute top-0 start-50 translate-middle-x text-center bg-light p-2 mt-3 rounded">
+                    <h4 className="mb-1">{tarjetaActual.titulo}</h4>
+                    <p className="mb-0">{tarjetaActual.contenido}</p>
+                  </div>
                 )}
+
+                <div className="card-result-content position-absolute top-50 start-50 translate-middle text-center bg-light p-2 rounded">
+                  {cartaActual ? (
+                    <>
+                      <h3 className="mb-1">{cartaActual.nombre}</h3>
+                      <p className="mb-1">Valor: {cartaActual.valor}</p>
+                      <strong>{cartaActual.tipoResultado}</strong>
+                    </>
+                  ) : (
+                    <>
+                      <h3 className="mb-1">Carta</h3>
+                      <p className="mb-0">Selecciona baraja y juega.</p>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <Card.Body className="d-flex gap-2">
-              <Button className="button-crear" type="button" onClick={jugarCarta}>
-                Juega
-              </Button>
+              <Card.Body className="d-flex gap-2">
+                <Button className="button-crear" type="button" onClick={jugarCarta}>
+                  Juega
+                </Button>
 
-              <Button className="button-editar" type="button" onClick={jugarCarta}>
-                Probar otra vez
-              </Button>
-            </Card.Body>
-          </Card>
+                <Button className="button-editar" type="button" onClick={jugarCarta}>
+                  Probar otra vez
+                </Button>
+              </Card.Body>
+            </Card>
 
-          {tarjetaActual && (
-            <Card className="game-card">
+            <Card className="action-card">
               <Card.Body>
-                <Card.Title>Tarjeta temática</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {tarjetaActual.titulo}
-                </Card.Subtitle>
+                <Card.Title>Cómo funciona el juego</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">Repasa con cartas aleatorias</Card.Subtitle>
                 <Card.Text>
-                  {tarjetaActual.contenido}
+                  Elige una baraja y pulsa Juega para sacar una carta aleatoria. Si el
+                  resultado es APTO, la ronda termina. Si sale NO_APTO o PRUEBA_OTRA_VEZ,
+                  se muestra una tarjeta temática para repasar antes de intentarlo de nuevo.
+                  <br />
+                  <br />
+                  Cada carta representa una prueba rápida: puede confirmar que ya dominas
+                  el contenido o mandarte a revisar una explicación concreta. Usa Probar
+                  otra vez para sacar una nueva carta cuando quieras seguir practicando.
+                  <br />
+                  <br />
+                  La idea es avanzar poco a poco, repasando solo lo necesario. Si una carta
+                  te pide volver a estudiar, lee la tarjeta temática, quédate con la parte
+                  importante y vuelve a jugar hasta que consigas superar la ronda.
+                  <br />
+                  <br />
+                  También puedes crear tus propias barajas, añadir cartas con distintos
+                  resultados y preparar tarjetas temáticas adaptadas a lo que quieras
+                  estudiar. Así el juego se convierte en un repaso hecho a tu medida.
+                  <br />
+                  <br />
+                  Una buena baraja mezcla preguntas faciles, trampas pequeñas y recordatorios
+                  clave. No hace falta que todo sea perfecto desde el primer dia: empieza con
+                  unas pocas cartas, juega una ronda y ajusta lo que veas flojo. El juego
+                  no juzga, solo insiste con una paciencia sospechosamente elegante.
+                  <br />
+                  <br />
+                  Puedes usarlo para vocabulario, formulas, historia, programacion o cualquier
+                  tema que necesite repeticion. Si una carta te gana, no pasa nada: es solo
+                  informacion diciendo "eh, mirame otra vez". Repasas, vuelves a pulsar y
+                  poco a poco conviertes el caos en memoria util.
                 </Card.Text>
               </Card.Body>
             </Card>
-          )}
+          </div>
 
           {error && (
             <p className="text-danger mb-0">{error}</p>
@@ -189,19 +223,6 @@ function JuegoView() {
         </section>
       </div>
 
-      <div className="actions view-actions">
-        <Card className="action-card">
-          <Card.Body>
-            <Card.Title>Cómo funciona el juego</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Repasa con cartas aleatorias</Card.Subtitle>
-            <Card.Text>
-              Elige una baraja y pulsa Juega para sacar una carta aleatoria. Si el
-              resultado es APTO, la ronda termina. Si sale NO_APTO o PRUEBA_OTRA_VEZ,
-              se muestra una tarjeta temática para repasar antes de intentarlo de nuevo.
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </div>
     </section>
   );
 }
