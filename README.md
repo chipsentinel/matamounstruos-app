@@ -103,16 +103,18 @@ Decisiones de negocio implementadas:
 
 La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json`.
 
-Frontend inicial:
+Frontend:
 
 - El proyecto React se ha creado dentro de `frontend/` usando Vite.
 - Bootstrap esta instalado e importado globalmente en `frontend/src/main.jsx`.
 - SweetAlert2 esta instalado y se importara en los componentes donde se use.
 - La estructura inicial usa `frontend/src/components/Navbar.jsx` y vistas en `frontend/src/views/`.
-- La navegacion inicial se resuelve con estado en `App.jsx`, sin añadir rutas hasta que sean necesarias.
-- La navegacion visible se simplifica en Inicio, Baraja, Tematica y Juego, usando el logo como acceso a inicio.
+- La navegacion usa `react-router-dom` con rutas centralizadas en `frontend/src/routes.js`.
+- La navegacion visible queda en Inicio, Baraja, Carta, Tematica y Juego, usando el logo como acceso a inicio.
 - La navbar se construye con React-Bootstrap y se ajusta con estilos propios en `App.css`.
-- Se crea `frontend/src/services/api.js` como base para centralizar las llamadas `fetch()` al backend.
+- `CardUsuario` actua como acceso previo para las secciones administrativas.
+- `BarajaView`, `CartaView`, `TematicaView` y `JuegoView` consumen funciones de `frontend/src/services/api.js`.
+- `frontend/src/services/api.js` centraliza las llamadas `fetch()` al backend.
 - El logo inicial se guarda en `frontend/src/assets/` para usarlo como identidad visual de la aplicacion.
 - El servidor de desarrollo se arranca desde `frontend/` con `npm run dev`.
 - Vite expone la aplicacion en `http://localhost:5173/`.
