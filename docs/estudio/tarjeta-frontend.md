@@ -44,7 +44,7 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | Bootstrap | Framework CSS responsive. | Instalado e importado en `main.jsx`. |
 | React-Bootstrap | Componentes Bootstrap adaptados a React. | Se usa para trabajar con `Card`, `Form` y `Button` como componentes JSX. |
 | React Router DOM | Libreria de rutas para React. | Se usa para asociar URLs con vistas. |
-| SweetAlert2 | Libreria para alertas y confirmaciones. | Instalado; se importara en los componentes donde se use. |
+| SweetAlert2 | Libreria para alertas y confirmaciones. | Se usa en acceso de usuario, Barajas y Juego. |
 
 ## Configuracion inicial
 
@@ -59,7 +59,7 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | Bootstrap | Configurado | Instalado e importado globalmente en `frontend/src/main.jsx`. |
 | React-Bootstrap | Instalado | Permite usar componentes como `Card`, `Form` y `Button` desde React. |
 | React Router DOM | Instalado | Permite navegar con rutas reales como `/baraja`, `/carta` o `/juego`. |
-| SweetAlert2 | Instalado | Disponible para mensajes y confirmaciones en componentes concretos. |
+| SweetAlert2 | Configurado | Disponible para mensajes y confirmaciones en componentes concretos. |
 | Logotipo | Añadido | Se guarda en `frontend/src/assets/` para usarlo en la navegacion y pantalla principal. |
 
 Comandos usados en la fase inicial:
@@ -80,7 +80,7 @@ npm run dev
 | `BarajaView` | Gestion de barajas. | Listar, crear, editar y eliminar barajas. | Conectada con API. |
 | `CartaView` | Gestion de cartas. | Listar cartas por baraja y crear, editar o borrar cartas. | Conectada con API. |
 | `TematicaView` | Gestion de tarjetas tematicas. | Consultar y crear tarjetas. Editar y borrar quedan como mejora futura. | Conectada con API disponible. |
-| `CardUsuario` | Acceso previo para secciones administrativas. | Identificar o registrar usuario de forma simple. | Conectada con API. |
+| `CardUsuario` | Acceso previo para secciones administrativas. | Identificar o registrar usuario de forma simple con avisos SweetAlert2. | Conectada con API. |
 | `JuegoView` | Vista principal del juego. | Seleccionar baraja, obtener carta aleatoria y mostrar tarjeta si corresponde. | Conectada con API. |
 
 Las pantallas se han creado dentro de `frontend/src/views/`.
@@ -164,7 +164,9 @@ Esta opcion se usa para mantener la maquetacion sencilla y evitar crear componen
 
 `frontend/src/services/api.js` centraliza las peticiones al backend con `fetch()`.
 
-La funcion base `request(endpoint, options)` une la URL del backend con cada endpoint, convierte la respuesta a JSON y lanza errores usando el campo `message` devuelto por la API.
+La funcion base `request(endpoint, options)` une la URL del backend con cada endpoint, convierte la respuesta a JSON y lanza errores usando `reason` o `message` devueltos por la API.
+
+Cuando la respuesta no es correcta, el error conserva tambien `status`, `url` y `data`. Esto permite mostrar mensajes con SweetAlert2 y pintar informes de error concretos cuando el backend devuelve codigos como `422`.
 
 En esta fase quedan preparadas funciones para:
 
@@ -253,7 +255,8 @@ La vista permite consultar barajas existentes y administrar barajas del usuario 
 | Listado | Muestra barajas en acordeon con propietario y descripcion. | Conectado con `getBarajas` y `getUsuarios`. |
 | Acciones | Botones `Crear`, `Editar` y `Borrar`. | Cambian el formulario activo. |
 | Formulario | Crea, edita o borra barajas. | Conectado con API. |
-| Mensajes | Muestra errores y confirmaciones debajo del formulario. | Conectado. |
+| Mensajes | Muestra errores, exitos y confirmacion de borrado con SweetAlert2. | Conectado. |
+| Informe IT | Muestra URL y codigo si el backend devuelve `422`. | Conectado. |
 | Card de ayuda | Explica como usar la pantalla. | Informativa. |
 
 Funciones de API usadas:
@@ -265,6 +268,8 @@ Funciones de API usadas:
 - `deleteBaraja`
 
 El borrado envia `idUsuario` para que el backend valide permisos.
+
+Si el backend bloquea una descripcion con `TEST` o `PRUEBA`, `BarajaView` muestra el `reason` recibido con SweetAlert2 y deja visible un informe tecnico debajo del formulario.
 
 ## CartaView
 
@@ -329,6 +334,7 @@ La vista permite elegir una baraja, obtener una carta aleatoria y mostrar una ta
 | Resultado | Muestra `nombre`, `valor` y `tipoResultado`. | Conectado. |
 | Tarjeta tematica | Se muestra si el resultado requiere repaso. | Conectado. |
 | Acciones | `Juega` y `Probar otra vez`. | Solicitan otra carta aleatoria. |
+| Avisos | Muestra mensajes del juego con SweetAlert2. | Conectado. |
 | Card de ayuda | Explica el flujo del juego al usuario. | Informativa. |
 
 La carta base se carga desde `frontend/src/assets/`:
@@ -401,7 +407,7 @@ En `CardUsuario`, el formulario puede empezar con React-Bootstrap:
 </Form>
 ```
 
-En esta fase los botones de acceso pueden simular la entrada del usuario. Mas adelante el formulario se conectara con una peticion `POST`.
+En `CardUsuario`, el acceso consulta `getUsuarios` y el registro usa `createUsuario`. Los errores y accesos correctos se muestran tambien con SweetAlert2.
 
 ## Estados de pantalla
 
@@ -504,7 +510,7 @@ Pendiente.
 
 ## Dudas o decisiones pendientes
 
-- Configurar SweetAlert2 en acciones concretas.
+- Extender SweetAlert2 al resto de validaciones si se decide sustituir todos los mensajes en linea.
 - Completar `PUT` y `DELETE` de tarjetas en backend para activar editar y borrar en `TematicaView`.
 
 ## Navegacion final

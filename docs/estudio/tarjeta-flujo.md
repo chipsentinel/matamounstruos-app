@@ -146,6 +146,8 @@ Si el resultado es `NO_APTO` o `PRUEBA_OTRA_VEZ`, se busca una tarjeta aleatoria
 
 La opcion de volver a intentarlo se resuelve solicitando otra carta aleatoria con `GET /juego/carta/aleatoria/:idBaraja`.
 
+En frontend, los avisos principales del juego se muestran con SweetAlert2 para que el feedback sea mas visible.
+
 ## Estados del flujo
 
 Estados principales:

@@ -148,6 +148,15 @@ En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica
 }
 ```
 
+Si `descripcion` contiene `TEST` o `PRUEBA`, la API bloquea la creacion, registra un `console.warn` con fecha e IP y devuelve `422`:
+
+```json
+{
+  "status": "error",
+  "reason": "Modo pruebas denegado"
+}
+```
+
 ### PUT /barajas/:id
 
 ```json
@@ -158,6 +167,8 @@ En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica
 ```
 
 En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario de la baraja durante una edicion normal.
+
+La misma validacion de modo pruebas se aplica tambien a la descripcion enviada en `PUT /barajas/:id`.
 
 ### POST /cartas
 
@@ -358,6 +369,7 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 - No se implementa validacion de carta duplicada exacta porque la regla importante del modelo es controlar la repeticion por valor.
 - Permitir eliminar una baraja solo al propietario o a un usuario admin.
 - Al eliminar una baraja, borrar primero sus cartas asociadas.
+- Bloquear descripciones de baraja con `TEST` o `PRUEBA` en creacion y edicion.
 - Permitir eliminar una carta solo al propietario de su baraja o a un usuario admin.
 - No permitir que un usuario se cree como admin enviando `rol` en el registro basico.
 - Validar que los datos obligatorios lleguen en las peticiones de creacion y actualizacion.
@@ -374,6 +386,7 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 | Borrado de carta sin permisos | 403 | No tiene permiso para eliminar esta carta. | Usar el propietario de la baraja asociada o un usuario admin. |
 | Recurso no encontrado | 404 | Recurso no encontrado. | Comprobar el identificador usado en la ruta. |
 | Datos incompletos | 400 | Faltan datos obligatorios. | Validar el cuerpo de la peticion antes de enviarla. |
+| Modo pruebas en baraja | 422 | Modo pruebas denegado. | Cambiar la descripcion antes de crear o editar. |
 
 ## Pruebas en Postman
 
@@ -420,7 +433,7 @@ Pendiente.
 
 - Confirmar nombres finales de rutas: plural en español (`/barajas`, `/cartas`) o estilo alternativo.
 - Decidir si el endpoint de TarjetaTeoria depende del resultado, de la carta o de ambos.
-- Definir codigos y formato comun de errores antes de crear todos los controladores.
+- Revisar si se unifica el formato de errores en todos los controladores.
 
 ## Navegacion final
 

@@ -98,6 +98,7 @@ Decisiones de negocio implementadas:
 - Las cartas no pueden tener valor superior a `12`.
 - Cada baraja puede tener como maximo `4` cartas con el mismo valor.
 - Al borrar una baraja se comprueba que el solicitante sea propietario o admin y se eliminan primero sus cartas asociadas.
+- Al crear o editar una baraja se bloquean descripciones con `TEST` o `PRUEBA` y se devuelve `422`.
 - Al crear una carta se comprueba que la baraja asociada exista.
 - Al borrar una carta se comprueba que el solicitante sea propietario de la baraja asociada o admin.
 
@@ -107,14 +108,14 @@ Frontend:
 
 - El proyecto React se ha creado dentro de `frontend/` usando Vite.
 - Bootstrap esta instalado e importado globalmente en `frontend/src/main.jsx`.
-- SweetAlert2 esta instalado y se importara en los componentes donde se use.
+- SweetAlert2 esta instalado y se usa en acceso de usuario, Barajas y Juego para avisos y confirmaciones.
 - La estructura inicial usa `frontend/src/components/Navbar.jsx` y vistas en `frontend/src/views/`.
 - La navegacion usa `react-router-dom` con rutas centralizadas en `frontend/src/routes.js`.
 - La navegacion visible queda en Inicio, Baraja, Carta, Tematica y Juego, usando el logo como acceso a inicio.
 - La navbar se construye con React-Bootstrap y se ajusta con estilos propios en `App.css`.
 - `CardUsuario` actua como acceso previo para las secciones administrativas.
 - `BarajaView`, `CartaView`, `TematicaView` y `JuegoView` consumen funciones de `frontend/src/services/api.js`.
-- `frontend/src/services/api.js` centraliza las llamadas `fetch()` al backend.
+- `frontend/src/services/api.js` centraliza las llamadas `fetch()` al backend y conserva datos de error como codigo HTTP, URL y respuesta JSON.
 - El logo inicial se guarda en `frontend/src/assets/` para usarlo como identidad visual de la aplicacion.
 - El servidor de desarrollo se arranca desde `frontend/` con `npm run dev`.
 - Vite expone la aplicacion en `http://localhost:5173/`.
