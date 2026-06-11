@@ -42,6 +42,91 @@
   max-width: 85%;
 }
 
+/* BOTONES */
+.button-baraja {
+  --bs-btn-color: #212529;
+  --bs-btn-bg: #d9ead3;
+  --bs-btn-border-color: #93c47d;
+  --bs-btn-hover-color: #212529;
+  --bs-btn-hover-bg: #cfe6c8;
+  --bs-btn-hover-border-color: #7fb069;
+  --bs-btn-active-color: #212529;
+  --bs-btn-active-bg: #cfe6c8;
+  --bs-btn-active-border-color: #7fb069;
+}
+
+.button-carta {
+  --bs-btn-color: #212529;
+  --bs-btn-bg: #fff2cc;
+  --bs-btn-border-color: #f1c232;
+  --bs-btn-hover-color: #212529;
+  --bs-btn-hover-bg: #ffe599;
+  --bs-btn-hover-border-color: #d6a800;
+  --bs-btn-active-color: #212529;
+  --bs-btn-active-bg: #ffe599;
+  --bs-btn-active-border-color: #d6a800;
+}
+
+.button-crear {
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #198754;
+  --bs-btn-border-color: #198754;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #157347;
+  --bs-btn-hover-border-color: #146c43;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #146c43;
+  --bs-btn-active-border-color: #13653f;
+}
+
+.button-editar {
+  --bs-btn-color: #212529;
+  --bs-btn-bg: #ffc107;
+  --bs-btn-border-color: #ffc107;
+  --bs-btn-hover-color: #212529;
+  --bs-btn-hover-bg: #ffca2c;
+  --bs-btn-hover-border-color: #ffc720;
+  --bs-btn-active-color: #212529;
+  --bs-btn-active-bg: #ffcd39;
+  --bs-btn-active-border-color: #ffc720;
+}
+
+.button-borrar {
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #dc3545;
+  --bs-btn-border-color: #dc3545;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #bb2d3b;
+  --bs-btn-hover-border-color: #b02a37;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #b02a37;
+  --bs-btn-active-border-color: #a52834;
+}
+
+.button-acceso {
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #0d6efd;
+  --bs-btn-border-color: #0d6efd;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #0b5ed7;
+  --bs-btn-hover-border-color: #0a58ca;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #0a58ca;
+  --bs-btn-active-border-color: #0a53be;
+}
+
+.button-registro {
+  --bs-btn-color: #ffffff;
+  --bs-btn-bg: #198754;
+  --bs-btn-border-color: #198754;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: #157347;
+  --bs-btn-hover-border-color: #146c43;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: #146c43;
+  --bs-btn-active-border-color: #13653f;
+}
+
 /* NAVBAR */
 .app-navbar {
   width: 100%;
@@ -83,7 +168,7 @@
   font-size: 0.85rem;
 }
 
-.app-navbar .btn-outline-secondary:not(.app-navbar-logo-button):not(.app-navbar-baraja-active):not(.app-navbar-tematica-active):not(.app-navbar-juego-active) {
+.app-navbar .btn-outline-secondary:not(.app-navbar-logo-button):not(.app-navbar-baraja-active):not(.app-navbar-carta-active):not(.app-navbar-tematica-active):not(.app-navbar-juego-active) {
   --bs-btn-color: #8b8f94;
   --bs-btn-bg: transparent;
   --bs-btn-border-color: transparent;
@@ -120,6 +205,18 @@
   color: #212529;
 }
 
+.app-navbar-carta-active {
+  --bs-btn-color: #212529;
+  --bs-btn-bg: #fff2cc;
+  --bs-btn-border-color: #f1c232;
+  --bs-btn-hover-color: #212529;
+  --bs-btn-hover-bg: #fff2cc;
+  --bs-btn-hover-border-color: #f1c232;
+  background-color: #fff2cc;
+  border-color: #f1c232;
+  color: #212529;
+}
+
 .app-navbar-tematica-active {
   --bs-btn-color: #212529;
   --bs-btn-bg: #d9eaf7;
@@ -147,4 +244,11 @@
 .app-navbar-search {
   width: 100%;
   max-width: 360px;
+}
+
+.app-navbar-user {
+  color: #5f6368;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
