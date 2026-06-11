@@ -18,7 +18,7 @@ import {
   getUsuarios,
 } from '../services/api';
 
-function TematicaView({ usuarioActivo }) {
+function TematicaView() {
   // Datos principales que vienen del backend y se pintan en la vista.
   const [barajas, setBarajas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
@@ -85,9 +85,13 @@ function TematicaView({ usuarioActivo }) {
 
   // Carga los datos principales cuando se entra por primera vez en esta vista.
   useEffect(() => {
-    cargarBarajas();
-    cargarTarjetas();
-    cargarUsuarios();
+    async function cargarDatosIniciales() {
+      await cargarBarajas();
+      await cargarTarjetas();
+      await cargarUsuarios();
+    }
+
+    cargarDatosIniciales();
   }, []);
 
   // Crea una tarjeta asociada a una baraja.

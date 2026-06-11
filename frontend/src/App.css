@@ -153,19 +153,21 @@
 
 .app-navbar-logo {
   width: 70px;
-  height: 46px;
-  object-fit: contain;
+  height: 70px;
+  object-fit: cover;
 }
 
 .app-navbar .btn {
   border-radius: 3px;
+  box-sizing: border-box;
 }
 
 .app-navbar .btn-sm:not(.app-navbar-logo-button) {
-  min-width: 72px;
+  width: 82px;
   min-height: 34px;
   padding-inline: 0.6rem;
   font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .app-navbar .btn-outline-secondary:not(.app-navbar-logo-button):not(.app-navbar-baraja-active):not(.app-navbar-carta-active):not(.app-navbar-tematica-active):not(.app-navbar-juego-active) {
@@ -203,6 +205,7 @@
   background-color: #d9ead3;
   border-color: #93c47d;
   color: #212529;
+  font-weight: 600;
 }
 
 .app-navbar-carta-active {
@@ -215,6 +218,7 @@
   background-color: #fff2cc;
   border-color: #f1c232;
   color: #212529;
+  font-weight: 600;
 }
 
 .app-navbar-tematica-active {
@@ -227,6 +231,7 @@
   background-color: #d9eaf7;
   border-color: #6fa8dc;
   color: #212529;
+  font-weight: 600;
 }
 
 .app-navbar-juego-active {
@@ -239,6 +244,7 @@
   background-color: #d9c2e9;
   border-color: #8e7cc3;
   color: #212529;
+  font-weight: 600;
 }
 
 .app-navbar-search {

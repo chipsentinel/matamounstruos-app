@@ -94,9 +94,13 @@ function CartaView({ usuarioActivo }) {
 
   // Carga los datos principales cuando se entra por primera vez en esta vista.
   useEffect(() => {
-    cargarBarajas();
-    cargarCartas();
-    cargarUsuarios();
+    async function cargarDatosIniciales() {
+      await cargarBarajas();
+      await cargarCartas();
+      await cargarUsuarios();
+    }
+
+    cargarDatosIniciales();
   }, []);
 
   // Crea una carta dentro de la baraja seleccionada.

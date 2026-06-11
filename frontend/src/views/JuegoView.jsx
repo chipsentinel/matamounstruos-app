@@ -46,7 +46,11 @@ function JuegoView() {
 
   // Carga las barajas cuando se entra por primera vez en esta vista.
   useEffect(() => {
-    cargarBarajas();
+    async function cargarDatosIniciales() {
+      await cargarBarajas();
+    }
+
+    cargarDatosIniciales();
   }, []);
 
   // Saca una carta aleatoria de la baraja elegida.

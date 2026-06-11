@@ -72,8 +72,12 @@ function BarajaView({ usuarioActivo }) {
 
   // Carga las barajas cuando se entra por primera vez en esta vista.
   useEffect(() => {
-    cargarBarajas();
-    cargarUsuarios();
+    async function cargarDatosIniciales() {
+      await cargarBarajas();
+      await cargarUsuarios();
+    }
+
+    cargarDatosIniciales();
   }, []);
 
   // Crea una baraja usando el usuario identificado en CardUsuario.
