@@ -150,9 +150,11 @@
   padding: 0.5rem;
   background: #ffffff;
   border-bottom: 1px solid #d8d8d8;
+  text-transform: uppercase;
 }
 
 .app-navbar-content {
+  position: relative;
   max-width: 1100px;
   margin-inline: auto;
 }
@@ -269,11 +271,26 @@
   max-width: 360px;
 }
 
+.app-navbar-search .form-control {
+  text-transform: uppercase;
+}
+
 .app-navbar-user {
   color: #5f6368;
   font-size: 0.9rem;
   font-weight: 600;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
   white-space: nowrap;
+}
+/* En movil el usuario vuelve al flujo normal para evitar solaparse con botones y buscador. */
+@media (max-width: 767.98px) {
+  .app-navbar-user {
+    position: static;
+    text-align: center;
+    transform: none;
+  }
 }
 
 /* evitar borde y resaltado al interactuar con el logo de la navbar */

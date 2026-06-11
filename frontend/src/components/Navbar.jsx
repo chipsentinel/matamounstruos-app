@@ -94,14 +94,14 @@ function Navbar({ vistaActual, cambiarVista, usuarioActivo }) {
         </Nav>
 
         {usuarioActivo && (
-          <span className="app-navbar-user ms-md-auto">
+          <span className="app-navbar-user">
             Usuario: {usuarioActivo.nombre}
           </span>
         )}
 
         {/* Buscador sencillo: localiza texto dentro de la pagina actual. */}
         <Form
-          className={`d-flex gap-2 app-navbar-search ${usuarioActivo ? '' : 'ms-md-auto'}`}
+          className="d-flex gap-2 app-navbar-search ms-md-auto"
           onSubmit={buscarEnPagina}
         >
           <Form.Control
