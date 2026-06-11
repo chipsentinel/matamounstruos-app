@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
+import Swal from 'sweetalert2'
 import { createUsuario, getUsuarios } from '../services/api'
 
 function CardUsuario({ onAcceso }) {
@@ -15,12 +16,18 @@ function CardUsuario({ onAcceso }) {
     await accederUsuario()
   }
 
+  // Muestra errores de acceso y registro con SweetAlert2.
+  function mostrarError(mensaje) {
+    setError(mensaje)
+    Swal.fire('Error', mensaje, 'error')
+  }
+
   async function accederUsuario() {
     setError('')
 
     try {
       if (!nombre || !password) {
-        setError('Introduce nick y password.')
+        mostrarError('Introduce nick y password.')
         return
       }
 
@@ -28,13 +35,14 @@ function CardUsuario({ onAcceso }) {
       const usuarioEncontrado = usuarios.find((usuario) => usuario.nombre === nombre)
 
       if (!usuarioEncontrado) {
-        setError('Usuario no encontrado. Puedes registrarte con ese nombre.')
+        mostrarError('Usuario no encontrado. Puedes registrarte con ese nombre.')
         return
       }
 
+      await Swal.fire('Acceso correcto', `Bienvenido, ${usuarioEncontrado.nombre}.`, 'success')
       onAcceso(usuarioEncontrado)
     } catch (error) {
-      setError(error.message)
+      mostrarError(error.message)
     }
   }
 
@@ -43,19 +51,20 @@ function CardUsuario({ onAcceso }) {
 
     try {
       if (!nombre || !password) {
-        setError('Introduce nick y password.')
+        mostrarError('Introduce nick y password.')
         return
       }
 
       const usuarioCreado = await createUsuario({ nombre, password })
 
+      await Swal.fire('Usuario registrado', `Bienvenido, ${nombre}.`, 'success')
       onAcceso({
         idUsuario: usuarioCreado.idUsuario,
         nombre,
         rol: 'usuario',
       })
     } catch (error) {
-      setError(error.message)
+      mostrarError(error.message)
     }
   }
 
