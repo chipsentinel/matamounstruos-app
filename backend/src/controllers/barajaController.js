@@ -1,5 +1,5 @@
 const pool = require('../config/db');
-const { contieneModoPruebas } = require('../utils'); // reutiliza la validacion tambien en tests unitarios
+const { contieneModoPruebas } = require('../utils'); // validacion reutilizable del modo pruebas
 
 const getBarajas = async (req, res) => {
     try {
@@ -68,6 +68,7 @@ const createBaraja = async (req, res) => {
             });
         }
 
+        // Se valida la relacion antes del INSERT para devolver 404 en vez de error SQL.
         const usuarios = await pool.query(
             'SELECT idUsuario FROM usuarios WHERE idUsuario = ?',
             [idUsuario]
@@ -152,7 +153,7 @@ const updateBaraja = async (req, res) => {
 const deleteBaraja = async (req, res) => {
     try {
         const {id} = req.params;
-        const {idUsuario} = req.body; // identifico usuario para que solo pueda borrar el usurio
+        const {idUsuario} = req.body;
 
         // localizar si la baraja existe
         const barajas = await pool.query(
@@ -189,19 +190,17 @@ const deleteBaraja = async (req, res) => {
             });
         }
 
-        // borrar primero las cartas asociadas a la baraja
+        // Se borran dependencias primero para no romper las claves foraneas.
         await pool.query(
             'DELETE FROM cartas WHERE idBaraja = ?',
             [id]
         );
 
-        // borrar tambien las tarjetas asociadas antes de eliminar la baraja
         await pool.query(
             'DELETE FROM tarjetas WHERE idBaraja = ?',
             [id]
         );
 
-        // borrar la baraja despues de borrar sus cartas y tarjetas
         const result = await pool.query(
             'DELETE FROM barajas WHERE idBaraja = ?',
             [id]

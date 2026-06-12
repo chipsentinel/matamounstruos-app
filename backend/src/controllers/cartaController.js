@@ -78,19 +78,19 @@ const createCarta = async (req, res) => {
             });
         }
 
+        // Mantiene el backend alineado con el ENUM definido en schema.sql.
         if (!['APTO', 'NO_APTO', 'PRUEBA_OTRA_VEZ'].includes(tipoResultado)) {
             return res.status(400).json({
                 message: 'Tipo de resultado no valido'
             });
         }
 
-        // solo puede haber 4 cartas del mismo valor
+        // Regla de baraja: no puede haber mas de 4 cartas con el mismo valor.
         const cartaMismoValor = await pool.query(
             'SELECT COUNT(*) AS total FROM cartas WHERE valor = ? AND idBaraja = ?',
             [valor, idBaraja]
         );
 
-        // aviso 209 de que no puede haber mas de 4 cartas del mismo valor
         if (Number(cartaMismoValor[0].total) >= 4) {
             return res.status(409).json({
                 message: 'NO puede haber mas de 4 cartas del mismo valor'
@@ -149,6 +149,7 @@ const updateCarta = async (req, res) => {
             });
         }
 
+        // Mantiene el backend alineado con el ENUM definido en schema.sql.
         if (!['APTO', 'NO_APTO', 'PRUEBA_OTRA_VEZ'].includes(tipoResultado)) {
             return res.status(400).json({
                 message: 'Tipo de resultado no valido'
@@ -180,7 +181,7 @@ const updateCarta = async (req, res) => {
 const deleteCarta = async (req, res) => {
     try {
         const {id} = req.params;
-        const {idUsuario} = req.body; // identifico usuario para que solo pueda borrar el usurio
+        const {idUsuario} = req.body;
 
         // localizar si la carta existe
         const cartas = await pool.query(
@@ -210,7 +211,7 @@ const deleteCarta = async (req, res) => {
         const carta = cartas[0];
         const usuario = usuarios[0];
 
-        // localizar la baraja asociada a la carta
+        // La carta hereda los permisos de la baraja a la que pertenece.
         const barajas = await pool.query(
             'SELECT idBaraja, idUsuario FROM barajas WHERE idBaraja = ?',
             [carta.idBaraja]

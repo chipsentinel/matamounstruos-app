@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { accesoUsuario, createUsuario } from '../services/api'
 
 function CardUsuario({ onAcceso }) {
-  // Este componente no guarda sesion real: solo identifica al usuario activo en App.jsx.
+  // El estado de sesion vive en App.jsx; aqui solo se recogen credenciales.
   const [nombre, setNombre] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -32,10 +32,10 @@ function CardUsuario({ onAcceso }) {
         return
       }
 
-      // El backend valida nombre y password para evitar accesos solo por nick.
+      // La validacion real se hace en backend para no confiar solo en el frontend.
       const usuarioEncontrado = await accesoUsuario({ nombre, password })
 
-      // App.jsx recibe el usuario y permite volver a la vista administrativa pendiente.
+      // App.jsx recibe el usuario y desbloquea la vista protegida que estuviera pendiente.
       await Swal.fire('Acceso correcto', `Bienvenido, ${usuarioEncontrado.nombre}.`, 'success')
       onAcceso(usuarioEncontrado)
     } catch (error) {
@@ -54,7 +54,7 @@ function CardUsuario({ onAcceso }) {
 
       const usuarioCreado = await createUsuario({ nombre, password })
 
-      // El backend devuelve el id creado; aqui completamos el objeto que necesita App.jsx.
+      // Tras registrar, se crea el mismo objeto minimo que usa la navegacion protegida.
       await Swal.fire('Usuario registrado', `Bienvenido, ${nombre}.`, 'success')
       onAcceso({
         idUsuario: usuarioCreado.idUsuario,

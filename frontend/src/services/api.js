@@ -1,9 +1,7 @@
-// CUIDADO: no queremos imports hasta que haga falta consumir estas funciones en las vistas.
-
 // URL base del backend. En Docker/Vite puede llegar desde VITE_API_URL.
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
-// Funcion base para centralizar las peticiones fetch al backend.
+// Punto unico de salida al backend: todas las vistas pasan por aqui.
 async function request(endpoint, options = {}) {
     const requestUrl = `${API_URL}${endpoint}`
     const response =await fetch(requestUrl, {
@@ -17,6 +15,7 @@ async function request(endpoint, options = {}) {
     const data = await response.json()
 
     if (!response.ok){
+        // Conserva datos tecnicos para que las vistas puedan mostrar mensajes utiles.
         const error = new Error(data.reason || data.message || 'Error de peticion')
         error.status = response.status
         error.url = requestUrl
@@ -134,5 +133,3 @@ export function getCartaAleatoriaDeBaraja(idBaraja) {
 export function getTarjetaAleatoriaDeCarta(idCarta) {
     return request(`/juego/tarjeta/aleatoria/${idCarta}`)
 }
-
-// especial ojo a escribir bien stringify

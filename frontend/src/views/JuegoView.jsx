@@ -21,7 +21,7 @@ import cartaStandar from '../assets/carta-standar.webp';
 function JuegoView() {
   // Datos principales que vienen del backend.
   const [barajas, setBarajas] = useState([]);
-  // cartaActual pinta el resultado central; tarjetaActual pinta el repaso superior.
+  // cartaActual pinta el resultado central; tarjetaActual aparece solo si toca repasar.
   const [cartaActual, setCartaActual] = useState(null);
   const [tarjetaActual, setTarjetaActual] = useState(null);
 
@@ -55,7 +55,7 @@ function JuegoView() {
     cargarDatosIniciales();
   }, []);
 
-  // Muestra los errores como alertas rojas con SweetAlert2.
+  // Los cambios de error disparan una alerta sin mezclar SweetAlert2 dentro del flujo de juego.
   useEffect(() => {
     if (!error) {
       return;
@@ -68,7 +68,7 @@ function JuegoView() {
     });
   }, [error]);
 
-  // Muestra los mensajes del juego como alertas verdes con SweetAlert2.
+  // Los mensajes positivos se tratan igual: estado primero, alerta despues.
   useEffect(() => {
     if (!mensajeJuego) {
       return;
@@ -110,7 +110,7 @@ function JuegoView() {
     }
   }
 
-  // Pide una tarjeta de estudio cuando la carta no es APTO.
+  // Pide una tarjeta de estudio cuando la carta obliga a repasar.
   async function cargarTarjetaDeEstudio(idCarta) {
     try {
       const tarjeta = await getTarjetaAleatoriaDeCarta(idCarta);

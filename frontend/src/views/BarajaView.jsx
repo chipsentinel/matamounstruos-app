@@ -83,13 +83,13 @@ function BarajaView({ usuarioActivo }) {
     cargarDatosIniciales();
   }, []);
 
-  // Muestra errores del backend con SweetAlert2 y guarda el informe IT si llega un 422.
+  // Unifica el tratamiento de errores para no repetir SweetAlert2 en cada formulario.
   function gestionarErrorBackend(error) {
     const mensaje = error.data?.reason || error.message;
 
     setError(mensaje);
 
-    // El backend envia status, url y data desde api.js; asi podemos mostrar el informe IT.
+    // api.js adjunta status y url; el informe ayuda a revisar errores concretos del backend.
     if (error.status === 422) {
       setInformeError({
         url: error.url,
@@ -172,7 +172,7 @@ function BarajaView({ usuarioActivo }) {
     }
   }
 
-  // Borra una baraja si el usuario tiene permisos en el backend.
+  // Borra una baraja; los permisos finales se comprueban en el backend.
   async function borrarBarajaSeleccionada(event) {
     event.preventDefault();
     setError('');
