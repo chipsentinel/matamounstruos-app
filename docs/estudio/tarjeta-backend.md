@@ -18,6 +18,7 @@ La intención es preparar los endpoints, validaciones y respuestas que más adel
 - [Datos de salida](#datos-de-salida)
 - [Validaciones](#validaciones)
 - [Errores frecuentes](#errores-frecuentes)
+- [Tests unitarios](#tests-unitarios)
 - [Pruebas en Postman](#pruebas-en-postman)
 - [Material para futuras tarjetas](#material-para-futuras-tarjetas)
 - [Dudas o decisiones pendientes](#dudas-o-decisiones-pendientes)
@@ -387,6 +388,25 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 | Recurso no encontrado | 404 | Recurso no encontrado. | Comprobar el identificador usado en la ruta. |
 | Datos incompletos | 400 | Faltan datos obligatorios. | Validar el cuerpo de la peticion antes de enviarla. |
 | Modo pruebas en baraja | 422 | Modo pruebas denegado. | Cambiar la descripcion antes de crear o editar. |
+
+## Tests unitarios
+
+Los tests unitarios del backend estan en:
+
+```txt
+backend/src/test/unit/
+```
+
+Cubren reglas pequenas y aisladas usando funciones puras de `backend/src/utils/index.js`, sin levantar Express ni conectar con MariaDB.
+
+Para ejecutarlos:
+
+```bash
+cd backend
+npm test
+```
+
+Actualmente se comprueban validaciones de usuario, baraja, carta, tarjeta y juego.
 
 ## Pruebas en Postman
 

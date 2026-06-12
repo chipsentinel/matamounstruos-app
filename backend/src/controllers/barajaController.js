@@ -1,9 +1,5 @@
 const pool = require('../config/db');
-
-// Detecta textos de prueba antes de crear o editar una baraja.
-function contieneModoPruebas(texto) {
-    return /TEST|PRUEBA/i.test(String(texto || ''));
-}
+const { contieneModoPruebas } = require('../utils'); // reutiliza la validacion tambien en tests unitarios
 
 const getBarajas = async (req, res) => {
     try {
