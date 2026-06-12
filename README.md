@@ -1,4 +1,24 @@
-# Matamounstruos App
+<p align="center">
+  <img src="./frontend/src/assets/logo-full.webp" alt="Matamounstruos App" width="280" />
+</p>
+
+<p align="center">
+  <a href="https://img.shields.io/badge/React-19.2.6-61dafb?logo=react&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/React-19.2.6-61dafb?logo=react&logoColor=white&style=flat-square" alt="React"/></a>
+  <a href="https://img.shields.io/badge/Vite-8.0.12-646cff?logo=vite&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Vite-8.0.12-646cff?logo=vite&logoColor=white&style=flat-square" alt="Vite"/></a>
+  <a href="https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white&style=flat-square" alt="Node.js"/></a>
+  <a href="https://img.shields.io/badge/Express-5.2.1-000000?logo=express&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Express-5.2.1-000000?logo=express&logoColor=white&style=flat-square" alt="Express"/></a>
+  <a href="https://img.shields.io/badge/MariaDB-3.5.2-003545?logo=mariadb&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/MariaDB-3.5.2-003545?logo=mariadb&logoColor=white&style=flat-square" alt="MariaDB"/></a>
+</p>
+
+<p align="center">
+  <a href="https://img.shields.io/badge/Bootstrap-5.3.8-7952b3?logo=bootstrap&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Bootstrap-5.3.8-7952b3?logo=bootstrap&logoColor=white&style=flat-square" alt="Bootstrap"/></a>
+  <a href="https://img.shields.io/badge/SweetAlert2-11.26.25-ff6f61?style=flat-square"><img src="https://img.shields.io/badge/SweetAlert2-11.26.25-ff6f61?style=flat-square" alt="SweetAlert2"/></a>
+  <a href="https://img.shields.io/badge/Postman-ff6c37?logo=postman&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Postman-ff6c37?logo=postman&logoColor=white&style=flat-square" alt="Postman"/></a>
+  <a href="https://img.shields.io/badge/Mocha-11.7.6-8d6748?logo=mocha&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Mocha-11.7.6-8d6748?logo=mocha&logoColor=white&style=flat-square" alt="Mocha"/></a>
+  <a href="https://github.com/chipsentinel/matamounstruos-app/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-GitHub_Actions-2088ff?logo=githubactions&logoColor=white&style=flat-square" alt="GitHub Actions"/></a>
+</p>
+
+<h1 align="center">Matamounstruos App</h1>
 
 Matamounstruos App es una aplicación web educativa basada en la gestión de barajas, cartas y tarjetas de teoría.
 
@@ -65,16 +85,14 @@ Funcionalidades principales:
 
 ## Tecnologias
 
-Este apartado recoge las tecnologias iniciales elegidas para el desarrollo.
-
-Tecnologias previstas:
-
-- Backend: Node.js, Express, CORS, dotenv y driver `mariadb`.
-- Frontend: React con Vite, Bootstrap y SweetAlert2.
-- Base de datos: MariaDB.
-- Control de versiones: Git y GitHub.
-- Contenedores: Docker Compose para el entorno de desarrollo de MariaDB.
-- Testing: Mocha y Chai para tests unitarios; Postman y Newman para pruebas de integracion.
+| Parte | Tecnologias reales |
+| --- | --- |
+| Frontend | React 19, Vite 8, React Router DOM 7, Bootstrap 5, React-Bootstrap, SweetAlert2, CSS |
+| Backend | Node.js 22, Express 5, CORS, dotenv, driver `mariadb` |
+| Base de datos | MariaDB con scripts `schema.sql` y `seeds.sql` |
+| Testing | Mocha 11, Chai 6, Postman, Newman |
+| Calidad y entrega | npm, Vite build, Docker, Docker Compose, GitHub Actions |
+| Control de versiones | Git y GitHub |
 
 ## Configuracion local
 
@@ -134,6 +152,7 @@ Enlaces a la documentación del proyecto:
   - Flujo funcional: [docs/estudio/tarjeta-flujo.md](docs/estudio/tarjeta-flujo.md)
   - Gitflow: [docs/estudio/tarjeta-gitflow.md](docs/estudio/tarjeta-gitflow.md)
   - Postman: [docs/estudio/tarjeta-postman.md](docs/estudio/tarjeta-postman.md)
+  - GitHub Actions: [docs/estudio/tarjeta-workflow.md](docs/estudio/tarjeta-workflow.md)
 - Documentación de API:
 - Modelo Entidad/Relación:
 - Modelo relacional:
