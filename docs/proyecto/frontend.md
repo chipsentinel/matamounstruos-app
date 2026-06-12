@@ -1,8 +1,17 @@
-# Tarjetas de estudio: frontend
+# Desempeño del proyecto: frontend
 
-Este documento queda como espacio de trabajo para definir las pantallas, componentes y estados visuales de las tarjetas de estudio.
+Este documento resume el trabajo realizado en el frontend de Matamounstruos App: estructura React, vistas, componentes, servicios API, navegacion y feedback visual.
 
-La intención es preparar cómo se mostrará el contenido de repaso al usuario dentro de la aplicación.
+El objetivo es dejar claro como se construye la interfaz, como se conecta con el backend y como se muestran barajas, cartas, tarjetas y juego dentro de la aplicacion.
+
+## Resumen de desempeño
+
+- Se creo el frontend dentro de `frontend/` con React y Vite.
+- Se instalo Bootstrap, React-Bootstrap, React Router DOM y SweetAlert2.
+- Se organizaron vistas principales para Inicio, Baraja, Carta, Tematica y Juego.
+- Se centralizaron llamadas al backend en `frontend/src/services/api.js`.
+- Se adapto la navegacion con logo, usuario activo, buscador y rutas.
+- Se integraron avisos visuales con SweetAlert2.
 
 ## Indice
 

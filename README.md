@@ -1,4 +1,24 @@
-# Matamounstruos App
+<p align="center">
+  <img src="./frontend/src/assets/logo-full.webp" alt="Matamounstruos App" width="280" />
+</p>
+
+<p align="center">
+  <a href="https://img.shields.io/badge/React-19.2.6-61dafb?logo=react&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/React-19.2.6-61dafb?logo=react&logoColor=white&style=flat-square" alt="React"/></a>
+  <a href="https://img.shields.io/badge/Vite-8.0.12-646cff?logo=vite&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Vite-8.0.12-646cff?logo=vite&logoColor=white&style=flat-square" alt="Vite"/></a>
+  <a href="https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white&style=flat-square" alt="Node.js"/></a>
+  <a href="https://img.shields.io/badge/Express-5.2.1-000000?logo=express&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Express-5.2.1-000000?logo=express&logoColor=white&style=flat-square" alt="Express"/></a>
+  <a href="https://img.shields.io/badge/MariaDB-3.5.2-003545?logo=mariadb&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/MariaDB-3.5.2-003545?logo=mariadb&logoColor=white&style=flat-square" alt="MariaDB"/></a>
+</p>
+
+<p align="center">
+  <a href="https://img.shields.io/badge/Bootstrap-5.3.8-7952b3?logo=bootstrap&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Bootstrap-5.3.8-7952b3?logo=bootstrap&logoColor=white&style=flat-square" alt="Bootstrap"/></a>
+  <a href="https://img.shields.io/badge/SweetAlert2-11.26.25-ff6f61?style=flat-square"><img src="https://img.shields.io/badge/SweetAlert2-11.26.25-ff6f61?style=flat-square" alt="SweetAlert2"/></a>
+  <a href="https://img.shields.io/badge/Postman-ff6c37?logo=postman&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Postman-ff6c37?logo=postman&logoColor=white&style=flat-square" alt="Postman"/></a>
+  <a href="https://img.shields.io/badge/Mocha-11.7.6-8d6748?logo=mocha&logoColor=white&style=flat-square"><img src="https://img.shields.io/badge/Mocha-11.7.6-8d6748?logo=mocha&logoColor=white&style=flat-square" alt="Mocha"/></a>
+  <a href="https://github.com/chipsentinel/matamounstruos-app/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-GitHub_Actions-2088ff?logo=githubactions&logoColor=white&style=flat-square" alt="GitHub Actions"/></a>
+</p>
+
+<h1 align="center">Matamounstruos App</h1>
 
 Matamounstruos App es una aplicación web educativa basada en la gestión de barajas, cartas y tarjetas de teoría.
 
@@ -65,16 +85,14 @@ Funcionalidades principales:
 
 ## Tecnologias
 
-Este apartado recoge las tecnologias iniciales elegidas para el desarrollo.
-
-Tecnologias previstas:
-
-- Backend: Node.js, Express, CORS, dotenv y driver `mariadb`.
-- Frontend: React con Vite, Bootstrap y SweetAlert2.
-- Base de datos: MariaDB.
-- Control de versiones: Git y GitHub.
-- Contenedores: Docker Compose para el entorno de desarrollo de MariaDB.
-- Testing: Pendiente.
+| Parte | Tecnologias reales |
+| --- | --- |
+| Frontend | React 19, Vite 8, React Router DOM 7, Bootstrap 5, React-Bootstrap, SweetAlert2, CSS |
+| Backend | Node.js 22, Express 5, CORS, dotenv, driver `mariadb` |
+| Base de datos | MariaDB con scripts `schema.sql` y `seeds.sql` |
+| Testing | Mocha 11, Chai 6, Postman, Newman |
+| Calidad y entrega | npm, Vite build, Docker, Docker Compose, GitHub Actions |
+| Control de versiones | Git y GitHub |
 
 ## Configuracion local
 
@@ -102,7 +120,7 @@ Decisiones de negocio implementadas:
 - Al crear una carta se comprueba que la baraja asociada exista.
 - Al borrar una carta se comprueba que el solicitante sea propietario de la baraja asociada o admin.
 
-La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json` y se documenta en `docs/estudio/tarjeta-postman.md`.
+La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json` y se documenta en `docs/testing.md`. Se puede ejecutar desde `backend/` con `npx newman run ../postman/matamounstruos-app.postman_collection.json`.
 
 Frontend:
 
@@ -125,18 +143,18 @@ Frontend:
 
 Enlaces a la documentación del proyecto:
 
-- Diseño de base de datos: [docs/database-design.md](docs/database-design.md)
+- Entrada principal: [docs/README.md](docs/README.md)
+- Guia de estudio: [docs/proyecto/guia-estudio.md](docs/proyecto/guia-estudio.md)
+- Arquitectura: [docs/proyecto/arquitectura.md](docs/proyecto/arquitectura.md)
+- Backend: [docs/backend.md](docs/backend.md)
+- Frontend: [docs/frontend.md](docs/frontend.md)
+- Base de datos: [docs/database.md](docs/database.md)
+- Testing y Postman: [docs/testing.md](docs/testing.md)
+- DevOps, Docker y GitHub Actions: [docs/devops.md](docs/devops.md)
+- Git y flujo de ramas: [docs/git.md](docs/git.md)
+- Contenido de tarjetas: [docs/tematica/README.md](docs/tematica/README.md)
+- Diseño historico de base de datos: [docs/database-design.md](docs/database-design.md)
 - Docker y MariaDB: [docker/README.md](docker/README.md)
-- Tarjetas de estudio:
-  - Base de datos: [docs/estudio/tarjeta-db.md](docs/estudio/tarjeta-db.md)
-  - Backend: [docs/estudio/tarjeta-backend.md](docs/estudio/tarjeta-backend.md)
-  - Frontend: [docs/estudio/tarjeta-frontend.md](docs/estudio/tarjeta-frontend.md)
-  - Flujo funcional: [docs/estudio/tarjeta-flujo.md](docs/estudio/tarjeta-flujo.md)
-  - Gitflow: [docs/estudio/tarjeta-gitflow.md](docs/estudio/tarjeta-gitflow.md)
-  - Postman: [docs/estudio/tarjeta-postman.md](docs/estudio/tarjeta-postman.md)
-- Documentación de API:
-- Modelo Entidad/Relación:
-- Modelo relacional:
 
 ## Objetivo del proyecto
 

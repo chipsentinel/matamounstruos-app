@@ -1,8 +1,17 @@
-# Tarjetas de estudio: backend
+# Desempeño del proyecto: backend
 
-Este documento queda como espacio de trabajo para definir la API REST y la logica de backend asociada a las tarjetas de estudio.
+Este documento resume el trabajo realizado en el backend de Matamounstruos App y deja organizada la informacion necesaria para entender la API REST, las validaciones y la conexion con la base de datos.
 
-La intención es preparar los endpoints, validaciones y respuestas que más adelante permitirán gestionar tarjetas desde la aplicación.
+El foco ya no es solo preparar futuras tarjetas de estudio, sino explicar como se ha construido el servidor, que decisiones se han tomado y como se comprueba que el backend responde de forma coherente.
+
+## Resumen de desempeño
+
+- Se preparo un servidor Express separado del frontend.
+- Se conecto el backend con MariaDB mediante variables de entorno.
+- Se organizaron rutas y controladores para mantener el codigo entendible.
+- Se implementaron endpoints para usuarios, barajas, cartas, tarjetas y juego.
+- Se anadieron validaciones de negocio y respuestas HTTP claras.
+- Se incorporaron pruebas unitarias y comprobaciones con Postman/Newman.
 
 ## Indice
 
@@ -417,6 +426,13 @@ postman/matamounstruos-app.postman_collection.json
 ```
 
 Incluye comprobaciones de usuarios, barajas, cartas, tarjetas, endpoints de juego, `health/db` y casos de error principales.
+
+La coleccion puede ejecutarse desde terminal con Newman:
+
+```bash
+cd backend
+npx newman run ../postman/matamounstruos-app.postman_collection.json
+```
 
 ## Material para futuras tarjetas
 

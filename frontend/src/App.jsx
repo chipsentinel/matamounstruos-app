@@ -14,6 +14,7 @@ import JuegoView from './views/JuegoView'
 import { MAIN_ROUTES } from './routes'
 
 function obtenerVistaActual(pathname) {
+  // Convierte la URL actual en la clave que usa la navbar para marcar el boton activo.
   const rutaEncontrada = Object.entries(MAIN_ROUTES).find(([, ruta]) => ruta === pathname)
 
   return rutaEncontrada?.[0] === 'root' ? 'home' : rutaEncontrada?.[0] || 'home'
@@ -27,10 +28,11 @@ function App() {
   const [vistaPendiente, setVistaPendiente] = useState(null) // Guarda la vista protegida a la que se queria entrar despues del acceso.
 
   const vistaActual = obtenerVistaActual(location.pathname)
+  // Si se esta en identificacion, la navbar mantiene marcada la vista que se queria abrir.
   const vistaPendienteActual = location.state?.vistaPendiente || vistaPendiente
   const vistaNavbar = vistaActual === 'usuario' && vistaPendienteActual ? vistaPendienteActual : vistaActual
 
-  // Cambia la ruta usando React Router y envia antes a identificacion si la vista requiere usuario.
+  // Centraliza la navegacion y decide si una vista necesita identificacion previa.
   function cambiarVista(vista) {
     const necesitaUsuario = vista === 'baraja' || vista === 'carta' || vista === 'tematica'
 

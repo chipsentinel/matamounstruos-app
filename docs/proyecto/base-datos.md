@@ -1,8 +1,16 @@
-# Tarjetas de estudio: base de datos
+# Desempeño del proyecto: base de datos
 
-Este documento resume cómo se guardan las tarjetas de estudio en la base de datos.
+Este documento resume como se ha planteado la parte de base de datos relacionada con las tarjetas de estudio y como encaja dentro del resto del proyecto.
 
-Las tarjetas sirven para mostrar contenido de repaso cuando una carta tiene resultado `NO_APTO` o `PRUEBA_OTRA_VEZ`.
+Las tarjetas sirven para mostrar contenido de repaso cuando una carta tiene resultado `NO_APTO` o `PRUEBA_OTRA_VEZ`, por eso la base de datos debe mantener bien la relacion entre barajas, cartas y contenido teorico.
+
+## Resumen de desempeño
+
+- Se definio la tabla `tarjetas` dentro del modelo relacional.
+- Se relacionaron las tarjetas con las barajas mediante `idBaraja`.
+- Se dejaron datos iniciales en `seeds.sql` para poder probar la aplicacion.
+- Se documento el uso de MariaDB en Docker y la comprobacion con `/health/db`.
+- Se explico el papel de las tarjetas dentro del flujo del juego.
 
 ## Tabla
 
@@ -39,22 +47,17 @@ CREATE TABLE tarjetas (
 
 ## Datos iniciales
 
-Los datos iniciales están en `backend/db/seeds.sql`.
+Los datos iniciales estan en `backend/db/seeds.sql`.
 
-Ahora mismo hay 10 tarjetas asociadas a la baraja `autoria-gitflow`.
+Actualmente se cargan 5 barajas completas:
 
-Ejemplos de tarjetas cargadas:
+- `gitflow`
+- `backend`
+- `frontend`
+- `database`
+- `devops-testing`
 
-- `Crear una rama`
-- `Revisar estado`
-- `Preparar un commit`
-- `Crear un commit`
-- `Subir una rama`
-- `Actualizar con rebase`
-- `Resolver conflictos`
-- `Cancelar rebase`
-- `Guardar cambios`
-- `Recuperar trabajo`
+Cada baraja tiene 12 cartas y varias tarjetas tematicas de repaso. La distribucion de resultados esta pensada para que el juego sea jugable, pero con mas cartas de repaso que de victoria.
 
 ## Entorno
 

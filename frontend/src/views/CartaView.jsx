@@ -25,7 +25,7 @@ function CartaView({ usuarioActivo }) {
   // Datos principales que vienen del backend y se pintan en la vista.
   const [barajas, setBarajas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
-  // Guarda cartas por id de baraja para no mezclar los listados de cada acordeon.
+  // Cachea las cartas por baraja para abrir acordeones sin pedir todo otra vez.
   const [cartasPorBaraja, setCartasPorBaraja] = useState({});
   const [cartas, setCartas] = useState([]);
 
@@ -86,9 +86,8 @@ function CartaView({ usuarioActivo }) {
     }
   }
 
-  // Recarga cartas despues de crear, editar o borrar.
+  // Recarga datos despues de mutaciones y limpia selecciones que podrian quedar antiguas.
   async function recargarDatos() {
-    // Limpia caches visuales para que el acordeon no muestre datos antiguos.
     setCartasPorBaraja({});
     setValorSeleccionado({});
     await cargarBarajas();
@@ -245,8 +244,7 @@ function CartaView({ usuarioActivo }) {
   // Igual que en BarajaView, al abrir una baraja se enfoca esa baraja concreta.
   const barajasVisibles = barajaSeleccionada ? [barajaSeleccionada] : barajas;
 
-  // Filtra las cartas del formulario segun la baraja elegida.
-  // Esto evita editar o borrar una carta de otra baraja por accidente.
+  // El formulario solo muestra cartas de la baraja seleccionada.
   const cartasFormulario = idBarajaCarta
     ? cartas.filter((carta) => String(carta.idBaraja) === String(idBarajaCarta))
     : cartas;

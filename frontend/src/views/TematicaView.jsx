@@ -22,7 +22,7 @@ function TematicaView() {
   // Datos principales que vienen del backend y se pintan en la vista.
   const [barajas, setBarajas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
-  // Todas las tarjetas se cargan juntas y luego se filtran por baraja en la vista.
+  // Se cargan todas y se agrupan en pantalla por idBaraja.
   const [tarjetas, setTarjetas] = useState([]);
 
   // Estados de seleccion visual.
@@ -127,7 +127,7 @@ function TematicaView() {
     }
   }
 
-  // Deja claro que editar y borrar tarjetas todavia no existen en el backend.
+  // Mantiene los botones visibles aunque el backend solo tenga GET y POST de tarjetas.
   function avisarMejoraFutura(accion) {
     setError('');
     setMensajeFormulario(`La accion ${accion} queda como mejora futura. El backend aun no tiene ese CRUD.`);
@@ -139,8 +139,7 @@ function TematicaView() {
     return usuario?.nombre || `Usuario ${idUsuario}`;
   }
 
-  // Devuelve las tarjetas asociadas a una baraja concreta.
-  // Se usa dentro del map de barajas para pintar cada grupo en su acordeon.
+  // Agrupa tarjetas bajo la baraja correspondiente dentro del acordeon.
   function obtenerTarjetasPorBaraja(idBaraja) {
     return tarjetas.filter((tarjeta) => Number(tarjeta.idBaraja) === Number(idBaraja));
   }

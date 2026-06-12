@@ -1,8 +1,16 @@
-# Tarjetas de estudio: Docker
+# Desempeño del proyecto: Docker
 
-Este documento recoge las decisiones y comandos principales usados para preparar Matamounstruos App con Docker.
+Este documento recoge las decisiones y comandos principales usados para preparar Matamounstruos App con Docker y poder levantar el proyecto completo de forma repetible.
 
-El objetivo es poder levantar la aplicacion completa de forma reproducible: base de datos, backend y frontend.
+El objetivo es que base de datos, backend y frontend puedan arrancar juntos sin depender de una configuracion manual distinta en cada equipo.
+
+## Resumen de desempeño
+
+- Se preparo Docker para MariaDB, backend y frontend.
+- Se anadieron Dockerfile para backend y frontend.
+- Se configuro Docker Compose para levantar la aplicacion completa.
+- Se separo el entorno de desarrollo con `docker-compose-dev.yml`.
+- Se documentaron variables, puertos, comandos y comprobaciones.
 
 ## Indice
 

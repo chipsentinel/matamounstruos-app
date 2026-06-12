@@ -1,8 +1,16 @@
-# Tarjetas de estudio: flujo funcional
+# Desempeño del proyecto: flujo funcional
 
-Este documento describe el flujo funcional de las tarjetas de estudio dentro de la aplicación.
+Este documento describe el flujo funcional de Matamounstruos App cuando el usuario juega con una baraja y la aplicacion decide si debe mostrar una tarjeta de repaso.
 
-Las tarjetas sirven como material de apoyo cuando el usuario necesita repasar contenido teórico relacionado con una baraja.
+Las tarjetas sirven como material de apoyo cuando el usuario necesita repasar contenido teorico relacionado con una baraja, por eso este flujo conecta frontend, backend, cartas, resultados y tarjetas.
+
+## Resumen de desempeño
+
+- Se definio el flujo de seleccion de baraja y obtencion de carta.
+- Se conectaron los resultados `APTO`, `NO_APTO` y `PRUEBA_OTRA_VEZ` con la respuesta visual.
+- Se integro la tarjeta tematica cuando el resultado requiere repaso.
+- Se dejo el juego preparado para repetir intentos.
+- Se documento el flujo tecnico entre vista, API, controlador y base de datos.
 
 ## Indice
 

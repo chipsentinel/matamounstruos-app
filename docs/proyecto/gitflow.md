@@ -1,8 +1,16 @@
-# Tarjetas de estudio: gitflow
+# Desempeño del proyecto: Gitflow
 
-Este documento recoge la metodología de trabajo con Git y GitHub que se aplicará durante el desarrollo del proyecto.
+Este documento recoge la metodologia de trabajo con Git y GitHub aplicada durante el desarrollo del proyecto.
 
-El objetivo es trabajar de forma ordenada, dejando un historial claro de cambios y usando ramas para separar cada tarea. Esto ayuda a demostrar que el proyecto se ha desarrollado siguiendo un proceso controlado, revisable y fácil de defender.
+El objetivo es trabajar de forma ordenada, dejando un historial claro de cambios y usando ramas para separar cada tarea. Esto permite revisar que el proyecto se ha desarrollado siguiendo un proceso controlado y trazable.
+
+## Resumen de desempeño
+
+- Se trabajo con ramas `feature` y `bugfix` segun el tipo de tarea.
+- Se usaron commits para separar avances funcionales, pruebas y documentacion.
+- Se crearon pull requests para revisar e integrar cambios.
+- Se documentaron comandos de recuperacion, conflictos y rebase.
+- Se mantuvo un flujo preparado para cierre de version y release.
 
 ## Indice
 
@@ -296,7 +304,7 @@ git add README.md
 Añadir varios archivos:
 
 ```bash
-git add README.md docs/database-design.md docs/estudio/
+git add README.md docs/database-design.md docs/proyecto/ docs/tematica/
 ```
 
 Añadir todos los cambios:
@@ -985,8 +993,8 @@ git checkout develop
 git pull origin develop
 git checkout -b feature/tarjetas-estudio
 git status
-git add README.md docs/estudio/
-git commit -m "docs: añadir documentación de tarjetas de estudio"
+git add README.md docs/proyecto/ docs/tematica/
+git commit -m "docs: organiza documentacion de estudio"
 git push -u origin feature/tarjetas-estudio
 ```
 

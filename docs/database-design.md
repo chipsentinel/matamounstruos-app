@@ -189,7 +189,7 @@ Las tablas se podrán crear siguiendo el modelo relacional con nombres en plural
 - `cartas`
 - `tarjetas`
 
-La primera baraja podrá cargarse como datos iniciales en `seeds.sql`, incluyendo sus 12 cartas y las tarjetas formativas relacionadas.
+Las barajas iniciales pueden cargarse desde `seeds.sql`, incluyendo 12 cartas por baraja y tarjetas formativas relacionadas.
 
 En desarrollo, MariaDB se levanta con Docker Compose y toma la configuracion desde variables de entorno. El backend usa esas mismas variables para conectarse a la base de datos mediante un pool de conexiones.
 
@@ -209,23 +209,27 @@ Por ejemplo, más adelante se podrán crear rutas como:
 
 El diseño también ayuda a mantener la integridad de los datos, porque las claves foráneas evitan que existan cartas sin baraja, tarjetas sin baraja o barajas sin usuario.
 
-## Documentación de estudio
+## Documentacion relacionada
 
-Como complemento a este diseño inicial, la carpeta `docs/estudio/` recoge la documentación específica de la funcionalidad de tarjetas de estudio.
+Como complemento a este diseno inicial, la documentacion queda separada en dos zonas:
 
-Estos documentos servirán como guía de análisis y diseño para preparar:
+- `docs/proyecto/`: explicacion del desempeno del proyecto por area.
+- `docs/tematica/`: contenido breve que puede reutilizarse como tarjetas.
+
+Estos documentos sirven como guia para entender:
 
 - La estructura de datos de las tarjetas.
 - Los endpoints de la API REST.
 - Las pantallas y componentes del frontend.
 - El flujo funcional entre cartas, resultados y tarjetas.
 - La metodología de trabajo aplicada durante el desarrollo.
-- El contenido teórico que más adelante podrá cargarse como material real de estudio.
+- El contenido teorico que puede cargarse como material real de estudio.
 
 Documentos relacionados:
 
-- `docs/estudio/tarjeta-db.md`
-- `docs/estudio/tarjeta-backend.md`
-- `docs/estudio/tarjeta-frontend.md`
-- `docs/estudio/tarjeta-flujo.md`
-- `docs/estudio/tarjeta-gitflow.md`
+- `docs/proyecto/base-datos.md`
+- `docs/proyecto/backend.md`
+- `docs/proyecto/frontend.md`
+- `docs/proyecto/flujo-funcional.md`
+- `docs/proyecto/gitflow.md`
+- `docs/tematica/tarjeta-base-datos.md`
