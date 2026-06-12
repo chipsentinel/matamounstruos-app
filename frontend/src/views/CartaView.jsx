@@ -406,6 +406,9 @@ function CartaView({ usuarioActivo }) {
                 <Form.Group className="mb-3">
                   <Form.Control
                     id="inputCrearValorCarta"
+                    type="number"
+                    min="1"
+                    max="12"
                     placeholder="Valor"
                     value={valorCarta}
                     onChange={(event) => setValorCarta(event.target.value)}
@@ -490,6 +493,9 @@ function CartaView({ usuarioActivo }) {
                 <Form.Group className="mb-3">
                   <Form.Control
                     id="inputEditarValorCarta"
+                    type="number"
+                    min="1"
+                    max="12"
                     placeholder="Nuevo valor"
                     value={valorCarta}
                     onChange={(event) => setValorCarta(event.target.value)}

@@ -102,7 +102,7 @@ Decisiones de negocio implementadas:
 - Al crear una carta se comprueba que la baraja asociada exista.
 - Al borrar una carta se comprueba que el solicitante sea propietario de la baraja asociada o admin.
 
-La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json`.
+La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json` y se documenta en `docs/estudio/tarjeta-postman.md`.
 
 Frontend:
 
@@ -133,6 +133,7 @@ Enlaces a la documentación del proyecto:
   - Frontend: [docs/estudio/tarjeta-frontend.md](docs/estudio/tarjeta-frontend.md)
   - Flujo funcional: [docs/estudio/tarjeta-flujo.md](docs/estudio/tarjeta-flujo.md)
   - Gitflow: [docs/estudio/tarjeta-gitflow.md](docs/estudio/tarjeta-gitflow.md)
+  - Postman: [docs/estudio/tarjeta-postman.md](docs/estudio/tarjeta-postman.md)
 - Documentación de API:
 - Modelo Entidad/Relación:
 - Modelo relacional:

@@ -1,9 +1,5 @@
 const pool = require('../config/db');
-
-// Detecta textos de prueba antes de crear o editar una baraja.
-function contieneModoPruebas(texto) {
-    return /TEST|PRUEBA/i.test(String(texto || ''));
-}
+const { contieneModoPruebas } = require('../utils'); // reutiliza la validacion tambien en tests unitarios
 
 const getBarajas = async (req, res) => {
     try {
@@ -14,7 +10,7 @@ const getBarajas = async (req, res) => {
         res.json(rows);
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -36,7 +32,7 @@ const getIdBaraja = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -45,11 +41,41 @@ const createBaraja = async (req, res) => {
     try {
         const {nombre, descripcion, idUsuario} = req.body;
 
+        // Validaciones previas para evitar errores controlables de MariaDB.
+        if (!nombre || !descripcion || !idUsuario) {
+            return res.status(400).json({
+                message: 'Faltan datos obligatorios'
+            });
+        }
+
+        if (nombre.length > 20) {
+            return res.status(400).json({
+                message: 'El nombre no puede tener mas de 20 caracteres'
+            });
+        }
+
+        if (descripcion.length > 100) {
+            return res.status(400).json({
+                message: 'La descripcion no puede tener mas de 100 caracteres'
+            });
+        }
+
         if (contieneModoPruebas(descripcion)) {
             console.warn(`[${new Date().toISOString()}] Modo pruebas denegado desde ${req.ip}`);
             return res.status(422).json({
                 status: 'error',
                 reason: 'Modo pruebas denegado'
+            });
+        }
+
+        const usuarios = await pool.query(
+            'SELECT idUsuario FROM usuarios WHERE idUsuario = ?',
+            [idUsuario]
+        );
+
+        if (usuarios.length === 0) {
+            return res.status(404).json({
+                message: 'Usuario no encontrado'
             });
         }
 
@@ -64,7 +90,7 @@ const createBaraja = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-        message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -73,6 +99,25 @@ const updateBaraja = async (req, res) => {
     try {
         const {id} = req.params;
         const {nombre, descripcion} = req.body;
+
+        // Validaciones previas para evitar errores controlables de MariaDB.
+        if (!nombre || !descripcion) {
+            return res.status(400).json({
+                message: 'Faltan datos obligatorios'
+            });
+        }
+
+        if (nombre.length > 20) {
+            return res.status(400).json({
+                message: 'El nombre no puede tener mas de 20 caracteres'
+            });
+        }
+
+        if (descripcion.length > 100) {
+            return res.status(400).json({
+                message: 'La descripcion no puede tener mas de 100 caracteres'
+            });
+        }
 
         if (contieneModoPruebas(descripcion)) {
             console.warn(`[${new Date().toISOString()}] Modo pruebas denegado desde ${req.ip}`);
@@ -99,7 +144,7 @@ const updateBaraja = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-        message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -150,7 +195,13 @@ const deleteBaraja = async (req, res) => {
             [id]
         );
 
-        // borrar la baraja despues de borrar sus cartas
+        // borrar tambien las tarjetas asociadas antes de eliminar la baraja
+        await pool.query(
+            'DELETE FROM tarjetas WHERE idBaraja = ?',
+            [id]
+        );
+
+        // borrar la baraja despues de borrar sus cartas y tarjetas
         const result = await pool.query(
             'DELETE FROM barajas WHERE idBaraja = ?',
             [id]
@@ -161,7 +212,7 @@ const deleteBaraja = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };

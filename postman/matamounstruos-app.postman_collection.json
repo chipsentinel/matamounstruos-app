@@ -10,7 +10,22 @@
       "name": "usuarios",
       "item": [
         {
-          "name": "getUsuarios",
+          "name": "getUsuarios 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 200 al listar usuarios\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -29,13 +44,28 @@
           "response": []
         },
         {
-          "name": "createUsuario",
+          "name": "createUsuario 201",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 201 al crear usuario\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"manolo\",\n  \"password\": \"1234\"\n}",
+              "raw": "{\n  \"nombre\": \"u{{$randomInt}}\",\n  \"password\": \"1234\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -55,6 +85,223 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "createUsuario 400 (nombre)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 400 si el nombre es demasiado largo\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"usuariorandom\",\n  \"password\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createUsuario 400 (password)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 400 si el password es demasiado largo\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"random\",\n  \"password\": \"usuariorandom1234567890\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createUsuario 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 409 si el usuario ya existe\", function () {",
+                  "  pm.response.to.have.status(409);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"admin\",\n  \"password\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "accesoUsuario 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 200 al acceder con el usuario\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"admin\",\n  \"password\": \"admin123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/usuarios/acceso",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "usuarios",
+                "acceso"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "accesoUsuario 401 (nombre/password)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 401 si el nombre o el passwordson incorrectos\", function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"palindromo\",\n  \"password\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/usuarios/acceso",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "usuarios",
+                "acceso"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -62,7 +309,22 @@
       "name": "barajas",
       "item": [
         {
-          "name": "getBarajas",
+          "name": "getBarajas 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 200 al listar barajas\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -88,12 +350,84 @@
           "response": []
         },
         {
-          "name": "getIdBaraja",
+          "name": "createBaraja 201",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.collectionVariables.set(\"nombreBarajaNueva\", \"b\" + Date.now().toString().slice(-9));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 201 al crear baraja\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "pm.collectionVariables.set(\"idBarajaCreada\", json.idBaraja);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"{{nombreBarajaNueva}}\",\n  \"descripcion\": \"Baraja temporal Postman\",\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getIdBaraja 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 200 al listar barajas por id\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/barajas/6",
+              "raw": "http://localhost:3000/barajas/{{idBarajaCreada}}",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -101,7 +435,7 @@
               "port": "3000",
               "path": [
                 "barajas",
-                "6"
+                "{{idBarajaCreada}}"
               ]
             }
           },
@@ -109,11 +443,26 @@
         },
         {
           "name": "getIdBaraja 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 404 si no encuentra la baraja por id\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/barajas/20",
+              "raw": "http://localhost:3000/barajas/200",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -121,14 +470,158 @@
               "port": "3000",
               "path": [
                 "barajas",
-                "20"
+                "200"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "createBaraja",
+          "name": "createBaraja 400 (nombre)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 400 si el nombre es demasiado largo\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"larguiiiiiiiiisiiiiiiiiiiiiiiiiimo\",\n    \"descripcion\": \"Baraja random\",\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createBaraja 400 (descripcion)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 400 si la descripcion es demasiado largo\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nombre\": \"u{{$randomInt}}\",\n    \"descripcion\": \"Laaaaaaaaaaaarguiiisisisisisiisisisisiisisisisiisisisiisisisisiisisisisisisiisisisisisiisisisisisiisisisisiisisisisisisiisisisisisisisiiisisisisisisisisismsomososmos sossojsojahafhaoiehfoaifheowifhaoiwhfoiwehfaoiwhfoiehwaofihoihwiohfioah hioahwefihoiahfioahwoiehfioahweihfaiohweofihaoiwehfoiahweoifhaoiwhefoiahwef hihfoahwoeifhaoihwefoiahowiefh oawoeihfoiahwef oaihfoaihweofiahw foiahwefioahwoiefha ofiaheofiahwofihawioef aoihwefoihaoiwefhioahwoeihfaiowhefoiahfoiehaoiwhfioahweifhaihwfhawfehaewoihfaiwhfeiohaihfiaowhfeiohaiwhfa\",\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createBaraja 404 (usuario)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 404 si el usuario no existe\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"baraja-usuario-404\",\n  \"descripcion\": \"Baraja con usuario inexistente\",\n  \"idUsuario\": 9999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createBaraja 422",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 422 cuando la descripcion contiene modo pruebas\", function () {",
+                  "  pm.response.to.have.status(422);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [],
@@ -156,13 +649,28 @@
           "response": []
         },
         {
-          "name": "updateBaraja",
+          "name": "updateBaraja 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 200 al actualizar baraja por id\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"nombre\": \"baraja-test\",\n    \"descripcion\": \"Baraja de prueba\"\n}",
+              "raw": "{\n  \"nombre\": \"{{nombreBarajaNueva}}\",\n  \"descripcion\": \"Baraja temporal editada\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -170,7 +678,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/barajas/6",
+              "raw": "http://localhost:3000/barajas/{{idBarajaCreada}}",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -178,7 +686,95 @@
               "port": "3000",
               "path": [
                 "barajas",
-                "6"
+                "{{idBarajaCreada}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateBaraja 400 (nombre)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 400 si el nombre es demasiado largo\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"nombre-demasiado-largo-postman\",\n  \"descripcion\": \"Baraja temporal editada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/{{idBarajaCreada}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "{{idBarajaCreada}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateBaraja 400 (descripcion)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 400 si la descripcion es demasiado largo\", function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"{{nombreBarajaNueva}}\",\n  \"descripcion\": \"Esta descripcion es demasiado larga para la tabla de barajas porque supera claramente los cien caracteres permitidos en la base de datos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/{{idBarajaCreada}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "{{idBarajaCreada}}"
               ]
             }
           },
@@ -186,12 +782,27 @@
         },
         {
           "name": "updateBaraja 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 404 si la baraja no existe\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"nombre\": \"baraja-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 1\n}",
+              "raw": "{\n    \"nombre\": \"autoria-gitflow\",\n    \"descripcion\": \"update-Repaso sobre ramas, commits y flujo Gitflow.\",\n    \"idUsuario\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -199,7 +810,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/barajas/60",
+              "raw": "http://localhost:3000/barajas/200",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -207,49 +818,35 @@
               "port": "3000",
               "path": [
                 "barajas",
-                "60"
+                "200"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "deleteBaraja",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+          "name": "updateBaraja 422",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 422 cuando la descripcion contiene modo pruebas\", function () {",
+                  "  pm.response.to.have.status(422);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
               }
-            },
-            "url": {
-              "raw": "http://localhost:3000/barajas/7",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "barajas",
-                "7"
-              ]
             }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteBaraja 404 (usuario)",
+          ],
           "request": {
-            "method": "DELETE",
+            "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 200\n}",
+              "raw": "{\n  \"nombre\": \"{{nombreBarajaNueva}}\",\n  \"descripcion\": \"Baraja de prueba\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -257,7 +854,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/barajas/1",
+              "raw": "http://localhost:3000/barajas/{{idBarajaCreada}}",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -265,36 +862,7 @@
               "port": "3000",
               "path": [
                 "barajas",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "deleteBaraja 404 (baraja)",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/barajas/60",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "barajas",
-                "60"
+                "{{idBarajaCreada}}"
               ]
             }
           },
@@ -302,12 +870,27 @@
         },
         {
           "name": "deleteBaraja 403",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 403 si el usuario no tiene permisos para borrar esta baraja\", function () {",
+                  "  pm.response.to.have.status(403);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "DELETE",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"nombre\": \"autoria-test\",\n    \"descripcion\": \"Baraja de prueba\",\n  \"idUsuario\": 3\n}",
+              "raw": "{\n  \"idUsuario\": 2\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -315,7 +898,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3000/barajas/1",
+              "raw": "http://localhost:3000/barajas/{{idBarajaCreada}}",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -323,7 +906,139 @@
               "port": "3000",
               "path": [
                 "barajas",
-                "1"
+                "{{idBarajaCreada}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteBaraja 404 (usuario)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 404 si el usuario no existe\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 9999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/{{idBarajaCreada}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "{{idBarajaCreada}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteBaraja 404 (baraja)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 404 si la baraja no existe\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/200",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "200"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteBaraja 200",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Devuelve 200 al borrar baraja creada en Postman\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/barajas/{{idBarajaCreada}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "barajas",
+                "{{idBarajaCreada}}"
               ]
             }
           },

@@ -14,8 +14,7 @@ const checkDbConnection = async (req, res) => {
     } catch (error) {
         // responder con error 500 si falla la conexion o la consulta
         res.status(500).json({
-            database: 'error',
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -49,8 +48,7 @@ GET /health/db.
    result: rows[0]
 
 5. Si la consulta falla, el catch devuelve un error 500 con:
-   database: 'error'
-   message: error.message
+   message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
 
 6. Al final se exporta checkDbConnection para que healthRoutes.js pueda usarla.
 
@@ -88,8 +86,8 @@ Glosario:
 - error:
   Objeto con informacion sobre el fallo que ha ocurrido.
 
-- error.message:
-  Texto descriptivo del error.
+- mensaje generico de error:
+  Texto sencillo para no exponer detalles internos del servidor.
 
 - rows:
   Resultado devuelto por MariaDB despues de ejecutar la consulta.

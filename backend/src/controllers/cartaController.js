@@ -9,7 +9,7 @@ const getCartas = async (req, res) => {
         res.json(rows);
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -27,7 +27,7 @@ const getCartasPorBaraja = async (req, res) => {
         res.json(rows);
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -49,7 +49,7 @@ const getIdCarta = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -58,10 +58,29 @@ const createCarta = async (req, res) => {
     try {
         const {nombre, valor, tipoResultado, idBaraja} = req.body;
 
+        // Validaciones previas para evitar errores controlables de MariaDB.
+        if (!nombre || valor === undefined || !tipoResultado || !idBaraja) {
+            return res.status(400).json({
+                message: 'Faltan datos obligatorios'
+            });
+        }
+
+        if (nombre.length > 20) {
+            return res.status(400).json({
+                message: 'El nombre no puede tener mas de 20 caracteres'
+            });
+        }
+
         // si la carta es mayor de 12 no se crea
         if (valor > 12) {
             return res.status(400).json({
                 message: 'La carta no puede valer mas de 12'
+            });
+        }
+
+        if (!['APTO', 'NO_APTO', 'PRUEBA_OTRA_VEZ'].includes(tipoResultado)) {
+            return res.status(400).json({
+                message: 'Tipo de resultado no valido'
             });
         }
 
@@ -101,7 +120,7 @@ const createCarta = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-        message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -110,6 +129,31 @@ const updateCarta = async (req, res) => {
     try {
         const {id} = req.params;
         const {nombre, valor, tipoResultado} = req.body;
+
+        // Validaciones previas para evitar errores controlables de MariaDB.
+        if (!nombre || valor === undefined || !tipoResultado) {
+            return res.status(400).json({
+                message: 'Faltan datos obligatorios'
+            });
+        }
+
+        if (nombre.length > 20) {
+            return res.status(400).json({
+                message: 'El nombre no puede tener mas de 20 caracteres'
+            });
+        }
+
+        if (valor > 12) {
+            return res.status(400).json({
+                message: 'La carta no puede valer mas de 12'
+            });
+        }
+
+        if (!['APTO', 'NO_APTO', 'PRUEBA_OTRA_VEZ'].includes(tipoResultado)) {
+            return res.status(400).json({
+                message: 'Tipo de resultado no valido'
+            });
+        }
         
         const result = await pool.query(
             'UPDATE cartas SET nombre = ?, valor = ?, tipoResultado = ? WHERE idCarta = ?',
@@ -128,7 +172,7 @@ const updateCarta = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-        message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -198,7 +242,7 @@ const deleteCarta = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };

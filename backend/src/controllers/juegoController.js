@@ -19,7 +19,7 @@ const getCartaAleatoriaDeBaraja = async (req, res) => {
         res.json(rows[0]);
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -63,7 +63,7 @@ const getTarjetaAleatoriaDeCarta = async (req, res) => {
         res.json(tarjetas[0]);
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };

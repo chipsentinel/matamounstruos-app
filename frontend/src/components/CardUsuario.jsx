@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Swal from 'sweetalert2'
-import { createUsuario, getUsuarios } from '../services/api'
+import { accesoUsuario, createUsuario } from '../services/api'
 
 function CardUsuario({ onAcceso }) {
   // Este componente no guarda sesion real: solo identifica al usuario activo en App.jsx.
@@ -32,14 +32,8 @@ function CardUsuario({ onAcceso }) {
         return
       }
 
-      const usuarios = await getUsuarios()
-      // El acceso es sencillo: busca el usuario por nombre y deja la password como campo obligatorio.
-      const usuarioEncontrado = usuarios.find((usuario) => usuario.nombre === nombre)
-
-      if (!usuarioEncontrado) {
-        mostrarError('Usuario no encontrado. Puedes registrarte con ese nombre.')
-        return
-      }
+      // El backend valida nombre y password para evitar accesos solo por nick.
+      const usuarioEncontrado = await accesoUsuario({ nombre, password })
 
       // App.jsx recibe el usuario y permite volver a la vista administrativa pendiente.
       await Swal.fire('Acceso correcto', `Bienvenido, ${usuarioEncontrado.nombre}.`, 'success')
@@ -78,7 +72,7 @@ function CardUsuario({ onAcceso }) {
         <Card.Body>
           <Card.Title>Identificate</Card.Title>
           <Card.Text>
-            Accede para administrar barajas, cartas y tarjetas temáticas.
+            Accede para administrar barajas, cartas y tarjetas temáticas. ↻ Cargar pagina de nuevo CIERRA SESION ↺
           </Card.Text>
 
           <Form onSubmit={manejarAcceso}>
