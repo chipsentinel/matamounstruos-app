@@ -1,0 +1,29 @@
+services:
+  mariadb:
+    # Imagen de MariaDB para desarrollo
+    image: mariadb:11
+    container_name: matamounstruos-mariadb-dev
+
+    # Reinicia el contenedor salvo que lo paremos manualmente
+    restart: unless-stopped
+
+    # Configuracion inicial de la base de datos
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+
+    # Expone MariaDB en localhost:3306
+    ports:
+      - "${DB_PORT}:3306"
+
+    # Guarda datos y carga scripts iniciales
+    volumes:
+      - mariadb_dev_data:/var/lib/mysql
+      - ../backend/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ../backend/db/seeds.sql:/docker-entrypoint-initdb.d/02-seeds.sql
+
+# Volumen persistente de MariaDB
+volumes:
+  mariadb_dev_data:
