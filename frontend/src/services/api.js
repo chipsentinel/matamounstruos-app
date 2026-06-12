@@ -39,6 +39,13 @@ export function createUsuario(usuarios) {
     })
 }
 
+export function accesoUsuario(usuarios) {
+    return request('/usuarios/acceso', {
+        method: 'POST',
+        body: JSON.stringify(usuarios),
+    })
+}
+
 // Barajas
 export function getBarajas() {
     return request('/barajas')
