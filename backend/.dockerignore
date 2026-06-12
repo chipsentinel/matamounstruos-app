@@ -1,6 +1,7 @@
 # Dependencias y archivos locales que no deben entrar en la imagen.
 node_modules
 npm-debug.log
+*.log
 .env
 .DS_Store
 coverage

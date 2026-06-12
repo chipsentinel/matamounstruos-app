@@ -10,6 +10,9 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+
+# Cache y variables locales de Vite
+.vite
 *.local
 
 # Editor directories and files
