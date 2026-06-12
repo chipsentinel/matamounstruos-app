@@ -12,9 +12,11 @@ La intención es preparar cómo se mostrará el contenido de repaso al usuario d
 - [Pantallas](#pantallas)
 - [Componentes](#componentes)
 - [React-Bootstrap](#react-bootstrap)
+- [Servicio API](#servicio-api)
 - [Imagenes y assets](#imagenes-y-assets)
 - [Estructura responsive base](#estructura-responsive-base)
 - [BarajaView](#barajaview)
+- [CartaView](#cartaview)
 - [TematicaView](#tematicaview)
 - [JuegoView](#juegoview)
 - [Formularios](#formularios)
@@ -41,7 +43,8 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | `fetch()` | API de JavaScript para pedir datos al backend. | Se usara para consumir la API REST. |
 | Bootstrap | Framework CSS responsive. | Instalado e importado en `main.jsx`. |
 | React-Bootstrap | Componentes Bootstrap adaptados a React. | Se usa para trabajar con `Card`, `Form` y `Button` como componentes JSX. |
-| SweetAlert2 | Libreria para alertas y confirmaciones. | Instalado; se importara en los componentes donde se use. |
+| React Router DOM | Libreria de rutas para React. | Se usa para asociar URLs con vistas. |
+| SweetAlert2 | Libreria para alertas y confirmaciones. | Se usa en acceso de usuario, Barajas y Juego. |
 
 ## Configuracion inicial
 
@@ -55,7 +58,8 @@ La fase inicial del frontend se centra en crear la carpeta `frontend/`, instalar
 | `frontend/.gitignore` | Revisado | Evita subir `node_modules/`, `dist/` y archivos locales. |
 | Bootstrap | Configurado | Instalado e importado globalmente en `frontend/src/main.jsx`. |
 | React-Bootstrap | Instalado | Permite usar componentes como `Card`, `Form` y `Button` desde React. |
-| SweetAlert2 | Instalado | Disponible para mensajes y confirmaciones en componentes concretos. |
+| React Router DOM | Instalado | Permite navegar con rutas reales como `/baraja`, `/carta` o `/juego`. |
+| SweetAlert2 | Configurado | Disponible para mensajes y confirmaciones en componentes concretos. |
 | Logotipo | Añadido | Se guarda en `frontend/src/assets/` para usarlo en la navegacion y pantalla principal. |
 
 Comandos usados en la fase inicial:
@@ -64,7 +68,7 @@ Comandos usados en la fase inicial:
 npm create vite@latest frontend
 cd frontend
 npm install
-npm install bootstrap sweetalert2 react-bootstrap
+npm install bootstrap sweetalert2 react-bootstrap react-router-dom
 npm run dev
 ```
 
@@ -73,25 +77,27 @@ npm run dev
 | Pantalla | Que muestra | Acciones | Estado |
 | --- | --- | --- | --- |
 | `HomeView` | Pantalla principal de la aplicacion. | Acceso inicial a las secciones principales. | Estructura inicial creada. |
-| `BarajaView` | Gestion conjunta de barajas y cartas. | Listar, crear, editar y eliminar contenido de baraja mas adelante. | Estructura inicial creada. |
-| `TematicaView` | Gestion de tarjetas tematicas. | Consultar y crear tarjetas mas adelante. | Estructura inicial creada. |
-| `CardUsuario` | Acceso previo para secciones administrativas. | Simular identificacion antes de entrar en `Baraja` o `Tematica`. | Estructura inicial creada. |
-| `JuegoView` | Vista principal del juego. | Seleccionar baraja y obtener carta aleatoria mas adelante. | Estructura inicial creada. |
+| `BarajaView` | Gestion de barajas. | Listar, crear, editar y eliminar barajas. | Conectada con API. |
+| `CartaView` | Gestion de cartas. | Listar cartas por baraja y crear, editar o borrar cartas. | Conectada con API. |
+| `TematicaView` | Gestion de tarjetas tematicas. | Consultar y crear tarjetas. Editar y borrar quedan como mejora futura. | Conectada con API disponible. |
+| `CardUsuario` | Acceso previo para secciones administrativas. | Identificar o registrar usuario de forma simple con avisos SweetAlert2. | Conectada con API. |
+| `JuegoView` | Vista principal del juego. | Seleccionar baraja, obtener carta aleatoria y mostrar tarjeta si corresponde. | Conectada con API. |
 
 Las pantallas se han creado dentro de `frontend/src/views/`.
 
-En esta fase no se usa `react-router-dom`. La aplicacion cambia de vista mediante un estado en `App.jsx`, manteniendo una estructura sencilla y facil de defender.
+La navegacion usa `react-router-dom`. `App.jsx` define las rutas principales y protege las vistas administrativas para que pasen antes por `CardUsuario` si no hay usuario activo.
 
 ## Componentes
 
 | Componente | Uso | Datos que necesita |
 | --- | --- | --- |
-| `Navbar` | Permite cambiar entre las vistas principales. | `vistaActual` y `cambiarVista`. |
+| `Navbar` | Permite cambiar entre las vistas principales y buscar texto en la pagina actual. | `vistaActual`, `cambiarVista` y `usuarioActivo`. |
 | `CardUsuario` | Muestra el acceso de usuario antes de entrar en zonas administrativas. | `onAcceso`. |
 | `HomeView` | Pantalla de inicio. | No necesita datos externos en esta fase. |
-| `BarajaView` | Pantalla de gestion de barajas y cartas. | Mas adelante consumira las API de barajas y cartas. |
-| `TematicaView` | Pantalla de gestion de tarjetas tematicas. | Mas adelante consumira la API de tarjetas. |
-| `JuegoView` | Pantalla del flujo de juego. | Mas adelante consumira la API de juego. |
+| `BarajaView` | Pantalla de gestion de barajas. | API de barajas y usuarios. |
+| `CartaView` | Pantalla de gestion de cartas. | API de cartas, barajas y usuarios. |
+| `TematicaView` | Pantalla de gestion de tarjetas tematicas. | API de tarjetas, barajas y usuarios. |
+| `JuegoView` | Pantalla del flujo de juego. | API de barajas, carta aleatoria y tarjeta aleatoria. |
 
 Estructura inicial del frontend:
 
@@ -103,22 +109,28 @@ frontend/src/
   components/
     Navbar.jsx
     CardUsuario.jsx
+  services/
+    api.js
+  routes.js
   views/
     HomeView.jsx
     BarajaView.jsx
+    CartaView.jsx
     TematicaView.jsx
     JuegoView.jsx
   App.jsx
   main.jsx
 ```
 
-Se evita crear carpetas adicionales como `layout/`, `ui/` o `services/` hasta que sean necesarias. La prioridad en esta fase es mantener el proyecto simple, claro y mantenible.
+Se evita crear carpetas adicionales como `layout/` o `ui/` hasta que sean necesarias. La prioridad sigue siendo mantener el proyecto simple, claro y mantenible.
 
-La navegacion visible se simplifica a `Inicio`, `Baraja`, `Tematica` y `Juego`. El logo funciona como acceso a inicio.
+`services/api.js` centraliza la URL base, la funcion comun `request()` y las llamadas `fetch()` de usuarios, barajas, cartas, tarjetas y juego.
 
-`Baraja` agrupa la gestion de barajas y cartas para reducir secciones en la interfaz. `Tematica` representa las tarjetas de teoria con un nombre mas claro para el usuario.
+`routes.js` centraliza las rutas principales para no repetir textos como `/baraja` o `/juego` por varios archivos.
 
-La `Navbar` se implementa con React-Bootstrap para mantener coherencia con el resto de componentes visuales. El logo actua como boton de inicio y las secciones activas se marcan con colores suaves inspirados en la maqueta inicial.
+La navegacion visible queda en `Inicio`, `Baraja`, `Carta`, `Tematica` y `Juego`. El logo funciona como acceso a inicio.
+
+La `Navbar` se implementa con React-Bootstrap para mantener coherencia con el resto de componentes visuales. El logo actua como boton de inicio, las secciones activas se marcan con colores suaves y el usuario activo se muestra solo en la barra superior.
 
 ## React-Bootstrap
 
@@ -147,6 +159,22 @@ import Form from 'react-bootstrap/Form'
 ```
 
 Esta opcion se usa para mantener la maquetacion sencilla y evitar crear componentes visuales desde cero.
+
+## Servicio API
+
+`frontend/src/services/api.js` centraliza las peticiones al backend con `fetch()`.
+
+La funcion base `request(endpoint, options)` une la URL del backend con cada endpoint, convierte la respuesta a JSON y lanza errores usando `reason` o `message` devueltos por la API.
+
+Cuando la respuesta no es correcta, el error conserva tambien `status`, `url` y `data`. Esto permite mostrar mensajes con SweetAlert2 y pintar informes de error concretos cuando el backend devuelve codigos como `422`.
+
+En esta fase quedan preparadas funciones para:
+
+- Usuarios: `getUsuarios` y `createUsuario`.
+- Barajas: `getBarajas`, `getIdBaraja`, `createBaraja`, `updateBaraja` y `deleteBaraja`.
+- Cartas: `getCartas`, `getCartasPorBaraja`, `getIdCarta`, `createCarta`, `updateCarta` y `deleteCarta`.
+- Tarjetas: `getTarjetas`, `getIdTarjeta` y `createTarjeta`.
+- Juego: `getCartaAleatoriaDeBaraja` y `getTarjetaAleatoriaDeCarta`.
 
 ## Imagenes y assets
 
@@ -217,115 +245,97 @@ La idea es empezar en columna para movil y adaptar despues a escritorio.
 
 ## BarajaView
 
-`BarajaView` agrupa la gestion de barajas y cartas dentro de una misma pantalla.
+`BarajaView` queda centrada solo en la gestion de barajas.
 
-La estructura inicial queda dividida en bloques:
+La vista permite consultar barajas existentes y administrar barajas del usuario identificado.
 
 | Bloque | Uso | Estado |
 | --- | --- | --- |
-| Header | Presenta la vista de gestion de barajas y cartas. | Maquetacion inicial. |
-| Acciones | Botones para `Crear`, `Editar` y `Borrar`. | Visual, sin logica conectada. |
-| Selector de tipo | Botones para elegir entre `Baraja` y `Carta`. | Visual, sin estado especifico todavia. |
-| Listado | Muestra barajas y, mas adelante, sus cartas. | Preparado con `Accordion`. |
-| Paginacion | Deja preparada la navegacion por paginas. | Preparada con `Pagination`. |
-| `baraja-form` | Espacio para crear, editar o borrar barajas. | Formulario placeholder. |
-| `carta-form` | Espacio para crear, editar o borrar cartas. | Formulario placeholder. |
+| Header | Presenta la gestion de barajas. | Conectado. |
+| Listado | Muestra barajas en acordeon con propietario y descripcion. | Conectado con `getBarajas` y `getUsuarios`. |
+| Acciones | Botones `Crear`, `Editar` y `Borrar`. | Cambian el formulario activo. |
+| Formulario | Crea, edita o borra barajas. | Conectado con API. |
+| Mensajes | Muestra errores, exitos y confirmacion de borrado con SweetAlert2. | Conectado. |
+| Informe IT | Muestra URL y codigo si el backend devuelve `422`. | Conectado. |
+| Card de ayuda | Explica como usar la pantalla. | Informativa. |
 
-El listado de barajas se prepara con `Accordion`:
+Funciones de API usadas:
 
-```jsx
-<Accordion defaultActiveKey="0" flush>
-  <Accordion.Item eventKey="0">
-    <Accordion.Header>Baraja: Autoría Gitflow</Accordion.Header>
-    <Accordion.Body>
-      Aquí se verán las cartas de esta baraja.
-    </Accordion.Body>
-  </Accordion.Item>
-</Accordion>
-```
+- `getBarajas`
+- `getUsuarios`
+- `createBaraja`
+- `updateBaraja`
+- `deleteBaraja`
 
-Este componente encaja porque permite desplegar una baraja y mostrar sus cartas dentro.
+El borrado envia `idUsuario` para que el backend valide permisos.
 
-Debajo del listado se puede usar `Pagination`:
+Si el backend bloquea una descripcion con `TEST` o `PRUEBA`, `BarajaView` muestra el `reason` recibido con SweetAlert2 y deja visible un informe tecnico debajo del formulario.
 
-```jsx
-<Pagination>
-  <Pagination.First />
-  <Pagination.Prev />
-  <Pagination.Item active>{1}</Pagination.Item>
-  <Pagination.Next />
-  <Pagination.Last />
-</Pagination>
-```
+## CartaView
 
-La paginacion queda como estructura visual. Mas adelante se conectara con los datos reales si el listado crece.
+`CartaView` se separa de `BarajaView` para que la gestion de cartas tenga su propia pantalla.
 
-Los formularios se separan para no mezclar responsabilidades:
+La vista permite consultar cartas por baraja y por valor, ademas de crear, editar y borrar cartas.
 
-```text
-baraja-form
-  crear / editar / borrar barajas
+| Bloque | Uso | Estado |
+| --- | --- | --- |
+| Header | Presenta la gestion de cartas. | Conectado. |
+| Listado | Muestra barajas y sus cartas. | Conectado con API. |
+| Botones 1-12 | Permiten consultar cartas por valor dentro de una baraja. | Conectado. |
+| Detalle de valor | Muestra nombre, resultado y cantidad de cartas con ese valor. | Conectado. |
+| Acciones | Botones `Crear`, `Editar` y `Borrar`. | Cambian el formulario activo. |
+| Formulario | Crea, edita o borra cartas. | Conectado con API. |
+| Card de ayuda | Explica como usar la pantalla. | Informativa. |
 
-carta-form
-  crear / editar / borrar cartas
-```
+Funciones de API usadas:
 
-Mas adelante los botones de accion y tipo decidiran que formulario se muestra y que operacion se prepara.
+- `getBarajas`
+- `getCartas`
+- `getCartasPorBaraja`
+- `getUsuarios`
+- `createCarta`
+- `updateCarta`
+- `deleteCarta`
+
+El borrado de cartas tambien envia `idUsuario` para validar permisos desde backend.
 
 ## TematicaView
 
-`TematicaView` agrupa la gestion inicial de tarjetas tematicas.
+`TematicaView` gestiona las tarjetas de teoria asociadas a una baraja.
 
-La estructura inicial queda dividida en bloques:
+En esta fase se conectan las operaciones disponibles en backend: consultar y crear tarjetas. Editar y borrar quedan visibles como mejora futura porque todavia no existen endpoints `PUT` y `DELETE` para tarjetas.
 
 | Bloque | Uso | Estado |
 | --- | --- | --- |
-| Header | Presenta la vista de tematica y tarjetas de teoria. | Maquetacion inicial. |
-| Acciones | Botones para `Crear`, `Editar` y `Borrar`. | Visual, sin logica conectada. |
-| Listado | Muestra barajas y, mas adelante, las tarjetas asociadas. | Preparado con `Accordion`. |
-| Paginacion | Deja preparada la navegacion por paginas. | Preparada con `Pagination`. |
-| Formulario | Espacio para crear o modificar tarjetas. | Formulario placeholder. |
+| Header | Presenta la vista de tematica. | Conectado. |
+| Listado | Muestra tarjetas agrupadas por baraja. | Conectado con API. |
+| Acciones | Botones `Crear`, `Editar` y `Borrar`. | Crear funciona; editar/borrar avisan mejora futura. |
+| Formulario | Crea tarjetas con titulo, contenido y baraja asociada. | Conectado con API. |
+| Card de ayuda | Explica como usar la pantalla. | Informativa. |
 
-El listado se prepara tambien con `Accordion`, igual que en `BarajaView`, porque una baraja puede tener varias tarjetas tematicas asociadas:
+Funciones de API usadas:
 
-```jsx
-<Accordion defaultActiveKey="0" flush>
-  <Accordion.Item eventKey="0">
-    <Accordion.Header>Baraja: Autoría Gitflow</Accordion.Header>
-    <Accordion.Body>
-      Aquí se verán las tarjetas de esta baraja.
-    </Accordion.Body>
-  </Accordion.Item>
-</Accordion>
-```
-
-La paginacion queda debajo del listado para mantener el mismo patron visual que en `BarajaView`.
-
-El formulario inicial de tematica queda preparado con:
-
-```text
-select de baraja
-select de tarjeta
-titulo
-contenido
-```
-
-En esta fase los botones `Editar` y `Borrar` quedan como parte visual del panel. La funcionalidad real se añadira cuando se conecte el frontend con la API.
+- `getBarajas`
+- `getUsuarios`
+- `getTarjetas`
+- `createTarjeta`
 
 ## JuegoView
 
-`JuegoView` prepara la estructura visual del flujo de juego.
+`JuegoView` conecta el flujo principal del juego con el backend.
 
-La estructura inicial queda dividida en bloques:
+La vista permite elegir una baraja, obtener una carta aleatoria y mostrar una tarjeta de repaso cuando el resultado lo necesita.
 
 | Bloque | Uso | Estado |
 | --- | --- | --- |
-| Header | Presenta la vista de juego. | Maquetacion inicial. |
-| Selector de baraja | Permite elegir la baraja que se usara para jugar. | Visual, sin datos de API. |
-| Carta visual | Muestra una carta base con resultado de ejemplo. | Preparada con asset local. |
-| Resultado | Deja espacio para `nombre`, `valor` y `tipoResultado`. | Placeholder visual. |
-| Tarjeta tematica | Representa el repaso asociado a `NO_APTO` o `PRUEBA_OTRA_VEZ`. | Placeholder visual. |
-| Acciones | Botones para iniciar o repetir la jugada. | Visual, sin logica conectada. |
+| Header | Presenta la vista de juego. | Conectado. |
+| Selector de baraja | Permite elegir la baraja con la que se juega. | Conectado con `getBarajas`. |
+| Carta visual | Muestra la carta base con datos reales encima. | Conectado con API. |
+| Resultado | Muestra `nombre`, `valor` y `tipoResultado`. | Conectado. |
+| Tarjeta tematica | Se muestra si el resultado requiere repaso. | Conectado. |
+| Acciones | `Juega` y `Probar otra vez`. | Solicitan otra carta aleatoria. |
+| Avisos | Muestra mensajes del juego con SweetAlert2. | Conectado. |
+| Card de ayuda | Explica el flujo del juego al usuario. | Informativa. |
 
 La carta base se carga desde `frontend/src/assets/`:
 
@@ -347,17 +357,22 @@ Para escribir informacion encima de la carta se usa un contenedor relativo y con
 </div>
 ```
 
-El flujo previsto es:
+Flujo actual:
 
 ```text
 elegir baraja
 sacar carta
 mostrar carta y resultado
-si el resultado requiere repaso, mostrar tarjeta tematica
-permitir repetir la jugada
+si el resultado es APTO, terminar ronda
+si el resultado es NO_APTO o PRUEBA_OTRA_VEZ, pedir tarjeta tematica
+permitir probar otra vez
 ```
 
-En esta fase no se conecta todavia con la API. Los textos y resultados son placeholders para validar la estructura visual.
+Funciones de API usadas:
+
+- `getBarajas`
+- `getCartaAleatoriaDeBaraja`
+- `getTarjetaAleatoriaDeCarta`
 
 ## Formularios
 
@@ -392,23 +407,29 @@ En `CardUsuario`, el formulario puede empezar con React-Bootstrap:
 </Form>
 ```
 
-En esta fase los botones de acceso pueden simular la entrada del usuario. Mas adelante el formulario se conectara con una peticion `POST`.
+En `CardUsuario`, el acceso consulta `getUsuarios` y el registro usa `createUsuario`. Los errores y accesos correctos se muestran tambien con SweetAlert2.
 
 ## Estados de pantalla
 
-- `home`: muestra `HomeView`.
-- `usuario`: muestra `CardUsuario`.
-- `baraja`: muestra `BarajaView`.
-- `tematica`: muestra `TematicaView`.
-- `juego`: muestra `JuegoView`.
+Las vistas se resuelven con `react-router-dom`:
 
-`App.jsx` mantiene el estado `vistaActual` con `useState`.
+| Ruta | Vista |
+| --- | --- |
+| `/` | `HomeView` |
+| `/home` | `HomeView` |
+| `/usuario` | `CardUsuario` |
+| `/baraja` | `BarajaView` |
+| `/carta` | `CartaView` |
+| `/tematica` | `TematicaView` |
+| `/juego` | `JuegoView` |
 
-La funcion `cambiarVista` se pasa a `Navbar` para controlar la navegacion desde un unico punto.
+`routes.js` guarda las rutas principales en `MAIN_ROUTES`.
 
-`Navbar` tambien recibe `vistaActual` para marcar visualmente el boton de la seccion activa.
+`App.jsx` usa `Routes`, `Route`, `Navigate`, `useNavigate` y `useLocation` para controlar la navegacion.
 
-Las secciones `baraja` y `tematica` requieren pasar antes por `CardUsuario` si todavia no hay un usuario activo. En esta fase el acceso se simula y queda preparado para conectarlo mas adelante con una peticion `POST`.
+Las secciones `/baraja`, `/carta` y `/tematica` requieren pasar antes por `CardUsuario` si todavia no hay un usuario activo.
+
+El usuario activo se muestra solo en la `Navbar`, no dentro de cada vista. El buscador de la `Navbar` usa la busqueda nativa del navegador sobre el contenido visible de la pagina.
 
 ## Contenido de una tarjeta
 
@@ -434,33 +455,34 @@ Pendiente.
 
 | Caso | Problema | Solucion |
 | --- | --- | --- |
-| `vistaActual` aparece subrayado | La variable se recibe en `Navbar`, pero no se usa. | Usarla para marcar el boton activo o no pasarla como prop. |
-| No cambia la pantalla | El boton no llama a `cambiarVista` con el nombre correcto. | Revisar que coincidan valores como `baraja`, `tematica` o `juego`. |
+| No cambia la pantalla | El boton no llama a `cambiarVista` con el nombre correcto. | Revisar que coincidan valores como `baraja`, `carta`, `tematica` o `juego`. |
 | No carga una vista | El componente no esta importado o exportado correctamente. | Revisar `import`, nombre del archivo y `export default`. |
-| No aparece `CardUsuario` | La `Navbar` llama directamente a `setVistaActual`. | Pasar la funcion `cambiarVista` para aplicar la comprobacion de usuario. |
+| No aparece `CardUsuario` | La ruta protegida no pasa por `protegerVista`. | Revisar `App.jsx` y `Navigate`. |
 | La imagen no se muestra | Se usa una ruta relativa directa a `src/assets`. | Importar la imagen y usar la variable en `src`. |
 | Varias cards dan error | El `return` devuelve varios elementos hermanos sin padre. | Envolverlas en `section`, `div` o fragment. |
 | Dos selects tienen el mismo id | Se copian varios ejemplos con `id` repetido. | Usar identificadores unicos como `selectBaraja` y `selectCarta`. |
 | Texto encima de imagen no se coloca bien | Falta un contenedor relativo para posicionar el resultado. | Usar `position-relative` en el padre y `position-absolute` en el texto. |
 | No se aplican estilos de la navbar | `App.css` no esta importado o Bootstrap pisa los estilos propios. | Importar Bootstrap como base en `main.jsx` y `App.css` desde `App.jsx`. |
+| La pagina se mueve al cambiar de vista | Aparece o desaparece la barra de scroll vertical. | Usar `scrollbar-gutter: stable` en `index.css`. |
 
 ## Material para futuras tarjetas
 
 | Titulo de tarjeta | Idea principal | Contenido clave |
 | --- | --- | --- |
 | Estructura inicial React | Separar componentes reutilizables y vistas principales. | `components/Navbar.jsx` y `views/*View.jsx`. |
-| Navegacion por estado | Cambiar de pantalla sin instalar router. | `useState`, `vistaActual` y `setVistaActual`. |
+| Navegacion con React Router | Asociar URLs reales con vistas. | `BrowserRouter`, `Routes`, `Route` y `Navigate`. |
 | Navbar con Bootstrap | Crear una navegacion sencilla y responsive. | Clases `navbar`, `btn`, `d-flex`, `flex-wrap`. |
 | Navbar con React-Bootstrap | Mantener la navegacion coherente con el resto de componentes. | `BootstrapNavbar`, `Container`, `Nav`, `Button` y `Form`. |
 | Acceso previo | Proteger secciones administrativas sin autenticacion real todavia. | `usuarioActivo`, `vistaPendiente` y `CardUsuario`. |
 | React-Bootstrap | Usar componentes Bootstrap dentro de React. | `Card`, `Form`, `Button`. |
+| Servicio API frontend | Centralizar las llamadas al backend. | `services/api.js`, `request()` y funciones por recurso. |
 | Assets en Vite | Cargar imagenes desde `src/assets`. | `import logoFull from '../assets/logo-full.webp'`. |
 | Cards responsive | Agrupar cards para preparar desktop. | `section`, `d-flex`, `row`, `col-md-*`. |
-| Barajas desplegables | Mostrar barajas y cartas en un mismo panel. | `Accordion` y `Pagination`. |
-| Formularios separados | Mantener barajas y cartas en bloques distintos. | `baraja-form` y `carta-form`. |
-| Tematicas desplegables | Mostrar tarjetas asociadas a una baraja. | `Accordion`, `Pagination` y formulario de tarjeta. |
-| Carta de juego | Superponer resultado sobre una imagen base. | `position-relative`, `position-absolute` y `Card.Img`. |
-| Flujo de juego | Preparar la experiencia antes de conectar API. | Selector de baraja, carta visual y tarjeta tematica. |
+| Barajas desplegables | Mostrar barajas en acordeon. | `Accordion` y `getBarajas`. |
+| Cartas por baraja | Separar la gestion de cartas en su propia vista. | `CartaView`, botones 1-12 y formularios CRUD. |
+| Tematicas desplegables | Mostrar tarjetas asociadas a una baraja. | `Accordion`, `getTarjetas` y `createTarjeta`. |
+| Carta de juego | Superponer resultado real sobre una imagen base. | `position-relative`, `position-absolute` y `Card.Img`. |
+| Flujo de juego | Jugar con carta aleatoria y tarjeta de repaso. | Selector de baraja, carta visual y tarjeta tematica. |
 
 Plantilla para ampliar tarjetas:
 
@@ -488,8 +510,8 @@ Pendiente.
 
 ## Dudas o decisiones pendientes
 
-- Conectar llamadas al backend con `fetch()`.
-- Configurar SweetAlert2 en acciones concretas.
+- Extender SweetAlert2 al resto de validaciones si se decide sustituir todos los mensajes en linea.
+- Completar `PUT` y `DELETE` de tarjetas en backend para activar editar y borrar en `TematicaView`.
 
 ## Navegacion final
 
@@ -500,9 +522,11 @@ Pendiente.
 - [Pantallas](#pantallas)
 - [Componentes](#componentes)
 - [React-Bootstrap](#react-bootstrap)
+- [Servicio API](#servicio-api)
 - [Imagenes y assets](#imagenes-y-assets)
 - [Estructura responsive base](#estructura-responsive-base)
 - [BarajaView](#barajaview)
+- [CartaView](#cartaview)
 - [TematicaView](#tematicaview)
 - [JuegoView](#juegoview)
 - [Formularios](#formularios)

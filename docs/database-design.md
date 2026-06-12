@@ -173,6 +173,8 @@ Se han tomado decisiones sencillas para que el modelo sea fácil de implementar:
 - Se permite un máximo de 4 cartas con el mismo valor dentro de una misma baraja.
 - No se valida una carta duplicada exacta, porque la regla importante del modelo es controlar la repetición por valor.
 - Al eliminar una baraja desde la API, se comprueba que el solicitante sea propietario o admin y se eliminan primero sus cartas asociadas.
+- Al crear una carta desde la API, se comprueba que la baraja asociada exista.
+- Al eliminar una carta desde la API, se comprueba que el solicitante sea propietario de la baraja asociada o admin.
 - Las cartas con resultado `APTO` mostrarán un mensaje de aprobado.
 - Las cartas con resultado `NO_APTO` o `PRUEBA_OTRA_VEZ` mostrarán una tarjeta formativa.
 

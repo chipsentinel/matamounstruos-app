@@ -132,7 +132,7 @@ Posibles reglas futuras:
 
 Endpoint implementado:
 
-- `GET /juego/cartas/aleatoria/:idBaraja`
+- `GET /juego/carta/aleatoria/:idBaraja`
 - `GET /juego/tarjeta/aleatoria/:idCarta`
 
 Datos necesarios para este endpoint:
@@ -144,7 +144,9 @@ Datos necesarios para este endpoint:
 Si el resultado de la carta es `APTO`, no se devuelve tarjeta de estudio.
 Si el resultado es `NO_APTO` o `PRUEBA_OTRA_VEZ`, se busca una tarjeta aleatoria de la misma baraja.
 
-La opcion de volver a intentarlo se resuelve solicitando otra carta aleatoria con `GET /juego/cartas/aleatoria/:idBaraja`.
+La opcion de volver a intentarlo se resuelve solicitando otra carta aleatoria con `GET /juego/carta/aleatoria/:idBaraja`.
+
+En frontend, los avisos principales del juego se muestran con SweetAlert2 para que el feedback sea mas visible.
 
 ## Estados del flujo
 

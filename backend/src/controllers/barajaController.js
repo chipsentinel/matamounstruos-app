@@ -1,5 +1,10 @@
 const pool = require('../config/db');
 
+// Detecta textos de prueba antes de crear o editar una baraja.
+function contieneModoPruebas(texto) {
+    return /TEST|PRUEBA/i.test(String(texto || ''));
+}
+
 const getBarajas = async (req, res) => {
     try {
         const rows = await pool.query(
@@ -40,6 +45,14 @@ const createBaraja = async (req, res) => {
     try {
         const {nombre, descripcion, idUsuario} = req.body;
 
+        if (contieneModoPruebas(descripcion)) {
+            console.warn(`[${new Date().toISOString()}] Modo pruebas denegado desde ${req.ip}`);
+            return res.status(422).json({
+                status: 'error',
+                reason: 'Modo pruebas denegado'
+            });
+        }
+
         const result = await pool.query(
             'INSERT INTO barajas (nombre, descripcion, idUsuario) VALUES (?, ?, ?)',
             [nombre, descripcion, idUsuario]
@@ -60,6 +73,14 @@ const updateBaraja = async (req, res) => {
     try {
         const {id} = req.params;
         const {nombre, descripcion} = req.body;
+
+        if (contieneModoPruebas(descripcion)) {
+            console.warn(`[${new Date().toISOString()}] Modo pruebas denegado desde ${req.ip}`);
+            return res.status(422).json({
+                status: 'error',
+                reason: 'Modo pruebas denegado'
+            });
+        }
         
         const result = await pool.query(
             'UPDATE barajas SET nombre = ?, descripcion = ? WHERE idBaraja = ?',

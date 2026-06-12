@@ -77,7 +77,18 @@ const createCarta = async (req, res) => {
                 message: 'NO puede haber mas de 4 cartas del mismo valor'
             });
         }
+        
+        // comprobar que la baraja asociada existe antes de crear la carta
+        const barajas = await pool.query(
+            'SELECT idBaraja FROM barajas WHERE idBaraja = ?',
+            [idBaraja]
+        );
 
+        if (barajas.length === 0) {
+            return res.status(404).json({
+                message: 'Baraja no encontrada'
+            });
+        }
 
         const result = await pool.query(
             'INSERT INTO cartas (nombre, valor, tipoResultado, idBaraja) VALUES (?, ?, ?, ?)',
@@ -125,17 +136,62 @@ const updateCarta = async (req, res) => {
 const deleteCarta = async (req, res) => {
     try {
         const {id} = req.params;
+        const {idUsuario} = req.body; // identifico usuario para que solo pueda borrar el usurio
 
-        const result = await pool.query(
-            'DELETE FROM cartas WHERE idCarta = ?',
+        // localizar si la carta existe
+        const cartas = await pool.query(
+            'SELECT idCarta, idBaraja FROM cartas WHERE idCarta = ?',
             [id]
         );
 
-        if (result.affectedRows === 0) {
+        if (cartas.length === 0) {
             return res.status(404).json({
                 message: 'Carta no encontrada'
             });
         }
+
+         // localizar si el usuario existe
+        const usuarios = await pool.query(
+            'SELECT idUsuario, rol FROM usuarios WHERE idUsuario = ?',
+            [idUsuario]
+        );
+
+        if (usuarios.length === 0) {
+            return res.status(404).json({
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        // guardar la carta y el usuario encontrados
+        const carta = cartas[0];
+        const usuario = usuarios[0];
+
+        // localizar la baraja asociada a la carta
+        const barajas = await pool.query(
+            'SELECT idBaraja, idUsuario FROM barajas WHERE idBaraja = ?',
+            [carta.idBaraja]
+        );
+
+        if (barajas.length === 0) {
+            return res.status(404).json({
+                message: 'Baraja no encontrada'
+            });
+        }
+
+        const baraja = barajas[0];
+
+        // comprobar que solo pueda borrar el propietario de la baraja o un admin
+        if (baraja.idUsuario !== Number(idUsuario) && usuario.rol !== 1) {
+            return res.status(403).json({
+                message: 'No tiene permiso para eliminar esta carta'
+            });
+        }
+
+        // borrar la carta
+        const result = await pool.query(
+            'DELETE FROM cartas WHERE idCarta = ?',
+            [id]
+        );
 
         res.json({
             message: 'Carta eliminada'

@@ -122,7 +122,7 @@ La fase inicial del backend se centra en configurar Express, conectar con MariaD
 | GET | `/tarjetas` | Listar tarjetas teoricas. | Configurado |
 | GET | `/tarjetas/:id` | Consultar una tarjeta teorica concreta. | Configurado |
 | POST | `/tarjetas` | Crear una tarjeta teorica. | Configurado |
-| GET | `/juego/cartas/aleatoria/:idBaraja` | Obtener una carta aleatoria de una baraja. | Configurado y probado |
+| GET | `/juego/carta/aleatoria/:idBaraja` | Obtener una carta aleatoria de una baraja. | Configurado y probado |
 | GET | `/juego/tarjeta/aleatoria/:idCarta` | Obtener una tarjeta de repaso segun el resultado de una carta. | Configurado |
 
 ## Datos de entrada
@@ -148,6 +148,15 @@ En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica
 }
 ```
 
+Si `descripcion` contiene `TEST` o `PRUEBA`, la API bloquea la creacion, registra un `console.warn` con fecha e IP y devuelve `422`:
+
+```json
+{
+  "status": "error",
+  "reason": "Modo pruebas denegado"
+}
+```
+
 ### PUT /barajas/:id
 
 ```json
@@ -158,6 +167,8 @@ En `POST /usuarios` no se recibe `rol` desde el cliente. La base de datos aplica
 ```
 
 En `PUT /barajas/:id` no se modifica `idUsuario`, para no cambiar el propietario de la baraja durante una edicion normal.
+
+La misma validacion de modo pruebas se aplica tambien a la descripcion enviada en `PUT /barajas/:id`.
 
 ### POST /cartas
 
@@ -192,7 +203,7 @@ En `PUT /cartas/:id` no se modifica `idBaraja`, para no mover la carta de una ba
 }
 ```
 
-### GET /juego/cartas/aleatoria/:idBaraja
+### GET /juego/carta/aleatoria/:idBaraja
 
 No necesita body. El identificador de la baraja se envia en la URL.
 
@@ -290,11 +301,24 @@ Si el usuario no es propietario ni admin, devuelve `403`.
 
 ```json
 {
+  "idUsuario": 1
+}
+```
+
+En `DELETE /cartas/:id` se envia el usuario solicitante en el body. La API comprueba si el usuario es propietario de la baraja asociada a la carta o admin antes de eliminarla.
+
+Respuesta correcta:
+
+```json
+{
   "message": "Carta eliminada"
 }
 ```
 
 Si no existe una carta con ese identificador, la API devuelve `404` con el mensaje `Carta no encontrada`.
+Si el usuario solicitante no existe, devuelve `404` con el mensaje `Usuario no encontrado`.
+Si la baraja asociada a la carta no existe, devuelve `404` con el mensaje `Baraja no encontrada`.
+Si el usuario no es propietario ni admin, devuelve `403`.
 
 ### POST /tarjetas
 
@@ -306,7 +330,7 @@ Si no existe una carta con ese identificador, la API devuelve `404` con el mensa
 
 Si no existe una tarjeta con ese identificador, la API devuelve `404` con el mensaje `Tarjeta no encontrada`.
 
-### GET /juego/cartas/aleatoria/:idBaraja
+### GET /juego/carta/aleatoria/:idBaraja
 
 ```json
 {
@@ -341,9 +365,12 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 
 - Limitar el valor de las cartas a un maximo de 12.
 - Permitir como maximo 4 cartas con el mismo valor dentro de una misma baraja.
+- Comprobar que la baraja exista antes de crear una carta asociada.
 - No se implementa validacion de carta duplicada exacta porque la regla importante del modelo es controlar la repeticion por valor.
 - Permitir eliminar una baraja solo al propietario o a un usuario admin.
 - Al eliminar una baraja, borrar primero sus cartas asociadas.
+- Bloquear descripciones de baraja con `TEST` o `PRUEBA` en creacion y edicion.
+- Permitir eliminar una carta solo al propietario de su baraja o a un usuario admin.
 - No permitir que un usuario se cree como admin enviando `rol` en el registro basico.
 - Validar que los datos obligatorios lleguen en las peticiones de creacion y actualizacion.
 - Devolver respuestas de error claras cuando no exista el recurso solicitado.
@@ -354,9 +381,12 @@ Si no existe la carta, la API devuelve `404` con el mensaje `Carta no encontrada
 | --- | --- | --- | --- |
 | Valor de carta mayor que 12 | 400 | La carta no puede valer mas de 12. | Enviar un valor entre 1 y 12. |
 | Mas de 4 cartas con el mismo valor | 409 | NO puede haber mas de 4 cartas del mismo valor. | Usar otro valor o revisar las cartas de la baraja. |
+| Carta asociada a baraja inexistente | 404 | Baraja no encontrada. | Usar un `idBaraja` existente. |
 | Borrado de baraja sin permisos | 403 | No tiene permiso para eliminar esta baraja. | Usar el propietario de la baraja o un usuario admin. |
+| Borrado de carta sin permisos | 403 | No tiene permiso para eliminar esta carta. | Usar el propietario de la baraja asociada o un usuario admin. |
 | Recurso no encontrado | 404 | Recurso no encontrado. | Comprobar el identificador usado en la ruta. |
 | Datos incompletos | 400 | Faltan datos obligatorios. | Validar el cuerpo de la peticion antes de enviarla. |
+| Modo pruebas en baraja | 422 | Modo pruebas denegado. | Cambiar la descripcion antes de crear o editar. |
 
 ## Pruebas en Postman
 
@@ -403,7 +433,7 @@ Pendiente.
 
 - Confirmar nombres finales de rutas: plural en español (`/barajas`, `/cartas`) o estilo alternativo.
 - Decidir si el endpoint de TarjetaTeoria depende del resultado, de la carta o de ambos.
-- Definir codigos y formato comun de errores antes de crear todos los controladores.
+- Revisar si se unifica el formato de errores en todos los controladores.
 
 ## Navegacion final
 

@@ -90,7 +90,7 @@ Endpoints iniciales de comprobacion:
 - `GET /barajas`, `GET /barajas/:id`, `POST /barajas`, `PUT /barajas/:id` y `DELETE /barajas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar barajas.
 - `GET /cartas`, `GET /cartas/:id`, `GET /cartas/baraja/:idBaraja`, `POST /cartas`, `PUT /cartas/:id` y `DELETE /cartas/:id`: endpoints iniciales para consultar, crear, actualizar y eliminar cartas.
 - `GET /tarjetas`, `GET /tarjetas/:id` y `POST /tarjetas`: endpoints iniciales para consultar y crear tarjetas teoricas.
-- `GET /juego/cartas/aleatoria/:idBaraja`: endpoint inicial de juego para obtener una carta aleatoria de una baraja.
+- `GET /juego/carta/aleatoria/:idBaraja`: endpoint inicial de juego para obtener una carta aleatoria de una baraja.
 - `GET /juego/tarjeta/aleatoria/:idCarta`: endpoint inicial de juego para obtener una tarjeta de repaso segun el resultado de una carta.
 
 Decisiones de negocio implementadas:
@@ -98,18 +98,24 @@ Decisiones de negocio implementadas:
 - Las cartas no pueden tener valor superior a `12`.
 - Cada baraja puede tener como maximo `4` cartas con el mismo valor.
 - Al borrar una baraja se comprueba que el solicitante sea propietario o admin y se eliminan primero sus cartas asociadas.
+- Al crear o editar una baraja se bloquean descripciones con `TEST` o `PRUEBA` y se devuelve `422`.
+- Al crear una carta se comprueba que la baraja asociada exista.
+- Al borrar una carta se comprueba que el solicitante sea propietario de la baraja asociada o admin.
 
 La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json`.
 
-Frontend inicial:
+Frontend:
 
 - El proyecto React se ha creado dentro de `frontend/` usando Vite.
 - Bootstrap esta instalado e importado globalmente en `frontend/src/main.jsx`.
-- SweetAlert2 esta instalado y se importara en los componentes donde se use.
+- SweetAlert2 esta instalado y se usa en acceso de usuario, Barajas y Juego para avisos y confirmaciones.
 - La estructura inicial usa `frontend/src/components/Navbar.jsx` y vistas en `frontend/src/views/`.
-- La navegacion inicial se resuelve con estado en `App.jsx`, sin añadir rutas hasta que sean necesarias.
-- La navegacion visible se simplifica en Inicio, Baraja, Tematica y Juego, usando el logo como acceso a inicio.
+- La navegacion usa `react-router-dom` con rutas centralizadas en `frontend/src/routes.js`.
+- La navegacion visible queda en Inicio, Baraja, Carta, Tematica y Juego, usando el logo como acceso a inicio.
 - La navbar se construye con React-Bootstrap y se ajusta con estilos propios en `App.css`.
+- `CardUsuario` actua como acceso previo para las secciones administrativas.
+- `BarajaView`, `CartaView`, `TematicaView` y `JuegoView` consumen funciones de `frontend/src/services/api.js`.
+- `frontend/src/services/api.js` centraliza las llamadas `fetch()` al backend y conserva datos de error como codigo HTTP, URL y respuesta JSON.
 - El logo inicial se guarda en `frontend/src/assets/` para usarlo como identidad visual de la aplicacion.
 - El servidor de desarrollo se arranca desde `frontend/` con `npm run dev`.
 - Vite expone la aplicacion en `http://localhost:5173/`.
