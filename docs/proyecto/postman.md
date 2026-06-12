@@ -1,10 +1,18 @@
-# Tarjeta de estudio: Postman
+# Desempeño del proyecto: Postman y Newman
 
 ## Objetivo
 
-Usar Postman como prueba de integracion del backend.
+Usar Postman y Newman como prueba de integracion del backend.
 
 La idea es comprobar que las rutas, los controladores, la base de datos y las respuestas HTTP funcionan juntos. A diferencia de los tests unitarios, aqui si se prueba la aplicacion levantada y conectada a MariaDB.
+
+## Resumen de desempeño
+
+- Se preparo una coleccion Postman para validar endpoints principales.
+- Se anadieron scripts de test para comprobar codigos HTTP y respuestas.
+- Se ejecuto la coleccion con Newman desde terminal.
+- Se ajustaron pruebas para que sean repetibles y no dependan de borrar datos base.
+- Se validaron usuarios, barajas, cartas, tarjetas, juego y health check.
 
 ## Archivo principal
 

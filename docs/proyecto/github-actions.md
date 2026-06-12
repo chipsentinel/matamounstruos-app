@@ -1,4 +1,4 @@
-# Tarjeta de estudio: GitHub Actions
+# Desempeño del proyecto: GitHub Actions
 
 ## Objetivo
 
@@ -9,6 +9,14 @@ El workflow esta en:
 ```txt
 .github/workflows/ci.yml
 ```
+
+## Resumen de desempeño
+
+- Se creo un workflow de CI para validar el proyecto en GitHub.
+- Se separaron comprobaciones de backend y frontend.
+- El backend instala dependencias y ejecuta tests unitarios.
+- El frontend instala dependencias y ejecuta el build de Vite.
+- El workflow ayuda a detectar errores antes de fusionar una pull request.
 
 ## Cuando se ejecuta
 

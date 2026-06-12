@@ -120,7 +120,7 @@ Decisiones de negocio implementadas:
 - Al crear una carta se comprueba que la baraja asociada exista.
 - Al borrar una carta se comprueba que el solicitante sea propietario de la baraja asociada o admin.
 
-La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json` y se documenta en `docs/estudio/tarjeta-postman.md`. Se puede ejecutar desde `backend/` con `npx newman run ../postman/matamounstruos-app.postman_collection.json`.
+La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json` y se documenta en `docs/testing.md`. Se puede ejecutar desde `backend/` con `npx newman run ../postman/matamounstruos-app.postman_collection.json`.
 
 Frontend:
 
@@ -143,19 +143,18 @@ Frontend:
 
 Enlaces a la documentación del proyecto:
 
-- Diseño de base de datos: [docs/database-design.md](docs/database-design.md)
+- Entrada principal: [docs/README.md](docs/README.md)
+- Guia de estudio: [docs/proyecto/guia-estudio.md](docs/proyecto/guia-estudio.md)
+- Arquitectura: [docs/proyecto/arquitectura.md](docs/proyecto/arquitectura.md)
+- Backend: [docs/backend.md](docs/backend.md)
+- Frontend: [docs/frontend.md](docs/frontend.md)
+- Base de datos: [docs/database.md](docs/database.md)
+- Testing y Postman: [docs/testing.md](docs/testing.md)
+- DevOps, Docker y GitHub Actions: [docs/devops.md](docs/devops.md)
+- Git y flujo de ramas: [docs/git.md](docs/git.md)
+- Contenido de tarjetas: [docs/tematica/README.md](docs/tematica/README.md)
+- Diseño historico de base de datos: [docs/database-design.md](docs/database-design.md)
 - Docker y MariaDB: [docker/README.md](docker/README.md)
-- Tarjetas de estudio:
-  - Base de datos: [docs/estudio/tarjeta-db.md](docs/estudio/tarjeta-db.md)
-  - Backend: [docs/estudio/tarjeta-backend.md](docs/estudio/tarjeta-backend.md)
-  - Frontend: [docs/estudio/tarjeta-frontend.md](docs/estudio/tarjeta-frontend.md)
-  - Flujo funcional: [docs/estudio/tarjeta-flujo.md](docs/estudio/tarjeta-flujo.md)
-  - Gitflow: [docs/estudio/tarjeta-gitflow.md](docs/estudio/tarjeta-gitflow.md)
-  - Postman: [docs/estudio/tarjeta-postman.md](docs/estudio/tarjeta-postman.md)
-  - GitHub Actions: [docs/estudio/tarjeta-workflow.md](docs/estudio/tarjeta-workflow.md)
-- Documentación de API:
-- Modelo Entidad/Relación:
-- Modelo relacional:
 
 ## Objetivo del proyecto
 
