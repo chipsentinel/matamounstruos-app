@@ -64,13 +64,14 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Validate Dockerfile - build image
-        # build-arg VITE_API_URL passed from secrets if exists (optional)
         run: |
+          # Construir usando el Dockerfile que está en frontend, pero con contexto en la raíz (.)
+          # evita el error "unable to prepare context: path 'frontend' not found"
           docker build \
             --build-arg VITE_API_URL="${{ secrets.VITE_API_URL }}" \
             -t matamounstruos-frontend:ci \
             -f frontend/Dockerfile \
-            frontend
+            .
 
       - name: Docker image size
         if: success()
