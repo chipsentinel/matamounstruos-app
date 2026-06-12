@@ -9,7 +9,7 @@ const getUsuarios = async (req, res) => {
         res.json(rows);
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -58,7 +58,7 @@ const createUsuario = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-        message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -88,7 +88,7 @@ const accesoUsuario = async (req, res) => {
         res.json(usuarios[0]);
     } catch (error) {
         res.status(500).json({
-        message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };

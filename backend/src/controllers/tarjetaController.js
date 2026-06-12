@@ -9,7 +9,7 @@ const getTarjetas = async (req, res) => {
         res.json(rows);
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -31,7 +31,7 @@ const getIdTarjeta = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
@@ -39,6 +39,30 @@ const getIdTarjeta = async (req, res) => {
 const createTarjeta = async (req, res) => {
     try {
         const {titulo, contenido, idBaraja} = req.body;
+
+        // Validaciones previas para evitar errores controlables de MariaDB.
+        if (!titulo || !contenido || !idBaraja) {
+            return res.status(400).json({
+                message: 'Faltan datos obligatorios'
+            });
+        }
+
+        if (titulo.length > 50) {
+            return res.status(400).json({
+                message: 'El titulo no puede tener mas de 50 caracteres'
+            });
+        }
+
+        const barajas = await pool.query(
+            'SELECT idBaraja FROM barajas WHERE idBaraja = ?',
+            [idBaraja]
+        );
+
+        if (barajas.length === 0) {
+            return res.status(404).json({
+                message: 'Baraja no encontrada'
+            });
+        }
 
         const result = await pool.query(
             'INSERT INTO tarjetas (titulo, contenido, idBaraja) VALUES (?, ?, ?)',
@@ -51,7 +75,7 @@ const createTarjeta = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
-        message: error.message
+            message: 'Error interno del servidor. Vuelve a intentarlo mas tarde.'
         });
     }
 };
