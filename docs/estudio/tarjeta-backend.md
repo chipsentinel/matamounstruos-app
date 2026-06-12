@@ -418,6 +418,13 @@ postman/matamounstruos-app.postman_collection.json
 
 Incluye comprobaciones de usuarios, barajas, cartas, tarjetas, endpoints de juego, `health/db` y casos de error principales.
 
+La coleccion puede ejecutarse desde terminal con Newman:
+
+```bash
+cd backend
+npx newman run ../postman/matamounstruos-app.postman_collection.json
+```
+
 ## Material para futuras tarjetas
 
 | Titulo de tarjeta | Idea principal | Contenido clave |

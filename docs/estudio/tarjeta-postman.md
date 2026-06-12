@@ -32,6 +32,15 @@ http://localhost:3000
 
 4. Ejecutar las peticiones por bloques: usuarios, barajas, cartas, tarjetas y juego.
 
+Tambien se puede ejecutar la coleccion completa desde terminal con Newman:
+
+```bash
+cd backend
+npx newman run ../postman/matamounstruos-app.postman_collection.json
+```
+
+Para que esta comprobacion funcione, el backend debe estar levantado previamente en `http://localhost:3000`.
+
 ## Bloques de la coleccion
 
 | Bloque | Que comprueba |
@@ -42,6 +51,23 @@ http://localhost:3000
 | Tarjetas | Consulta y creacion de tarjetas teoricas. |
 | Juego | Carta aleatoria y tarjeta de repaso cuando corresponde. |
 | Health | Conexion del backend con MariaDB. |
+
+## Ejecucion con Newman
+
+La coleccion se ha preparado para poder repetirse desde Newman sin depender de borrar datos base.
+
+En el bloque de barajas, Postman crea una baraja temporal, guarda su identificador en una variable de coleccion y la reutiliza para consultar, editar y borrar. De esta forma se evita eliminar la baraja inicial de `seeds.sql`.
+
+Ultima comprobacion realizada:
+
+```txt
+iterations: 1
+requests: 45
+test-scripts: 24
+prerequest-scripts: 1
+assertions: 24
+failed: 0
+```
 
 ## Casos importantes
 

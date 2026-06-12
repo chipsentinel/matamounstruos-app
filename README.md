@@ -74,7 +74,7 @@ Tecnologias previstas:
 - Base de datos: MariaDB.
 - Control de versiones: Git y GitHub.
 - Contenedores: Docker Compose para el entorno de desarrollo de MariaDB.
-- Testing: Pendiente.
+- Testing: Mocha y Chai para tests unitarios; Postman y Newman para pruebas de integracion.
 
 ## Configuracion local
 
@@ -102,7 +102,7 @@ Decisiones de negocio implementadas:
 - Al crear una carta se comprueba que la baraja asociada exista.
 - Al borrar una carta se comprueba que el solicitante sea propietario de la baraja asociada o admin.
 
-La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json` y se documenta en `docs/estudio/tarjeta-postman.md`.
+La coleccion de Postman con las pruebas principales se encuentra en `postman/matamounstruos-app.postman_collection.json` y se documenta en `docs/estudio/tarjeta-postman.md`. Se puede ejecutar desde `backend/` con `npx newman run ../postman/matamounstruos-app.postman_collection.json`.
 
 Frontend:
 
