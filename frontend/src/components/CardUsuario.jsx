@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import { createUsuario, getUsuarios } from '../services/api'
 
 function CardUsuario({ onAcceso }) {
+  // Este componente no guarda sesion real: solo identifica al usuario activo en App.jsx.
   const [nombre, setNombre] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -32,6 +33,7 @@ function CardUsuario({ onAcceso }) {
       }
 
       const usuarios = await getUsuarios()
+      // El acceso es sencillo: busca el usuario por nombre y deja la password como campo obligatorio.
       const usuarioEncontrado = usuarios.find((usuario) => usuario.nombre === nombre)
 
       if (!usuarioEncontrado) {
@@ -39,6 +41,7 @@ function CardUsuario({ onAcceso }) {
         return
       }
 
+      // App.jsx recibe el usuario y permite volver a la vista administrativa pendiente.
       await Swal.fire('Acceso correcto', `Bienvenido, ${usuarioEncontrado.nombre}.`, 'success')
       onAcceso(usuarioEncontrado)
     } catch (error) {
@@ -57,6 +60,7 @@ function CardUsuario({ onAcceso }) {
 
       const usuarioCreado = await createUsuario({ nombre, password })
 
+      // El backend devuelve el id creado; aqui completamos el objeto que necesita App.jsx.
       await Swal.fire('Usuario registrado', `Bienvenido, ${nombre}.`, 'success')
       onAcceso({
         idUsuario: usuarioCreado.idUsuario,

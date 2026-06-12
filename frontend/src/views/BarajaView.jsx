@@ -38,6 +38,7 @@ function BarajaView({ usuarioActivo }) {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState('');
   const [mensajeFormulario, setMensajeFormulario] = useState('');
+  // Guarda informacion tecnica solo para errores que interesa revisar despues, como el 422.
   const [informeError, setInformeError] = useState(null);
 
   // Pide las barajas al backend y actualiza el listado en pantalla.
@@ -88,6 +89,7 @@ function BarajaView({ usuarioActivo }) {
 
     setError(mensaje);
 
+    // El backend envia status, url y data desde api.js; asi podemos mostrar el informe IT.
     if (error.status === 422) {
       setInformeError({
         url: error.url,
@@ -221,6 +223,7 @@ function BarajaView({ usuarioActivo }) {
   }
 
   // Decide si se muestran todas las barajas o solo la seleccionada.
+  // Al pulsar una baraja en el acordeon, la vista se centra en ella para leerla mejor.
   const barajasVisibles = barajaSeleccionada ? [barajaSeleccionada] : barajas;
 
   return (

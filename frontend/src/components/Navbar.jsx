@@ -8,6 +8,7 @@ import BootstrapNavbar from 'react-bootstrap/Navbar'
 import logoIcon from '../assets/logo-icon.webp'
 
 function Navbar({ vistaActual, cambiarVista, usuarioActivo }) {
+  // Mantiene el texto escrito en el buscador sin afectar al resto de vistas.
   const [busqueda, setBusqueda] = useState('')
 
   // Busca texto dentro de la pagina visible usando la busqueda nativa del navegador.
@@ -94,6 +95,7 @@ function Navbar({ vistaActual, cambiarVista, usuarioActivo }) {
         </Nav>
 
         {usuarioActivo && (
+          /* Solo se muestra cuando App.jsx ya tiene un usuario activo. */
           <span className="app-navbar-user">
             Usuario: {usuarioActivo.nombre}
           </span>

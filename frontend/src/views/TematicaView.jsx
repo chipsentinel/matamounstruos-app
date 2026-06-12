@@ -22,6 +22,7 @@ function TematicaView() {
   // Datos principales que vienen del backend y se pintan en la vista.
   const [barajas, setBarajas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
+  // Todas las tarjetas se cargan juntas y luego se filtran por baraja en la vista.
   const [tarjetas, setTarjetas] = useState([]);
 
   // Estados de seleccion visual.
@@ -139,11 +140,13 @@ function TematicaView() {
   }
 
   // Devuelve las tarjetas asociadas a una baraja concreta.
+  // Se usa dentro del map de barajas para pintar cada grupo en su acordeon.
   function obtenerTarjetasPorBaraja(idBaraja) {
     return tarjetas.filter((tarjeta) => Number(tarjeta.idBaraja) === Number(idBaraja));
   }
 
   // Decide si se muestran todas las barajas o solo la seleccionada.
+  // Al seleccionar una baraja se reduce el ruido visual y se ven mejor sus tarjetas.
   const barajasVisibles = barajaSeleccionada ? [barajaSeleccionada] : barajas;
 
   return (

@@ -21,6 +21,7 @@ import cartaStandar from '../assets/carta-standar.webp';
 function JuegoView() {
   // Datos principales que vienen del backend.
   const [barajas, setBarajas] = useState([]);
+  // cartaActual pinta el resultado central; tarjetaActual pinta el repaso superior.
   const [cartaActual, setCartaActual] = useState(null);
   const [tarjetaActual, setTarjetaActual] = useState(null);
 
@@ -82,6 +83,7 @@ function JuegoView() {
 
   // Saca una carta aleatoria de la baraja elegida.
   async function jugarCarta() {
+    // Cada jugada empieza limpia para que no queden resultados anteriores en pantalla.
     setError('');
     setMensajeJuego('');
     setCartaActual(null);
@@ -96,6 +98,7 @@ function JuegoView() {
       const carta = await getCartaAleatoriaDeBaraja(idBarajaSeleccionada);
       setCartaActual(carta);
 
+      // APTO termina la ronda: no hace falta pedir tarjeta de repaso.
       if (carta.tipoResultado === 'APTO') {
         setMensajeJuego('Eres APTO. Has terminado esta ronda.');
         return;
@@ -113,6 +116,7 @@ function JuegoView() {
       const tarjeta = await getTarjetaAleatoriaDeCarta(idCarta);
 
       if (tarjeta.message) {
+        // El backend puede responder con message cuando no hay tarjeta disponible.
         setMensajeJuego(tarjeta.message);
         return;
       }
@@ -145,6 +149,7 @@ function JuegoView() {
               id="selectBarajaJuego"
               value={idBarajaSeleccionada}
               onChange={(event) => {
+                // Cambiar de baraja reinicia la ronda visualmente.
                 setIdBarajaSeleccionada(event.target.value);
                 setCartaActual(null);
                 setTarjetaActual(null);
@@ -166,6 +171,7 @@ function JuegoView() {
               <div className="position-relative">
                 <Card.Img className="card-image" variant="top" src={cartaStandar} />
 
+                {/* La tarjeta de repaso aparece arriba para convivir con el resultado central. */}
                 {tarjetaActual && (
                   <div className="card-topic-content position-absolute top-0 start-50 translate-middle-x text-center bg-light p-2 mt-3 rounded">
                     <h4 className="mb-1">{tarjetaActual.titulo}</h4>
@@ -173,6 +179,7 @@ function JuegoView() {
                   </div>
                 )}
 
+                {/* El resultado de la carta se mantiene centrado como informacion principal. */}
                 <div className="card-result-content position-absolute top-50 start-50 translate-middle text-center bg-light p-2 rounded">
                   {cartaActual ? (
                     <>

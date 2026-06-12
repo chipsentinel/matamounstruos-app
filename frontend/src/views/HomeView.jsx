@@ -19,6 +19,7 @@ function HomeView() {
             </Card.Body>
           </Card>
           
+          {/* Cards de acceso rapido: reutilizan el layout flexible usado tambien en JuegoView. */}
           <div className="actions view-actions home-action-cards">
             <Card className="action-card">
                 <Card.Body>
