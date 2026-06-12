@@ -1,7 +1,7 @@
 INSERT INTO usuarios (nombre, password, rol) VALUES
-    ('admin', 'admin123', TRUE),
-    ('jose', 'jose123', FALSE),
-    ('juan', 'admin123', FALSE);
+    ('admin', 'Admin123!', TRUE),
+    ('jose', 'Jose123!', FALSE),
+    ('juan', 'Juan123!', FALSE);
 
 INSERT INTO barajas (nombre, descripcion, idUsuario) VALUES
     ('gitflow', 'Ramas, commits y rescates de ultima hora.', 1),
