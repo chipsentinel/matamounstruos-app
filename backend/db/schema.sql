@@ -11,6 +11,7 @@ CREATE TABLE barajas (
     idBaraja INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(20) NOT NULL,
     descripcion VARCHAR(100) NOT NULL,
+    precio INT NOT NULL,
     idUsuario INT UNSIGNED NOT NULL,
     FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
 );

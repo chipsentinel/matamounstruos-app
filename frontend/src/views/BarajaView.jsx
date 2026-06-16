@@ -125,11 +125,13 @@ function BarajaView({ usuarioActivo }) {
       await createBaraja({
         nombre: nombreBaraja,
         descripcion: descripcionBaraja,
+        precio: precioBaraja,
         idUsuario: usuarioActivo.idUsuario,
       });
 
       setNombreBaraja('');
       setDescripcionBaraja('');
+      setPrecioBaraja('');
       setMensajeFormulario('Baraja creada correctamente.');
       Swal.fire('Baraja creada', 'La baraja se ha guardado correctamente.', 'success');
       await recargarDatos();
@@ -331,6 +333,8 @@ function BarajaView({ usuarioActivo }) {
                       setIdBarajaFormulario(idBaraja);
                       setNombreBaraja(baraja?.nombre || '');
                       setDescripcionBaraja(baraja?.descripcion || '');
+                      setPrecioBaraja(baraja?.precio || '');
+
                     }}
                   >
                     <option value="">Selecciona Baraja</option>
@@ -357,6 +361,15 @@ function BarajaView({ usuarioActivo }) {
                     placeholder="Nueva descripcion"
                     value={descripcionBaraja}
                     onChange={(event) => setDescripcionBaraja(event.target.value)}
+                  />
+                </Form.Group>
+
+                 <Form.Group className="mb-3">
+                  <Form.Control
+                    id="inputEditarPrecioBaraja"
+                    placeholder="Nueva descripcion"
+                    value={descripcionBaraja}
+                    onChange={(event) => setPrecioBaraja(event.target.value)}
                   />
                 </Form.Group>
 
