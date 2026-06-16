@@ -75,6 +75,8 @@ export function deleteBaraja(idBaraja, idUsuario) {
     })
 }
 
+
+
 // Cartas
 export function getCartas(){
     return request('/cartas')

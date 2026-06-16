@@ -39,7 +39,7 @@ const getIdBaraja = async (req, res) => {
 
 const createBaraja = async (req, res) => {
     try {
-        const {nombre, descripcion, idUsuario} = req.body;
+        const {nombre, descripcion, precio, idUsuario} = req.body;
 
         // Validaciones previas para evitar errores controlables de MariaDB.
         if (!nombre || !descripcion || !idUsuario) {
@@ -81,8 +81,8 @@ const createBaraja = async (req, res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO barajas (nombre, descripcion, idUsuario) VALUES (?, ?, ?)',
-            [nombre, descripcion, idUsuario]
+            'INSERT INTO barajas (nombre, descripcion, precio, idUsuario) VALUES (?, ?, ?, ?)',
+            [nombre, descripcion, precio,idUsuario]
         );
 
         res.status(201).json({
